@@ -87,7 +87,7 @@ input.form-input:hover {
 }
 
 input.form-input.empty {
-  color: #c2c2c2;
+  color: #000;
   font-size: 12px;
 }
 

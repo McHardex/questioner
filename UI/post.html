@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questioner</title>
+  <link rel="stylesheet" type="text/css" href="./assets/stylesheets/post.css">
+</head>
+<body>
+  <div class='cont'>
+    <Header>
+      <a href='./post.html' >HOME</a>
+      <a href='./profile.html' >PROFILE</a>
+      <a href='./admin.html' >ADMIN</a>
+      <a href='./sign-in.html' ><img class='logout-icon' src='./assets/images/logout-icon.png' alt='logout icon'/></a>
+    </Header>
+    <div class='app-cnt'>
+      <div class='post'>
+        <h1 class='head-tit'>POST A QUESTION</h1>
+        <form>
+          <div class='sel-mtup'>
+            <label>Select Meetup:</label>
+            <select>
+              <option>ABUJA INTERNS</option>
+              <option>COMMERSE ENTERPRISE</option>
+            </select>
+          </div>
+          <div>
+            <textarea placeholder='write your question'></textarea>
+          </div>
+          <button type='submit' class='submit-form'>SUBMIT QUESTION</button>
+        </form>
+      </div>
+      <hr>
+      <h1 class='head-tit'>QUETIONS- MEETUPS</h1>
+      <div class='que-cont'>
+        <div class='que'>
+          <p>Meetup: <span>Abuja Interns</span></p>
+          <p>Happening on: <span>10/04/2019</span></p>
+          <h4>What is the Abuja Internship program all about?</h4>
+          <div class='lke-que'>
+            <div>
+              <img src='./assets/images/upvote.png' alt='upvote a question'/>
+            </div>
+            <div>
+              <img src='./assets/images/downvote.png' alt='downvote a question'/>
+            </div>
+          </div>
+          <span id='comm' onclick='toggle()'>comment</span>
+          <form id='comment'>
+            <input type='text' class='form-input' placeholder='write comment'/>
+            <input type='image' class='sub-comm' name='submit' src='./assets/images/messageSend.png'/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script language='javascript' src='../UI/assets/js/post.js'></script>
+</body>
+</html>

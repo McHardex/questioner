@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questioner</title>
+  <link rel="stylesheet" type="text/css" href="./assets/stylesheets/admin.css">
+</head>
+<body>
+  <div class='cont'>
+    <Header>
+      <a href='./post.html' >HOME</a>
+      <a href='./profile.html' >PROFILE</a>
+      <a href='./admin.html' >ADMIN</a>
+    </Header>
+    <div class='admin-cnt'>
+      <h3 class='head-tit'>CREATE MEETUP</h3>
+      <form>
+        <div>
+          <input class='form-input' name='topic' type='text' placeholder='Title'/>
+        </div>
+        <div>
+          <input class='form-input empty' name='date' type='date'/>
+        </div>
+        <div>
+          <input class='form-input' name='location' type='string' placeholder='Enter your location'/>
+        </div>
+        <div>
+          <input class='form-input' name='tags' type='text' placeholder='Tags'/>
+        </div>
+        <button type='submit' class='submit-form'>SUBMIT</button>
+      </form>
+    </div>
+    <section>
+      <h3 class='head-tit'>MEETUPS</h3>
+      <div id='que'>
+        <h4>What is the Abuja Internship program all about?</h4>
+        <p>Location: <span>Abuja</span></p>
+        <p>Happening on: <span>10/04/2019</span></p>
+        <div class='del-edit'>
+          <button class='del'>DELETE</button>
+          <button class='edit' onclick='toggle()'>EDIT</button>
+        </div>
+      </div>
+      <form id='edit-form'>
+          <div>
+            <input class='form-input' name='topic' type='text' placeholder='Title' value='What is the Abuja Internship program all about?'/>
+          </div>
+          <div>
+            <input class='form-input' name='date' type='text' value='10/04/2019' placeholder='date'/>
+          </div>
+          <div>
+            <input class='form-input' name='location' type='string' placeholder='Location' value='Abuja'/>
+          </div>
+          <div>
+            <input class='form-input' name='tags' type='text' placeholder='Tags' value='social, games'/>
+          </div>
+          <button type='submit' class='submit-form'>UPDATE</button>
+          <button class='close-div' onclick='toggle()'>X</button>
+        </form>
+    </section>
+  </div>
+  <script language='javascript' src='../UI/assets/js/admin.js'></script>
+</body>
+</html>

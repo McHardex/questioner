@@ -1,6 +1,6 @@
 const express = require('express');
 
-const db = require('../startup/db');
+const db = require('../startup/db/meetupDb');
 
 const router = express.Router();
 
@@ -11,28 +11,27 @@ router.get('/meetups', (req, res) => {
   });
 });
 
-router.get('/meetups/upcoming', (req, res) => {
-  let newArray = db.filter(db => {
-    return db.happeningOn > Date.now()
-  });
-  if (newArray === undefined || newArray.length == 0) return res.status(400).send({ message: 'there is no upcoming meetups' })
+router.get('/meetups/upcoming', async (req, res) => {
+  const newArray = await db.filter(result => result.happeningOn > Date.now());
+  if (newArray === undefined || newArray.length === 0) return res.status(400).send({ message: 'there is no upcoming meetups' });
 
-  res.status(200).send({
+  return res.status(200).send({
     status: 200,
     data: newArray,
   });
 });
 
-router.get('/meetups/:id', (req, res) => {
-  const meetup = db[req.params.id];
-  if (!meetup) return res.status(400).send({ message: `Unable to fetch meetup with id of ${req.params.id}`});
-  res.status(200).send({
+router.get('/meetups/:id', async (req, res) => {
+  const meetup = await db[req.params.id];
+  if (!meetup) return res.status(400).send({ message: `Unable to fetch meetup with id of ${req.params.id}` });
+
+  return res.status(200).send({
     status: 200,
     data: meetup,
   });
 });
 
-router.post('/meetups', (req, res) => {
+router.post('/meetups', async (req, res) => {
   if (!req.body.topic) {
     res.status(400).send({
       success: false,
@@ -63,8 +62,8 @@ router.post('/meetups', (req, res) => {
     tags: req.body.tags,
   };
 
-  db.push(meetup);
-  return res.status(201).send({
+  await db.push(meetup);
+  res.status(201).send({
     status: 201,
     data: [meetup],
   });

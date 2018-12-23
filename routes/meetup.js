@@ -4,6 +4,13 @@ const db = require('../startup/db');
 
 const router = express.Router();
 
+router.get('/meetups', (req, res) => {
+  res.status(200).send({
+    status: 200,
+    data: db,
+  });
+});
+
 router.post('/meetups', (req, res) => {
   if (!req.body.topic) {
     res.status(400).send({

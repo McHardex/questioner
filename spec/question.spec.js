@@ -17,6 +17,24 @@ describe('Question Api Exists', () => {
     };
   });
 
+  describe('GET /questions', () => {
+    it('should return status code 200', (done) => {
+      request.get(baseUrl, (error, response, body) => {
+        expect(response.statusCode).toBe(200);
+        done();
+      });
+    });
+
+    it('API Response should be valid json', (done) => {
+      request.post(baseUrl, (error, response, body) => {
+        expect(() => {
+          JSON.parse(body);
+        }).not.toThrow();
+        done();
+      });
+    });
+  });
+
   describe('POST /questions', () => {
     it('should return status code 201', (done) => {
       request.post(params, (error, response, body) => {

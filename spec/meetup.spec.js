@@ -42,32 +42,32 @@ describe('Meetups List Api Exists', () => {
   //   });
   // });
 
-  describe('GET /meetups/meetup-id', () => {
-    let id = 0;
-    it('should return status code 200 on successful fetching', (done) => {
-      request.get(`${baseUrl}/${id}`, (error, response, body) => {
-        expect(response.statusCode).toBe(200);
-        done();
-      });
-    });
+  // describe('GET /meetups/meetup-id', () => {
+  //   let id = 0;
+  //   it('should return status code 200 on successful fetching', (done) => {
+  //     request.get(`${baseUrl}/${id}`, (error, response, body) => {
+  //       expect(response.statusCode).toBe(200);
+  //       done();
+  //     });
+  //   });
 
-    it('should return status code 400 for invalid id', (done) => {
-      id = 'aaa';
-      request.get(`${baseUrl}/${id}`, (error, response, body) => {
-        expect(response.statusCode).toBe(400);
-        done();
-      });
-    });
+  //   it('should return status code 400 for invalid id', (done) => {
+  //     id = 'aaa';
+  //     request.get(`${baseUrl}/${id}`, (error, response, body) => {
+  //       expect(response.statusCode).toBe(400);
+  //       done();
+  //     });
+  //   });
 
-    it('API Response should be valid json', (done) => {
-      request.get(`${baseUrl}/${id}`, (error, response, body) => {
-        expect(() => {
-          JSON.parse(body);
-        }).not.toThrow();
-        done();
-      });
-    });
-  });
+  //   it('API Response should be valid json', (done) => {
+  //     request.get(`${baseUrl}/${id}`, (error, response, body) => {
+  //       expect(() => {
+  //         JSON.parse(body);
+  //       }).not.toThrow();
+  //       done();
+  //     });
+  //   });
+  // });
 
   describe('POST /meetups', () => {
     let params = null;

@@ -11,6 +11,18 @@ router.get('/meetups', (req, res) => {
   });
 });
 
+router.get('/meetups/upcoming', (req, res) => {
+  let newArray = db.filter(db => {
+    return db.happeningOn > Date.now()
+  });
+  if (newArray === undefined || newArray.length == 0) return res.status(400).send({ message: 'there is no upcoming meetups' })
+
+  res.status(200).send({
+    status: 200,
+    data: newArray,
+  });
+});
+
 router.get('/meetups/:id', (req, res) => {
   const meetup = db[req.params.id];
   if (!meetup) return res.status(400).send({ message: `Unable to fetch meetup with id of ${req.params.id}`});
@@ -44,7 +56,7 @@ router.post('/meetups', (req, res) => {
   }
 
   const meetup = {
-    id: db.length + 1,
+    id: db.length,
     topic: req.body.topic,
     location: req.body.location,
     happeningOn: req.body.happeningOn,

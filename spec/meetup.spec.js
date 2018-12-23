@@ -23,7 +23,6 @@ describe('Meetups List Api Exists', () => {
     });
   });
 
-
   describe('GET /meetups/upcoming', () => {
     it('should return status code 200', (done) => {
       request.get(`${baseUrl}/upcoming`, (error, response, body) => {
@@ -72,20 +71,20 @@ describe('Meetups List Api Exists', () => {
   describe('POST /meetups', () => {
     let params = null;
 
-    beforeEach(() =>{
-        params = {
-          url: baseUrl,
-          form: {
-            topic: 'js',
-            location: 'lagos',
-            happeningOn: new Date(),
-            tags: 'apple',
-          }
-        };
+    beforeEach(() => {
+      params = {
+        url: baseUrl,
+        form: {
+          topic: 'js',
+          location: 'lagos',
+          happeningOn: new Date(),
+          tags: 'apple',
+        },
+      };
     });
 
     it('should return status code 201 on successful post', (done) => {
-      return request.post(params, (error, response, body) => {
+      request.post(params, (error, response, body) => {
         expect(response.statusCode).toBe(201);
         done();
       });
@@ -107,13 +106,4 @@ describe('Meetups List Api Exists', () => {
       });
     });
   });
-
-  // describe('POST /meetups/meetup-id/rsvps', () => {
-  //   it('should respond to meetup RSVP', (done) => {
-  //     request.post(`${baseUrl}/1/rsvps`, { json: true, body: {} }, (error, response) => {
-  //       expect(response.statusCode).toEqual(404);
-  //       done();
-  //     });
-  //   });
-  // });
 });

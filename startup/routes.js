@@ -1,10 +1,12 @@
 const bodyParser = require('body-parser');
-const router = require('../routes/meetup');
+const meetup = require('../routes/meetup');
+const rsvp = require('../routes/rsvp');
 
 module.exports = (app) => {
   // parse incoming requests data
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  app.use('/api/v1', router);
+  app.use('/api/v1', meetup);
+  app.use('/api/v1', rsvp);
 };

@@ -4,6 +4,7 @@ const router = express.Router();
 
 const db = require('../startup/db/questionDb');
 const votesDb = require('../startup/db/votes');
+let counter = require('../startup/db/voteCount');
 
 router.get('/questions', (req, res) => {
   res.status(200).send({
@@ -32,13 +33,29 @@ router.post('/questions', async (req, res) => {
 
 router.patch('/questions/:question_id/upvote', async (req, res) => {
   const specificQuestion = await db[req.params.question_id];
-  if (!specificQuestion) return res.status(400).send({ message: 'bad request' })
 
   const question = {
     meetupId: 1,
     title: specificQuestion.title,
     body: specificQuestion.body,
-    votes: votesDb.length + 1,
+    votes: counter += 1,
+  };
+
+  await votesDb.push(question);
+  return res.status(200).send({
+    status: 200,
+    data: [question],
+  });
+});
+
+router.patch('/questions/:question_id/downvote', async (req, res) => {
+  const specificQuestion = await db[req.params.question_id];
+
+  const question = {
+    meetupId: 1,
+    title: specificQuestion.title,
+    body: specificQuestion.body,
+    votes: counter -= 1,
   };
 
   await votesDb.push(question);

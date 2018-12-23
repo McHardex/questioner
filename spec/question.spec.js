@@ -78,28 +78,21 @@ describe('Question Api Exists', () => {
     });
   });
 
-  // describe('PATCH /questions/question-id/downvote', () => {
-  //   it('should return status code 200', (done) => {
-  //     request.patch(`${baseUrl}/1/downvote`, (error, response, body) => {
-  //       expect(response.statusCode).toBe(200);
-  //       done();
-  //     });
-  //   });
+  describe('PATCH /questions/question_id/downvote', () => {
+    it('should return status code 200', (done) => {
+      request.patch(`${baseUrl}/0/downvote`, (error, response, body) => {
+        expect(response.statusCode).toBe(200);
+        done();
+      });
+    });
 
-  //   it('should fail on patch', (done) => {
-  //     request.patch(`${baseUrl}/1/downvote`, { json: true, body: {} }, (error, response) => {
-  //       expect(response.statusCode).toEqual(404);
-  //       done();
-  //     });
-  //   });
-
-  //   it('API Response should be valid json', (done) => {
-  //     request.patch(`${baseUrl}/1/downvote`, (error, response, body) => {
-  //       expect(() => {
-  //         JSON.parse(body);
-  //       }).not.toThrow();
-  //       done();
-  //     });
-  //   });
-  // });
+    it('API Response should be valid json', (done) => {
+      request.patch(`${baseUrl}/0/downvote`, (error, response, body) => {
+        expect(() => {
+          JSON.parse(body);
+        }).not.toThrow();
+        done();
+      });
+    });
+  });
 });

@@ -24,23 +24,23 @@ describe('Meetups List Api Exists', () => {
   });
 
 
-  // describe('GET /meetups/upcoming', () => {
-  //   it('should return status code 200', (done) => {
-  //     request.get(`${baseUrl}/upcoming`, (error, response, body) => {
-  //       expect(response.statusCode).toBe(200);
-  //       done();
-  //     });
-  //   });
+  describe('GET /meetups/upcoming', () => {
+    it('should return status code 200', (done) => {
+      request.get(`${baseUrl}/upcoming`, (error, response, body) => {
+        expect(response.statusCode).toBe(200);
+        done();
+      });
+    });
 
-  //   it('API Response should be valid json', (done) => {
-  //     request.get(`${baseUrl}/upcoming`, (error, response, body) => {
-  //       expect(() => {
-  //         JSON.parse(body);
-  //       }).not.toThrow();
-  //       done();
-  //     });
-  //   });
-  // });
+    it('API Response should be valid json', (done) => {
+      request.get(`${baseUrl}/upcoming`, (error, response, body) => {
+        expect(() => {
+          JSON.parse(body);
+        }).not.toThrow();
+        done();
+      });
+    });
+  });
 
   describe('GET /meetups/meetup-id', () => {
     let id = 0;

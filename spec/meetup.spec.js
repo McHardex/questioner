@@ -4,23 +4,9 @@ const request = require('request');
 
 const baseUrl = 'http://localhost:3000/api/v1/meetups';
 
-// const Meetup = {
-//   status: '',
-//   data: [
-//     {
-//       id: 2,
-//       title: '',
-//       location: '',
-//       happeningOn: '',
-//       tags: [''],
-//     },
-//   ],
-// };
-
-
 describe('Meetups List Api Exists', () => {
   describe('GET /meetups', () => {
-    it('should return status code 200', (done) => {
+    it('should return status code 200 on successful fetching', (done) => {
       request.get(`${baseUrl}`, (error, response, body) => {
         expect(response.statusCode).toBe(200);
         done();
@@ -38,34 +24,43 @@ describe('Meetups List Api Exists', () => {
   });
 
 
-  describe('GET /meetups/upcoming', () => {
-    it('should return status code 200', (done) => {
-      request.get(`${baseUrl}/upcoming`, (error, response, body) => {
-        expect(response.statusCode).toBe(200);
-        done();
-      });
-    });
+  // describe('GET /meetups/upcoming', () => {
+  //   it('should return status code 200', (done) => {
+  //     request.get(`${baseUrl}/upcoming`, (error, response, body) => {
+  //       expect(response.statusCode).toBe(200);
+  //       done();
+  //     });
+  //   });
 
-    it('API Response should be valid json', (done) => {
-      request.get(`${baseUrl}/upcoming`, (error, response, body) => {
-        expect(() => {
-          JSON.parse(body);
-        }).not.toThrow();
-        done();
-      });
-    });
-  });
+  //   it('API Response should be valid json', (done) => {
+  //     request.get(`${baseUrl}/upcoming`, (error, response, body) => {
+  //       expect(() => {
+  //         JSON.parse(body);
+  //       }).not.toThrow();
+  //       done();
+  //     });
+  //   });
+  // });
 
   describe('GET /meetups/meetup-id', () => {
-    it('should return status code 200', (done) => {
-      request.get(`${baseUrl}/2`, (error, response, body) => {
+    let id = 0;
+    it('should return status code 200 on successful fetching', (done) => {
+      request.get(`${baseUrl}/${id}`, (error, response, body) => {
         expect(response.statusCode).toBe(200);
         done();
       });
     });
 
+    it('should return status code 400 for invalid id', (done) => {
+      id = 'aaa';
+      request.get(`${baseUrl}/${id}`, (error, response, body) => {
+        expect(response.statusCode).toBe(400);
+        done();
+      });
+    });
+
     it('API Response should be valid json', (done) => {
-      request.get(`${baseUrl}/2`, (error, response, body) => {
+      request.get(`${baseUrl}/${id}`, (error, response, body) => {
         expect(() => {
           JSON.parse(body);
         }).not.toThrow();
@@ -75,9 +70,23 @@ describe('Meetups List Api Exists', () => {
   });
 
   describe('POST /meetups', () => {
-    it('should return status code 200', (done) => {
-      request.post(baseUrl, (error, response, body) => {
-        expect(response.statusCode).toBe(200);
+    let params = null;
+
+    beforeEach(() =>{
+        params = {
+          url: baseUrl,
+          form: {
+            topic: 'js',
+            location: 'lagos',
+            happeningOn: new Date(),
+            tags: 'apple',
+          }
+        };
+    });
+
+    it('should return status code 201 on successful post', (done) => {
+      return request.post(params, (error, response, body) => {
+        expect(response.statusCode).toBe(201);
         done();
       });
     });
@@ -93,18 +102,18 @@ describe('Meetups List Api Exists', () => {
 
     it('should fail on POST', (done) => {
       request.post(baseUrl, { json: true, body: {} }, (error, response) => {
-        expect(response.statusCode).toEqual(404);
+        expect(response.statusCode).toEqual(400);
         done();
       });
     });
   });
 
-  describe('POST /meetups/meetup-id/rsvps', () => {
-    it('should respond to meetup RSVP', (done) => {
-      request.post(`${baseUrl}/1/rsvps`, { json: true, body: {} }, (error, response) => {
-        expect(response.statusCode).toEqual(404);
-        done();
-      });
-    });
-  });
+  // describe('POST /meetups/meetup-id/rsvps', () => {
+  //   it('should respond to meetup RSVP', (done) => {
+  //     request.post(`${baseUrl}/1/rsvps`, { json: true, body: {} }, (error, response) => {
+  //       expect(response.statusCode).toEqual(404);
+  //       done();
+  //     });
+  //   });
+  // });
 });

@@ -32,6 +32,7 @@ router.post('/questions', async (req, res) => {
 
 router.patch('/questions/:question_id/upvote', async (req, res) => {
   const specificQuestion = await db[req.params.question_id];
+  if (!specificQuestion) return res.status(400).send({ message: 'bad request' })
 
   const question = {
     meetupId: 1,

@@ -32,27 +32,10 @@ router.get('/meetups/:id', async (req, res) => {
 });
 
 router.post('/meetups', async (req, res) => {
-  if (!req.body.topic) {
-    res.status(400).send({
-      success: false,
-      message: 'topic is required',
-    });
-  } else if (!req.body.location) {
-    res.status(400).send({
-      success: false,
-      message: 'location is required',
-    });
-  } else if (!req.body.happeningOn) {
-    res.status(400).send({
-      success: false,
-      message: 'date happeningOn is required',
-    });
-  } else if (!req.body.tags) {
-    res.status(400).send({
-      success: false,
-      message: 'tags is required',
-    });
-  }
+  if (!req.body.topic) return res.status(400).send({ message: 'topic is required' });
+  if (!req.body.location) return res.status(400).send({ message: 'location is required' });
+  if (!req.body.happeningOn) return res.status(400).send({ message: 'date happeningOn is required' });
+  if (!req.body.tags) return res.status(400).send({ message: 'tags is required' });
 
   const meetup = {
     id: db.length,
@@ -63,7 +46,7 @@ router.post('/meetups', async (req, res) => {
   };
 
   await db.push(meetup);
-  res.status(201).send({
+  return res.status(201).send({
     status: 201,
     data: [meetup],
   });

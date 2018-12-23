@@ -4,22 +4,6 @@ const db = require('../startup/db');
 
 const router = express.Router();
 
-router.get('/meetups', (req, res) => {
-  res.status(200).send({
-    status: 200,
-    data: db,
-  });
-});
-
-router.get('/meetups/:id', (req, res) => {
-  const meetup = db[req.params.id];
-  if (!meetup) return res.status(400).send({ message: `Unable to fetch meetup with id of ${req.params.id}`});
-  res.status(200).send({
-    status: 200,
-    data: meetup,
-  });
-});
-
 router.post('/meetups', (req, res) => {
   if (!req.body.topic) {
     res.status(400).send({

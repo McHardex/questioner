@@ -10,5 +10,5 @@ module.exports = (app) => {
 
   app.use('/api/v1', meetup);
   app.use('/api/v1', rsvp);
-  app.use('/api/v1', question);
+  app.use('/api/v1/', question);
 };

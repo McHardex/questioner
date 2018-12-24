@@ -2,6 +2,8 @@
 
 const request = require('request');
 
+const server = require('../index');
+
 const baseUrl = 'http://localhost:3000/api/v1/meetups';
 
 describe('Meetups List Api Exists', () => {

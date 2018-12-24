@@ -1,3 +1,3 @@
-const rsvp = [];
+const rsvpDb = [];
 
-module.exports = rsvp;
+export default rsvpDb;

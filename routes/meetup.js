@@ -1,18 +1,17 @@
-const express = require('express');
-
-const db = require('../startup/db/meetupDb');
+import express from 'express';
+import db from '../startup/db/db';
 
 const router = express.Router();
 
 router.get('/meetups', (req, res) => {
   res.status(200).send({
     status: 200,
-    data: db,
+    data: db.meetupDb,
   });
 });
 
 router.get('/meetups/upcoming', async (req, res) => {
-  const newArray = await db.filter(result => result.happeningOn > Date.now());
+  const newArray = await db.meetupDb.filter(result => result.happeningOn > Date.now());
   if (newArray === undefined || newArray.length === 0) return res.status(400).send({ message: 'there is no upcoming meetups' });
 
   return res.status(200).send({
@@ -22,7 +21,7 @@ router.get('/meetups/upcoming', async (req, res) => {
 });
 
 router.get('/meetups/:id', async (req, res) => {
-  const meetup = await db[req.params.id];
+  const meetup = await db.meetupDb[req.params.id];
   if (!meetup) return res.status(400).send({ message: `Unable to fetch meetup with id of ${req.params.id}` });
 
   return res.status(200).send({
@@ -45,11 +44,11 @@ router.post('/meetups', async (req, res) => {
     tags: req.body.tags,
   };
 
-  await db.push(meetup);
+  await db.meetupDb.push(meetup);
   return res.status(201).send({
     status: 201,
     data: [meetup],
   });
 });
 
-module.exports = router;
+export default router;

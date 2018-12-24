@@ -1,7 +1,7 @@
-const bodyParser = require('body-parser');
-const meetup = require('../routes/meetup');
-const rsvp = require('../routes/rsvp');
-const question = require('../routes/question');
+import bodyParser from 'body-parser';
+import meetup from '../routes/meetup';
+import rsvp from '../routes/rsvp';
+import question from '../routes/question';
 
 module.exports = (app) => {
   // parse incoming requests data

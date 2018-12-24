@@ -1,6 +1,6 @@
 const today = new Date();
 
-const meetup = [
+const meetupDb = [
   {
     id: 0,
   },
@@ -8,9 +8,9 @@ const meetup = [
     id: 1,
     title: 'Javascript crash course',
     location: 'Lagos',
-    happeningOn: today.setHours(today.getHours() + 2000),
+    happeningOn: new Date(today.setHours(today.getHours() + 2000)),
     tags: ['javascript', 'programming', '2018'],
   },
 ];
 
-module.exports = meetup;
+export default meetupDb;

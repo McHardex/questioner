@@ -1,15 +1,12 @@
-const express = require('express');
+import express from 'express';
+import db from '../startup/db/db';
 
 const router = express.Router();
-
-const db = require('../startup/db/questionDb');
-const votesDb = require('../startup/db/votes');
-let counter = require('../startup/db/voteCount');
 
 router.get('/questions', (req, res) => {
   res.status(200).send({
     status: 200,
-    data: db,
+    data: db.questionDb,
   });
 });
 
@@ -20,11 +17,13 @@ router.post('/questions', async (req, res) => {
   const question = {
     userId: 1,
     meetupId: 1,
+    createdOn: new Date(),
     title: req.body.title,
     body: req.body.body,
+    votes: 0,
   };
 
-  await db.push(question);
+  await db.questionDb.push(question);
   return res.status(201).send({
     status: 201,
     data: [question],
@@ -32,16 +31,16 @@ router.post('/questions', async (req, res) => {
 });
 
 router.patch('/questions/:question_id/upvote', async (req, res) => {
-  const specificQuestion = await db[req.params.question_id];
+  const specificQuestion = await db.questionDb[req.params.question_id];
 
   const question = {
     meetupId: 1,
     title: specificQuestion.title,
     body: specificQuestion.body,
-    votes: counter += 1,
+    votes: specificQuestion.votes += 1,
   };
 
-  await votesDb.push(question);
+  await db.votesDb.push(question);
   return res.status(200).send({
     status: 200,
     data: [question],
@@ -49,20 +48,20 @@ router.patch('/questions/:question_id/upvote', async (req, res) => {
 });
 
 router.patch('/questions/:question_id/downvote', async (req, res) => {
-  const specificQuestion = await db[req.params.question_id];
+  const specificQuestion = await db.questionDb[req.params.question_id];
 
   const question = {
     meetupId: 1,
     title: specificQuestion.title,
     body: specificQuestion.body,
-    votes: counter -= 1,
+    votes: specificQuestion.votes -= 1,
   };
 
-  await votesDb.push(question);
+  await db.votesDb.push(question);
   return res.status(200).send({
     status: 200,
     data: [question],
   });
 });
 
-module.exports = router;
+export default router;

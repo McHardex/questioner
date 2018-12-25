@@ -69,6 +69,51 @@ describe('Meetups List Api Exists', () => {
         });
     });
 
+    it('should fail on POST with incomplete payload', (done) => {
+      params = {
+        topic: 'js',
+        location: 'lagos',
+        happeningOn: new Date(),
+      };
+      request(server)
+        .post('/api/v1/meetups')
+        .send(params)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          done();
+        });
+    });
+
+    it('should fail on POST with incomplete payload', (done) => {
+      params = {
+        topic: 'js',
+        tags: 'apple',
+        happeningOn: new Date(),
+      };
+      request(server)
+        .post('/api/v1/meetups')
+        .send(params)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          done();
+        });
+    });
+
+    it('should fail on POST with incomplete payload', (done) => {
+      params = {
+        topic: 'js',
+        tags: 'apple',
+        location: 'lagos',
+      };
+      request(server)
+        .post('/api/v1/meetups')
+        .send(params)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          done();
+        });
+    });
+
     it('should fail on POST with empty payload', (done) => {
       params = {};
       request(server)

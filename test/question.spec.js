@@ -34,6 +34,19 @@ describe('Question Api Exists', () => {
         });
     });
 
+    it('should return 400 with incomplete payload', (done) => {
+      params = {
+        title: 'new apple',
+      };
+      request(server)
+        .post('/api/v1/questions')
+        .send(params)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          done();
+        });
+    });
+
     it('should fail on POST with empty payload', (done) => {
       params = {};
       request(server)

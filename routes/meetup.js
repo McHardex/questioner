@@ -12,7 +12,7 @@ router.get('/meetups', (req, res) => {
 
 router.get('/meetups/upcoming', async (req, res) => {
   const newArray = await db.meetupDb.filter(result => result.happeningOn > Date.now());
-  if (newArray === undefined || newArray.length === 0) return res.status(400).send({ message: 'there is no upcoming meetups' });
+  if (newArray === undefined || newArray.length === 0) return res.status(400).send({ message: 'there are no upcoming meetups' });
 
   return res.status(200).send({
     status: 200,

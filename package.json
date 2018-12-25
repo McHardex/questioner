@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:@babel/register --require babel-polyfill --exit",
     "pretest": "eslint --ignore-path .gitignore .",
-    "start": "nodemon --exec babel-node index.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",

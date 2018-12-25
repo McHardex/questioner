@@ -38,7 +38,7 @@ describe('Question Api Exists', () => {
       params = {};
       request(server)
         .post('/api/v1/questions')
-        .send()
+        .send(params)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           done();

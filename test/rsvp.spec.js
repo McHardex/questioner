@@ -42,7 +42,7 @@ describe('RSVP List Api Exists', () => {
 
     it('should return 404 status with invalid meetupId', (done) => {
       request(server)
-        .post('/api/v1/meetups/1/rsvps')
+        .post('/api/v1/meetups/invalidId/rsvps')
         .send(payload)
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);

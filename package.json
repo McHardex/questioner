@@ -4,10 +4,10 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:@babel/register --require babel-polyfill --exit",
+    "test": "mocha --compilers js:babel-core/register ./test/**/*.spec.js --exit",
     "pretest": "eslint --ignore-path .gitignore .",
     "start": "nodemon --exec babel-node index.js",
-    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover _mocha test/*.spec.js --exit",
+    "coverage": "node_modules/.bin/nyc --require babel-core/register node_modules/.bin/mocha test/*.spec.js",
     "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
@@ -47,6 +47,8 @@
     "supertest": "^3.3.0"
   },
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-istanbul": "^0.12.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.4"
   }

@@ -6,7 +6,7 @@ const app = express();
 require('./startup/routes')(app);
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2000;
 const server = app.listen(port, () => {
   /* eslint-disable no-console */
   console.log(`questioner listening on port ${port}`);

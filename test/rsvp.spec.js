@@ -19,10 +19,9 @@ describe('RSVP List Api Exists', () => {
 
   describe('POST /meetups/:meetup-id/rsvps', () => {
     let payload = { status: 'yes' };
-    let meetupId = 1;
     it('should return status code 201 on successful post to endpoint', (done) => {
       request(server)
-        .post(`/api/v1/meetups/${meetupId}/rsvps`)
+        .post('/api/v1/meetups/1/rsvps')
         .send(payload)
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
@@ -33,7 +32,7 @@ describe('RSVP List Api Exists', () => {
     it('should return 400 status code when empty payload is passed', (done) => {
       payload = {};
       request(server)
-        .post(`/api/v1/meetups/${meetupId}/rsvps`)
+        .post('/api/v1/meetups/1/rsvps')
         .send(payload)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -42,9 +41,8 @@ describe('RSVP List Api Exists', () => {
     });
 
     it('should return 404 status with invalid meetupId', (done) => {
-      meetupId = 'aaaa';
       request(server)
-        .post(`/api/v1/meetups/${meetupId}/rsvps`)
+        .post('/api/v1/meetups/invalidId/rsvps')
         .send(payload)
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);

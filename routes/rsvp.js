@@ -12,7 +12,7 @@ router.get('/rsvps', (req, res) => {
 
 router.post('/meetups/:meetup_id/rsvps', async (req, res) => {
   const meetup = await db.meetupDb[req.params.meetup_id];
-  if (!meetup) return res.status(400).send({ message: 'meetup does not exist' });
+  if (!meetup) return res.status(404).send({ message: 'meetup does not exist' });
 
   if (!req.body.status) return res.status(400).send({ message: 'Please let us know if you will be coming' });
 

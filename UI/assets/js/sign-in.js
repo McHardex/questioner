@@ -1,4 +1,5 @@
-function redirect() {
-  console.log('click')
-  window.open('../UI/post.html')
-}
+const redirect = () => {
+  window.open('../UI/post.html');
+};
+
+module.exports = redirect;

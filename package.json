@@ -1,0 +1,39 @@
+{
+  "name": "questioner",
+  "version": "1.0.0",
+  "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "pretest": "eslint --ignore-path .gitignore .",
+    "start": "nodemon app.js --exec babel-node --presets babel-preset-env"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/McHardex/questioner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/McHardex/questioner/issues"
+  },
+  "homepage": "https://github.com/McHardex/questioner#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.11.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "jasmine": "^3.3.1",
+    "jasmine-ts-console-reporter": "^3.1.1",
+    "nodemon": "^1.18.9",
+    "request": "^2.88.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  }
+}

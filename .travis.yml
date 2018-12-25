@@ -1,5 +1,8 @@
 language: node_js
-node_js: 
-  - "stable"
-  script: npm test
-before_script: npm start
+node_js:
+ - "6.5.0"
+before_script:
+  - npm install
+script:
+  - npm start &
+  - npm test

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jasmine",
     "pretest": "eslint --ignore-path .gitignore .",
-    "start": "nodemon index.js --exec babel-node --presets babel-preset-env"
+    "start": "nodemon app.js --exec babel-node --presets babel-preset-env"
   },
   "repository": {
     "type": "git",

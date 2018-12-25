@@ -3,6 +3,3 @@ node_js:
  - "6.5.0"
 before_script:
   - npm install
-script:
-  - npm start &
-  - npm test

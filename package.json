@@ -7,7 +7,7 @@
     "test": "mocha --compilers js:@babel/register --require babel-polyfill --exit",
     "pretest": "eslint --ignore-path .gitignore .",
     "start": "nodemon --exec babel-node index.js",
-    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover _mocha index.js",
+    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover _mocha test/*.spec.js",
     "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
@@ -42,6 +42,7 @@
     "mocha": "^5.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.18.9",
+    "nyc": "^13.1.0",
     "request": "^2.88.0",
     "supertest": "^3.3.0"
   },

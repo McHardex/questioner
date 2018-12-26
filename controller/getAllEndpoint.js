@@ -1,4 +1,6 @@
-import * as db from '../startup/db/db';
+import db from '../startup/db/db';
+
+const { meetupDb, rsvpDb, questionDb } = db;
 
 class getAllEndpoints {
   /**
@@ -10,21 +12,21 @@ class getAllEndpoints {
   static getAllMeetups(req, res) {
     res.status(200).send({
       status: 200,
-      data: db.meetupDb,
+      data: meetupDb,
     });
   }
 
   static getAllRsvps(req, res) {
     res.status(200).send({
       status: 200,
-      data: db.rsvpDb,
+      data: rsvpDb,
     });
   }
 
   static getAllQuestions(req, res) {
     res.status(200).send({
       status: 200,
-      data: db.questionDb,
+      data: questionDb,
     });
   }
 }

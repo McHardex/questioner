@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
       createRsvp: 'POST /api/v1/meetups/:meetup_id/rsvps',
     },
   };
-  res.status(200).json(rootMessage);
+  res.status(200).send({ rootMessage });
 });
 
 export default router;

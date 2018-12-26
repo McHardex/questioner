@@ -13,8 +13,7 @@ ratings:
   paths:
   - "routes/*.js"
   - "routes/**/*.js"
-  - "routes/**/*.js"
-  - "./test/**/*.spec.js"
+  - "tests/**/*.js"
 exclude_paths:
 - node_modules/
 - startup/db/

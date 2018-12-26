@@ -1,14 +1,12 @@
+/* eslint-disable consistent-return */
+
 import express from 'express';
 import db from '../startup/db/db';
+import getEndpointControllers from '../controller/getAllEndpoint';
 
 const router = express.Router();
 
-router.get('/rsvps', (req, res) => {
-  res.status(200).send({
-    status: 200,
-    data: db.rsvpDb,
-  });
-});
+router.get('/rsvps', getEndpointControllers.getAllRsvps);
 
 router.post('/meetups/:meetup_id/rsvps', async (req, res) => {
   const meetup = await db.meetupDb[req.params.meetup_id];
@@ -23,7 +21,7 @@ router.post('/meetups/:meetup_id/rsvps', async (req, res) => {
   };
 
   await db.rsvpDb.push(rsvp);
-  return res.status(201).send({
+  res.status(201).send({
     status: 201,
     data: [rsvp],
   });

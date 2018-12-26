@@ -29,38 +29,8 @@ router.post('/questions', async (req, res) => {
   });
 });
 
-router.patch('/questions/:question_id/upvote', async (req, res) => {
-  const specificQuestion = await db.questionDb[req.params.question_id];
+router.patch('/questions/:question_id/upvote', getEndpointControllers.upvote);
 
-  const question = {
-    meetupId,
-    title: specificQuestion.title,
-    body: specificQuestion.body,
-    votes: specificQuestion.votes += 1,
-  };
-
-  await db.votesDb.push(question);
-  res.status(200).send({
-    status: 200,
-    data: [question],
-  });
-});
-
-router.patch('/questions/:question_id/downvote', async (req, res) => {
-  const specificQuestion = await db.questionDb[req.params.question_id];
-
-  const question = {
-    meetupId,
-    title: specificQuestion.title,
-    body: specificQuestion.body,
-    votes: specificQuestion.votes -= 1,
-  };
-
-  await db.votesDb.push(question);
-  res.status(200).send({
-    status: 200,
-    data: [question],
-  });
-});
+router.patch('/questions/:question_id/downvote', getEndpointControllers.downvote);
 
 export default router;

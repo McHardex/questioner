@@ -11,12 +11,10 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "server/*.js"
-  - "server/**/*.js"
-  - "server/tests/**/*.js"
+  - "routes/*.js"
+  - "routes/**/*.js"
+  - "routes/**/*.js"
 exclude_paths:
 - node_modules/
-- server/db/
+- startup/db/
 - UI/
-- client/
-- build/

@@ -9,7 +9,7 @@
     "start": "nodemon --exec babel-node index.js",
     "coverage": "nyc --require babel-core/register _mocha --exit test/*.spec.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
-    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info"
+    "codeclimate-report": "codeclimate-test-reporter < ./nyc_output"
   },
   "repository": {
     "type": "git",

@@ -1,20 +1,18 @@
+/* eslint-disable consistent-return */
+
 import express from 'express';
 import db from '../startup/db/db';
+import getEndpointControllers from '../controller/getAllEndpoint';
 
 const router = express.Router();
 
-router.get('/meetups', (req, res) => {
-  res.status(200).send({
-    status: 200,
-    data: db.meetupDb,
-  });
-});
+router.get('/meetups', getEndpointControllers.getAllMeetups);
 
 router.get('/meetups/upcoming', async (req, res) => {
   const newArray = await db.meetupDb.filter(result => result.happeningOn > Date.now());
   if (newArray === undefined || newArray.length === 0) return res.status(400).send({ message: 'there are no upcoming meetups' });
 
-  return res.status(200).send({
+  res.status(200).send({
     status: 200,
     data: newArray,
   });
@@ -24,7 +22,7 @@ router.get('/meetups/:id', async (req, res) => {
   const meetup = await db.meetupDb[req.params.id];
   if (!meetup) return res.status(400).send({ message: `Unable to fetch meetup with id of ${req.params.id}` });
 
-  return res.status(200).send({
+  res.status(200).send({
     status: 200,
     data: meetup,
   });
@@ -45,7 +43,7 @@ router.post('/meetups', async (req, res) => {
   };
 
   await db.meetupDb.push(meetup);
-  return res.status(201).send({
+  res.status(201).send({
     status: 201,
     data: [meetup],
   });

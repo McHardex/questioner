@@ -4,11 +4,12 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node index.js",
     "test": "nyc mocha --exit --compilers js:babel-core/register ./test/**/*.spec.js",
     "pretest": "eslint --ignore-path .gitignore .",
-    "start": "nodemon --exec babel-node index.js",
-    "coverage": "nyc --require babel-core/register _mocha --exit test/*.spec.js",
-    "report-coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register  _mocha --exit test/*.spec.js",
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "babel-preset-es2015": "^6.24.1",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
+    "codeclimate-test-reporter": "^0.5.1",
     "coveralls": "^3.0.2",
     "eslint": "^5.11.0",
     "eslint-config-airbnb-base": "^13.1.0",

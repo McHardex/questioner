@@ -7,9 +7,9 @@
     "test": "nyc mocha --exit --compilers js:babel-core/register ./test/**/*.spec.js",
     "pretest": "eslint --ignore-path .gitignore .",
     "start": "nodemon --exec babel-node index.js",
-    "coverage": "nyc --require babel-core/register _mocha --exit test/*.spec.js",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register  _mocha --exit test/*.spec.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
-    "codeclimate-report": "codeclimate-test-reporter < --reporter=text-lcov"
+    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov-report"
   },
   "repository": {
     "type": "git",

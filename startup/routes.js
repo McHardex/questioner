@@ -9,7 +9,7 @@ module.exports = (app) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  app.use('/', welcome);
+  app.use('/api/v1', welcome);
   app.use('/api/v1', meetup);
   app.use('/api/v1', rsvp);
   app.use('/api/v1/', question);

@@ -4,6 +4,7 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run build:prod",
     "start": "set NODE_ENV=production&& npm run prod-migrate && babel-node index.js",
     "start:dev": "node --watch server --exec babel-node index.js",
     "prod-migrate": "npm run db-migrate --env production",

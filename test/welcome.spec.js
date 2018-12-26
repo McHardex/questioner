@@ -9,7 +9,7 @@ describe('Welcome page Api Exists', () => {
   describe('GET /', () => {
     it('should return status code 200 on success', (done) => {
       request(server)
-        .get('/')
+        .get('/api/v1/welcome')
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           done();

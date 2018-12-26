@@ -4,7 +4,10 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
+    "start": "set NODE_ENV=production&& npm run prod-migrate && babel-node index.js",
+    "start:dev": "node --watch server --exec babel-node index.js",
+    "prod-migrate": "npm run db-migrate --env production",
+    "db-migrate": "babel-node ./startup/db/db.js",
     "test": "nyc mocha --exit --compilers js:babel-core/register ./test/**/*.spec.js",
     "pretest": "eslint --ignore-path .gitignore .",
     "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register  _mocha --exit test/*.spec.js",

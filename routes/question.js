@@ -3,6 +3,7 @@
 import express from 'express';
 import db from '../startup/db/db';
 import getEndpointControllers from '../controller/getAllEndpoint';
+import patch from '../controller/patchRequest';
 
 const router = express.Router();
 const meetupId = 1;
@@ -29,8 +30,8 @@ router.post('/questions', async (req, res) => {
   });
 });
 
-router.patch('/questions/:question_id/upvote', getEndpointControllers.upvote);
+router.patch('/questions/:question_id/upvote', patch.upvote);
 
-router.patch('/questions/:question_id/downvote', getEndpointControllers.downvote);
+router.patch('/questions/:question_id/downvote', patch.downvote);
 
 export default router;

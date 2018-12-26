@@ -5,7 +5,7 @@ import express from 'express';
 const router = express.Router();
 
 // Welcome message route
-router.get('/', (req, res) => {
+router.get('/welcome', (req, res) => {
   const rootMessage = {
     message: 'Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.',
     endpoints: {

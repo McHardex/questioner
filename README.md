@@ -33,10 +33,10 @@ The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuap
 
 ## Installation.
   * Install [Nodejs](https://nodejs.org/en/download/)
-  * Clone this repo ``` git clone https://github.com/d-beloved/WEconnect.git ```
+  * Clone this repo ``` https://github.com/McHardex/questioner.git ```
   * Run ```npm install``` to install the required dependencies
   * Run ```npm test``` to fireup the tests
-  * Navigate to http://localhost:3110/api/v1/
+  * Navigate to http://localhost:2000/api/v1/welcome
 
 ## Features of the template
 * Users can create meetup.

@@ -3,6 +3,10 @@ const today = new Date();
 const meetupDb = [
   {
     id: 0,
+    title: 'coders brings live',
+    location: 'Abuja',
+    happeningOn: new Date(today.setHours(today.getHours() + 2000)),
+    tags: ['codes', 'live'],
   },
   {
     id: 1,

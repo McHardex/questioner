@@ -21,8 +21,6 @@ The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuap
     * Nodejs for server-side logic
     * Babel for transpiling
     * Express for api routes implementation
-    * Heroku for hosting services
-    * PostgreSql for the App database
 
   ### Continuous Integration
     * Travis CI & Codeclimate for test automation

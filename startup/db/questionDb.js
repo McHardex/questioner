@@ -1,4 +1,4 @@
-const Db = [
+const questionDb = [
   {
     userId: 1,
     meetupId: 1,
@@ -9,4 +9,4 @@ const Db = [
   },
 ];
 
-export default Db;
+export default questionDb;

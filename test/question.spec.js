@@ -5,13 +5,14 @@ import { expect } from 'chai';
 
 import server from '../index';
 
-describe('Question Api Exists', () => {
+describe('Questions', () => {
   describe('GET /questions', () => {
     it('should return status code 200 on successful questions fetching', (done) => {
       request(server)
         .get('/api/v1/questions')
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          expect(res.body).to.be.an('object');
           done();
         });
     });
@@ -30,6 +31,7 @@ describe('Question Api Exists', () => {
         .send(params)
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
+          expect(res.body).to.be.an('object');
           done();
         });
     });
@@ -43,6 +45,8 @@ describe('Question Api Exists', () => {
         .send(params)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('body is required');
           done();
         });
     });
@@ -54,6 +58,8 @@ describe('Question Api Exists', () => {
         .send(params)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('title is required');
           done();
         });
     });
@@ -65,6 +71,18 @@ describe('Question Api Exists', () => {
         .patch('/api/v1/questions/0/upvote')
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          expect(res.body).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should return status code 422 with invalid id', (done) => {
+      request(server)
+        .patch('/api/v1/questions/aaa/upvote')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(422);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('no question with id of aaa found');
           done();
         });
     });
@@ -76,6 +94,18 @@ describe('Question Api Exists', () => {
         .patch('/api/v1/questions/0/downvote')
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          expect(res.body).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should return status code 422 with invalid id', (done) => {
+      request(server)
+        .patch('/api/v1/questions/aaa/downvote')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(422);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('no question with id of aaa found');
           done();
         });
     });

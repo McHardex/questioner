@@ -5,13 +5,14 @@ import { expect } from 'chai';
 
 import server from '../index';
 
-describe('RSVP List Api Exists', () => {
+describe('RSVPs', () => {
   describe('GET /rsvps', () => {
     it('should return status code 200 on successful fetching of all rsvps', (done) => {
       request(server)
         .get('/api/v1/rsvps')
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          expect(res.body).to.be.an('object');
           done();
         });
     });
@@ -25,6 +26,7 @@ describe('RSVP List Api Exists', () => {
         .send(payload)
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
+          expect(res.body).to.be.an('object');
           done();
         });
     });
@@ -36,6 +38,8 @@ describe('RSVP List Api Exists', () => {
         .send(payload)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('Please let us know if you will be coming');
           done();
         });
     });
@@ -46,6 +50,8 @@ describe('RSVP List Api Exists', () => {
         .send(payload)
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('meetup does not exist');
           done();
         });
     });

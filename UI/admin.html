@@ -8,13 +8,13 @@
   <link rel="stylesheet" type="text/css" href="./assets/stylesheets/admin.css">
 </head>
 <body>
-  <div class='cont'>
-    <Header>
+  <div class='admin-cont'>
+    <Header id='myHeader'>
       <a href='./post.html' >HOME</a>
       <a href='./profile.html' >PROFILE</a>
       <a href='./admin.html' >ADMIN</a>
     </Header>
-    <div class='admin-cnt'>
+    <div class='cont'>
       <h3 class='head-tit'>CREATE MEETUP</h3>
       <form>
         <div>
@@ -31,19 +31,21 @@
         </div>
         <button type='submit' class='submit-form'>SUBMIT</button>
       </form>
-    </div>
-    <section>
-      <h3 class='head-tit'>MEETUPS</h3>
-      <div id='que'>
-        <h4>What is the Abuja Internship program all about?</h4>
-        <p>Location: <span>Abuja</span></p>
-        <p>Happening on: <span>10/04/2019</span></p>
-        <div class='del-edit'>
-          <button class='del'>DELETE</button>
-          <button class='edit' onclick='toggle()'>EDIT</button>
+
+      <hr/>
+      
+      <section>
+        <h3 class='head-tit'>MEETUPS</h3>
+        <div id='que'>
+          <h4>What is the Abuja Internship program all about?</h4>
+          <p>Location: <span>Abuja</span></p>
+          <p>Happening on: <span>10/04/2019</span></p>
+          <div class='del-edit'>
+            <button class='del'>DELETE</button>
+            <button class='edit' onclick='toggle()'>EDIT</button>
+          </div>
         </div>
-      </div>
-      <form id='edit-form'>
+        <form id='edit-form'>
           <div>
             <input class='form-input' name='topic' type='text' placeholder='Title' value='What is the Abuja Internship program all about?'/>
           </div>
@@ -59,8 +61,10 @@
           <button type='submit' class='submit-form'>UPDATE</button>
           <button class='close-div' onclick='toggle()'>X</button>
         </form>
-    </section>
+      </section>
+    </div>
   </div>
-  <script language='javascript' src='../UI/assets/js/admin.js'></script>
+  <script language='javascript' src='./assets/js/admin.js'></script>
+  <script language='javascript' src='./assets/js/header.js'></script>
 </body>
 </html>

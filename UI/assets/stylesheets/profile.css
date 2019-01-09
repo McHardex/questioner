@@ -4,21 +4,27 @@ body {
 
 .prof-cont {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  height: 100vh;
 }
 
 header {
   display: flex;
-  position: fixed;
-  top: 0;
   width: 100%;
   justify-content: space-evenly;
   background: #000;
-  height: 10vh;
   align-items: center;
+  padding: 10px 0;
+  z-index: 2;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.sticky + .cont {
+  padding-top: 102px;
 }
 
 a {
@@ -32,38 +38,29 @@ a:hover {
 }
 
 .cont {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 70%;
-  align-items: baseline;
-  margin-top: 70px;
+  width: 80%;
+  padding: 16px;
+  margin: 0 auto;
 }
 
 .section1, .section2 {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.section2 {
-  margin-top: 30px;
-}
-
-.cont h1 {
+.section1 h1, .section2 h1 {
   font-size: 25px;
   color: #081144;
   font-family: monospace;
-  margin-bottom: 0;
+  text-align: center;
 }
 
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 90%;
-  margin-top: 30px;
+  width: 70%;
   color: #499c86;
+  margin: 0 auto;
+  border: 3px solid #eee;
 }
 
 td, th {
@@ -73,65 +70,48 @@ td, th {
 }
 
 th.lab {
-  color: #9E9E9E;
+  color: #4a4141;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
 }
 
 .feeds span {
   font-family: monospace;
   font-size: 16px;
   font-weight: bolder;
+  color: #000;
 }
 
 .feeds {
-  margin: 2px;
-  padding: 5px;
+  margin: 3px auto;
+  padding: 10px 10px;
+  background: #f0ffff29;
+  border-radius: 10px;
+  width: 90%;
+  border: 1px solid #eee;
+  line-height: 1.8;
 }
 
 .feeds h4 {
   margin-bottom: 0;
   color: #499c86;
   font-family: sans-serif;
-  font-weight: 100;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .feeds p {
   margin: 0;
-  color: #9E9E9E;
-  font-size: 14px;
+  color: #4a4141;
+  font-size: 16px;
   font-family: monospace;
-}
-
-.feeds span {
-  color: #000;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
   .cont {
-    display: flex;
-    flex-direction: column;
     width: 100%;
-  }
-
-  .feeds span {
-    font-size: 14px;
-  }
-
-  .section1, .section2 {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .section2 {
-    margin-top: 20px;
-  }
-
-  table {
-    width: 95%;
+    padding: 0;
   }
 }

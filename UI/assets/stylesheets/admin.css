@@ -3,23 +3,19 @@ body {
   height: 100vh;
 }
 
-.cont {
-  display: flex;
+.admin-cont {
   width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;
 }
 
 header {
   display: flex;
-  position: fixed;
-  top: 0;
   width: 100%;
   justify-content: space-evenly;
   background: #000;
-  height: 10vh;
   align-items: center;
+  padding: 10px 0;
+  z-index: 2;
 }
 
 a {
@@ -32,21 +28,25 @@ a:hover {
   color: #499c86;
 }
 
-.admin-cnt {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 70px;
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.sticky + .cont {
+  padding-top: 102px;
+}
+
+.cont {
+  width: 80%;
+  padding: 16px;
+  margin: 0 auto;
 }
 
 form {
   width: 100%;
   text-align: center;
-}
-
-div {
-  width: 100%;
 }
 
 input.form-input {
@@ -95,29 +95,36 @@ input.form-input.empty {
 }
 
 section {
-  margin-top: 20px;
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  width: 100%;
+  margin-top: 6%;
 }
 
 .head-tit {
   text-align: center;
   font-family: monospace;
   color: #000;
-  font-size: 18px;
+  font-size: 24px;
+}
+
+#que {
+  width: 90%;
+  margin: 2px auto;
+  line-height: 1.5;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #eee;
 }
 
 #que h4 {
   margin: 0;
+  font-size: 22px;
 }
 
 #que p {
   margin: 0;
   color: #9E9E9E;
-  font-size: 14px;
+  font-size: 16px;
   font-family: monospace;
 }
 
@@ -140,6 +147,7 @@ button.del {
   color: #fff;
   cursor: pointer;
   padding: 5px 12px;
+  font-size: 18px;
 }
 
 button.edit {
@@ -150,6 +158,7 @@ button.edit {
   color: #fff;
   cursor: pointer;
   padding: 5px 12px;
+  font-size: 18px;
 }
 
 button:hover {
@@ -160,6 +169,10 @@ button:hover {
 form#edit-form {
   display: none;
   position: relative;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #eee;
 }
 
 button.close-div {
@@ -180,11 +193,16 @@ button.close-div:hover {
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  input.form-input, .submit-form {
-    width: 80%;
+  .cont {
+    width: 100%;
+    padding: 0;
   }
 
-  .admin-cnt, section {
-    width: 100%;
+  button.del, button.edit {
+    font-size: 14px;
+  }
+
+  #que {
+    width: 95%;
   }
 }

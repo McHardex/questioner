@@ -15,7 +15,7 @@ header {
   display: flex;
   position: fixed;
   top: 0;
-  width: 70%;
+  width: 100%;
   justify-content: space-evenly;
   background: #000;
   height: 10vh;
@@ -180,10 +180,6 @@ button.close-div:hover {
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  header {
-    width: 100%;
-  }
-
   input.form-input, .submit-form {
     width: 80%;
   }

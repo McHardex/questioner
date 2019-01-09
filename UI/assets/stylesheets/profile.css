@@ -14,7 +14,7 @@ header {
   display: flex;
   position: fixed;
   top: 0;
-  width: 70%;
+  width: 100%;
   justify-content: space-evenly;
   background: #000;
   height: 10vh;
@@ -110,10 +110,6 @@ tr:nth-child(even) {
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  header {
-    width: 100%;
-  }
-
   .cont {
     display: flex;
     flex-direction: column;

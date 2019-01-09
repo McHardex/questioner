@@ -13,6 +13,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
           done();
         });
     });
@@ -26,6 +27,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
           done();
         });
     });
@@ -37,6 +39,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal(`Unable to fetch meetup with id of ${id}`);
           done();
         });
@@ -50,6 +53,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
           done();
         });
     });
@@ -71,6 +75,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
           done();
         });
     });
@@ -87,6 +92,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('tags is required');
           done();
         });
@@ -104,6 +110,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('location is required');
           done();
         });
@@ -121,6 +128,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('date happeningOn is required');
           done();
         });
@@ -134,6 +142,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('title is required');
           done();
         });
@@ -152,6 +161,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('title length must be greater than 5');
           done();
         });
@@ -170,6 +180,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('location length must be greater than 3');
           done();
         });
@@ -188,12 +199,13 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('tags length must be greater than 3');
           done();
         });
     });
 
-    it('should fail on POST with date input', (done) => {
+    it('should fail on POST with incorrect date input', (done) => {
       params = {
         title: 'javascript',
         location: 'los angeles',
@@ -206,6 +218,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('the date must be in this format: mm-dd-yyy');
           done();
         });

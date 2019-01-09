@@ -13,6 +13,7 @@ describe('RSVPs', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
           done();
         });
     });
@@ -27,6 +28,7 @@ describe('RSVPs', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
           done();
         });
     });
@@ -39,6 +41,7 @@ describe('RSVPs', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('Please let us know if you will be coming');
           done();
         });
@@ -51,6 +54,7 @@ describe('RSVPs', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);
           expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('meetup does not exist');
           done();
         });

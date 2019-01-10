@@ -34,6 +34,8 @@ describe('Questions', () => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data.title).to.equal('new apple');
+          expect(res.body.data.body).to.equal('apple');
           done();
         });
     });
@@ -76,7 +78,7 @@ describe('Questions', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.all.keys('meetupId', 'title', 'body', 'votes');
           done();
         });
     });
@@ -102,6 +104,7 @@ describe('Questions', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.all.keys('meetupId', 'title', 'body', 'votes');
           done();
         });
     });

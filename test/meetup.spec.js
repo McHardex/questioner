@@ -28,6 +28,10 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data.title).to.equal('coders brings live');
+          expect(res.body.data.location).to.equal('Abuja');
+          expect(res.body.data.happeningOn).to.equal('12-04-2016');
+          expect(res.body.data.tags).to.deep.equal(['codes', 'live']);
           done();
         });
     });
@@ -76,6 +80,10 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data.title).to.equal('javascript');
+          expect(res.body.data.location).to.equal('lagos');
+          expect(res.body.data.happeningOn).to.equal('23-12-2020');
+          expect(res.body.data.tags).to.deep.eql(['apple', 'coding', 'legend']);
           done();
         });
     });

@@ -29,6 +29,7 @@ describe('RSVPs', () => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data.status).to.equal('yes');
           done();
         });
     });

@@ -14,6 +14,7 @@ describe('Welcome', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.keys('message', 'endpoints');
           done();
         });
     });

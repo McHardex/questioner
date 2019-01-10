@@ -34,7 +34,7 @@ class RsvpController {
     await rsvpDb.push(rsvp);
     res.status(201).send({
       status: 201,
-      data: [rsvp],
+      data: rsvp,
     });
   }
 }

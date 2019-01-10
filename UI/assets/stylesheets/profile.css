@@ -43,6 +43,16 @@ a:hover {
   margin: 0 auto;
 }
 
+img.logout-icon {
+  width: 30px;
+  height: auto;
+}
+
+img.logout-icon:hover {
+  background: #4c4343;
+  border-radius: 50px;
+}
+
 .section1, .section2 {
   width: 100%;
 }

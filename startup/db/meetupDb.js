@@ -10,8 +10,8 @@ const meetupDb = [
     id: 1,
     title: 'Javascript crash course',
     location: 'Lagos',
-    happeningOn: '12-04-2019',
-    tags: ['javascript', 'programming', '2018'],
+    happeningOn: '12-04-2030',
+    tags: ['javascript', 'programming', '2030'],
   },
 ];
 

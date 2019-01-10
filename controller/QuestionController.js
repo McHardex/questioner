@@ -36,7 +36,7 @@ class QuestionController {
     await questionDb.push(question);
     res.status(201).send({
       status: 201,
-      data: [question],
+      data: question,
     });
   }
 
@@ -54,7 +54,7 @@ class QuestionController {
     await votesDb.push(question);
     res.status(200).send({
       status: 200,
-      data: [question],
+      data: question,
     });
   }
 
@@ -72,7 +72,7 @@ class QuestionController {
     await votesDb.push(question);
     res.status(200).send({
       status: 200,
-      data: [question],
+      data: question,
     });
   }
 }

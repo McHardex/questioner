@@ -50,7 +50,7 @@ class MeetupController {
     await meetupDb.push(meetup);
     res.status(201).send({
       status: 201,
-      data: [meetup],
+      data: meetup,
     });
   }
 }

@@ -14,6 +14,10 @@ describe('RSVPs', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data[0]).to.have.all.keys('meetup_id', 'topic', 'status');
+          expect(res.body.data[0].meetup_id).to.equal(2);
+          expect(res.body.data[0].topic).to.equal('bootcamp cycle-40');
+          expect(res.body.data[0].status).to.equal('yes');
           done();
         });
     });
@@ -30,6 +34,7 @@ describe('RSVPs', () => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
           expect(res.body.data.status).to.equal('yes');
+          expect(res.body.data).to.have.all.keys('meetup_id', 'topic', 'status');
           done();
         });
     });

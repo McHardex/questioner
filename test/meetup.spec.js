@@ -5,6 +5,14 @@ import { expect } from 'chai';
 
 import server from '../index';
 
+const meetup = {
+  id: 3,
+  title: 'testing outcome',
+  location: 'Lagos',
+  happeningOn: '21-12-2017',
+  tags: ['test', 'outcome'],
+};
+
 describe('Meetups', () => {
   describe('GET /meetups', () => {
     it('should return status code 200 on successful fetching of all meetups', (done) => {
@@ -14,6 +22,11 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data[0]).to.have.keys('id', 'title', 'location', 'happeningOn', 'tags');
+          expect(res.body.data[0].title).to.equal('coders brings live');
+          expect(res.body.data[0].location).to.equal('Abuja');
+          expect(res.body.data[0].happeningOn).to.equal('12-04-2016');
+          expect(res.body.data[0].tags).to.deep.equal(['codes', 'live']);
           done();
         });
     });
@@ -28,6 +41,7 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
           expect(res.body.data.title).to.equal('coders brings live');
           expect(res.body.data.location).to.equal('Abuja');
           expect(res.body.data.happeningOn).to.equal('12-04-2016');
@@ -58,6 +72,7 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
+          expect(res.body.data[0]).to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
           done();
         });
     });
@@ -68,7 +83,7 @@ describe('Meetups', () => {
 
     it('should return status code 201 on successful post', (done) => {
       params = {
-        title: 'javascript',
+        title: 'Binary trading',
         location: 'lagos',
         happeningOn: '23-12-2020',
         tags: ['apple', 'coding', 'legend'],
@@ -80,7 +95,8 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
-          expect(res.body.data.title).to.equal('javascript');
+          expect(res.body.data).to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
+          expect(res.body.data.title).to.equal('Binary trading');
           expect(res.body.data.location).to.equal('lagos');
           expect(res.body.data.happeningOn).to.equal('23-12-2020');
           expect(res.body.data.tags).to.deep.eql(['apple', 'coding', 'legend']);
@@ -90,7 +106,7 @@ describe('Meetups', () => {
 
     it('should fail on POST with incomplete payload', (done) => {
       params = {
-        title: 'javascript',
+        title: 'Progress Party',
         location: 'lagos',
         happeningOn: '22-04-2020',
       };
@@ -106,9 +122,28 @@ describe('Meetups', () => {
         });
     });
 
+    it('should return 409 status code if meetup already exists', (done) => {
+      params = {
+        title: 'coders brings live',
+        location: 'lagos',
+        happeningOn: '22-04-2020',
+        tags: ['coders', 'everyday', 'live'],
+      };
+      request(server)
+        .post('/api/v1/meetups')
+        .send(params)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(409);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal('A meetup with this title already exists. Please input another title');
+          done();
+        });
+    });
+
     it('should fail on POST with incomplete payload', (done) => {
       params = {
-        title: 'javascript',
+        title: 'Bootcamp',
         tags: 'apple',
         happeningOn: '23-12-2019',
       };
@@ -177,7 +212,7 @@ describe('Meetups', () => {
 
     it('should fail on POST with location length less than 3', (done) => {
       params = {
-        title: 'javascript',
+        title: 'community shield',
         location: 'la',
         happeningOn: '22-04-2020',
         tags: 'apple',
@@ -196,7 +231,7 @@ describe('Meetups', () => {
 
     it('should fail on POST with tag length less than 3', (done) => {
       params = {
-        title: 'javascript',
+        title: 'Accountability',
         location: 'los angeles',
         happeningOn: '22-04-2020',
         tags: 'ap',
@@ -208,14 +243,14 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('tags length must be greater than 3');
+          expect(res.body.message).to.equal('Please add a minimum of three(3) tags');
           done();
         });
     });
 
     it('should fail on POST with incorrect date input', (done) => {
       params = {
-        title: 'javascript',
+        title: 'The green initiatives',
         location: 'los angeles',
         happeningOn: '2222-040-2020',
         tags: 'apple',

@@ -19,8 +19,7 @@ class MeetupController {
   }
 
   static async upcomingMeetups(req, res) {
-    const newArray = await meetupDb.filter(result => new Date(result.happeningOn.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')) > Date.now());
-    if (newArray === undefined || newArray.length === 0) return res.status(404).send({ message: 'there are no upcoming meetups' });
+    const newArray = meetupDb.filter(result => new Date(result.happeningOn.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')) > Date.now());
 
     res.status(200).send({
       status: 200,
@@ -29,12 +28,11 @@ class MeetupController {
   }
 
   static async getSpecificMeetupRecord(req, res) {
-    const meetup = await meetupDb[req.params.id];
-    if (!meetup) return res.status(400).send({ message: `Unable to fetch meetup with id of ${req.params.id}` });
+    const meetup = meetupDb[req.params.id];
 
     res.status(200).send({
       status: 200,
-      data: meetup,
+      data: [meetup],
     });
   }
 
@@ -50,7 +48,7 @@ class MeetupController {
     await meetupDb.push(meetup);
     res.status(201).send({
       status: 201,
-      data: meetup,
+      data: [meetup],
     });
   }
 }

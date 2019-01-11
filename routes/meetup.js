@@ -1,17 +1,17 @@
-import express from 'express';
+// import express from 'express';
 
-import MeetupController from '../controller/MeetupController';
+// import MeetupController from '../controller/MeetupController';
 
-import validateCreateMeetup from '../validations/createMeetup';
+// import * as validate from '../middlewares/validations/meetupValidations';
 
-const router = express.Router();
+// const router = express.Router();
 
-router.get('/meetups', MeetupController.getAllMeetups);
+// router.get('/meetups', MeetupController.getAllMeetups);
 
-router.get('/meetups/upcoming', MeetupController.upcomingMeetups);
+// router.get('/meetups/upcoming', validate.upcomingMeetups, MeetupController.upcomingMeetups);
 
-router.get('/meetups/:id', MeetupController.getSpecificMeetupRecord);
+// router.get('/meetups/:id', validate.specificMeetup, MeetupController.getSpecificMeetupRecord);
 
-router.post('/meetups', validateCreateMeetup, MeetupController.createMeetup);
+// router.post('/meetups', validate.createMeetup, MeetupController.createMeetup);
 
-export default router;
+// export default router;

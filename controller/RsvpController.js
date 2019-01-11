@@ -20,10 +20,7 @@ class RsvpController {
   }
 
   static async createRsvp(req, res) {
-    const meetup = await meetupDb[req.params.meetup_id];
-    if (!meetup) return res.status(404).send({ message: 'meetup does not exist' });
-
-    if (!req.body.status) return res.status(400).send({ message: 'Please let us know if you will be coming' });
+    const meetup = meetupDb[req.params.meetup_id];
 
     const rsvp = {
       meetup_id: req.params.meetup_id,
@@ -34,7 +31,7 @@ class RsvpController {
     await rsvpDb.push(rsvp);
     res.status(201).send({
       status: 201,
-      data: rsvp,
+      data: [rsvp],
     });
   }
 }

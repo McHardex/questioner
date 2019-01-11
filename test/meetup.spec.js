@@ -5,14 +5,6 @@ import { expect } from 'chai';
 
 import server from '../index';
 
-const meetup = {
-  id: 3,
-  title: 'testing outcome',
-  location: 'Lagos',
-  happeningOn: '21-12-2017',
-  tags: ['test', 'outcome'],
-};
-
 describe('Meetups', () => {
   describe('GET /meetups', () => {
     it('should return status code 200 on successful fetching of all meetups', (done) => {
@@ -22,7 +14,8 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
-          expect(res.body.data[0]).to.have.keys('id', 'title', 'location', 'happeningOn', 'tags');
+          expect(res.body.data[0])
+            .to.have.keys('id', 'title', 'location', 'happeningOn', 'tags');
           expect(res.body.data[0].title).to.equal('coders brings live');
           expect(res.body.data[0].location).to.equal('Abuja');
           expect(res.body.data[0].happeningOn).to.equal('12-04-2016');
@@ -41,11 +34,12 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
-          expect(res.body.data).to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
-          expect(res.body.data.title).to.equal('coders brings live');
-          expect(res.body.data.location).to.equal('Abuja');
-          expect(res.body.data.happeningOn).to.equal('12-04-2016');
-          expect(res.body.data.tags).to.deep.equal(['codes', 'live']);
+          expect(res.body.data[0])
+            .to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
+          expect(res.body.data[0].title).to.equal('coders brings live');
+          expect(res.body.data[0].location).to.equal('Abuja');
+          expect(res.body.data[0].happeningOn).to.equal('12-04-2016');
+          expect(res.body.data[0].tags).to.deep.equal(['codes', 'live']);
           done();
         });
     });
@@ -57,8 +51,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal(`Unable to fetch meetup with id of ${id}`);
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(`Unable to fetch meetup with id of ${id}`);
           done();
         });
     });
@@ -72,7 +66,8 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
-          expect(res.body.data[0]).to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
+          expect(res.body.data[0])
+            .to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
           done();
         });
     });
@@ -95,11 +90,12 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
-          expect(res.body.data).to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
-          expect(res.body.data.title).to.equal('Binary trading');
-          expect(res.body.data.location).to.equal('lagos');
-          expect(res.body.data.happeningOn).to.equal('23-12-2020');
-          expect(res.body.data.tags).to.deep.eql(['apple', 'coding', 'legend']);
+          expect(res.body.data[0])
+            .to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
+          expect(res.body.data[0].title).to.equal('Binary trading');
+          expect(res.body.data[0].location).to.equal('lagos');
+          expect(res.body.data[0].happeningOn).to.equal('23-12-2020');
+          expect(res.body.data[0].tags).to.deep.eql(['apple', 'coding', 'legend']);
           done();
         });
     });
@@ -116,8 +112,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('tags is required');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('tags is required');
           done();
         });
     });
@@ -135,8 +131,9 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(409);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('A meetup with this title already exists. Please input another title');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error)
+            .to.equal('A meetup with this title already exists. Please input another title');
           done();
         });
     });
@@ -153,8 +150,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('location is required');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('location is required');
           done();
         });
     });
@@ -171,8 +168,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('date happeningOn is required');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('date is required');
           done();
         });
     });
@@ -185,8 +182,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('title is required');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('title is required');
           done();
         });
     });
@@ -204,8 +201,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('title length must be greater than 5');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('title length must be greater than 5');
           done();
         });
     });
@@ -223,8 +220,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('location length must be greater than 3');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('location length must be greater than 3');
           done();
         });
     });
@@ -242,8 +239,8 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('Please add a minimum of three(3) tags');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('Please add a minimum of three(3) tags');
           done();
         });
     });
@@ -261,8 +258,9 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('the date must be in this format: mm-dd-yyy');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error)
+            .to.equal('happeningOn date must be in this format: mm-dd-yyy or mm/dd/yy');
           done();
         });
     });

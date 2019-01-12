@@ -11,6 +11,7 @@ import * as validate from '../middlewares/validations/meetupValidations';
 import * as validation from '../middlewares/validations/questionValidations';
 import createRsvpValidation from '../middlewares/validations/rsvpValidations';
 import signupValidation from '../middlewares/validations/signupValidation';
+import loginValidation from '../middlewares/validations/loginValidation';
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/welcome', WelcomeController.welcome);
 router.post('/auth/signup', signupValidation, UserController.signUp);
 
 // login to account
-router.post('/auth/login', UserController.login);
+router.post('/auth/login', loginValidation, UserController.login);
 
 // Meetup endpoints
 router.get('/meetups', MeetupController.getAllMeetups);

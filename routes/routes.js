@@ -1,9 +1,10 @@
 import express from 'express';
 
-import MeetupController from '../controller/MeetupController';
-import QuestionController from '../controller/QuestionController';
-import RsvpController from '../controller/RsvpController';
-import WelcomeController from '../controller/WelcomeController';
+import MeetupController from '../controllers/MeetupController';
+import QuestionController from '../controllers/QuestionController';
+import RsvpController from '../controllers/RsvpController';
+import WelcomeController from '../controllers/WelcomeController';
+import UserController from '../controllers/userController';
 
 // validations
 import * as validate from '../middlewares/validations/meetupValidations';
@@ -14,6 +15,12 @@ const router = express.Router();
 
 // Welcome endpoint
 router.get('/welcome', WelcomeController.welcome);
+
+// create user account
+router.post('/auth/signup', UserController.signUp);
+
+// login to account
+router.post('/auth/login', UserController.login);
 
 // Meetup endpoints
 router.get('/meetups', MeetupController.getAllMeetups);

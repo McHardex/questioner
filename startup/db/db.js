@@ -16,7 +16,7 @@ pool.on('connect', () => {
 pool.query(`${userDb}`)
   .then((res) => {
     /* eslint-disable no-console */
-    console.log(res);
+    console.log('schmas ready', res);
   })
   .catch((err) => {
     /* eslint-disable no-console */

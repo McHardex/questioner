@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
 
-import db from '../startup/db/db';
+import meetupDb from '../models/meetupDb';
 
-const { rsvpDb, meetupDb } = db;
+import rsvpDb from '../models/rsvpDb';
 
 class RsvpController {
   /**

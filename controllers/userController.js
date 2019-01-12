@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import Helper from './Helper';
+import Helper from './Helpers';
 
 require('dotenv').config();
 
@@ -16,51 +16,38 @@ class UserController {
   */
 
   static signUp(req, res) {
-    if (!req.body.password || !req.body.email) {
-      res.status(400).send({
-        status: 400,
-        error: 'Some values are missing',
-      });
-    }
-    if (!Helper.isValidEmail(req.body.email)) {
-      res.status(400).send({
-        status: 400,
-        error: 'Please enter a valid email address',
-      });
-    }
-
     const hashPassword = Helper.hashPassword(req.body.password);
 
-    const {
-      firstname,
-      lastname,
-      othername,
-      email,
-      phoneNumber,
-      username,
-    } = req.body;
+    const query = `INSERT INTO
+      users (firstname, lastname, othername, username, phoneNumber, email, password, isAdmin)
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      returning *`;
+    const values = [
+      req.body.firstname,
+      req.body.lastname,
+      req.body.othername,
+      req.body.username,
+      req.body.phoneNumber,
+      req.body.email,
+      hashPassword,
+      req.body.isAdmin,
+    ];
 
-    pool.query(`INSERT INTO users
-    (firstname, lastname, othername, email, phoneNumber, username, password)
-    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-    [firstname, lastname, othername, email, phoneNumber, username, hashPassword],
-    (error, results) => {
-      if (error.routine === '_bt_check_unique') {
-        res.status(400).send({
-          status: 400,
+    pool.query(query, values, (error, results) => {
+      if (error) {
+        return res.status(409).send({
+          status: 409,
           error: 'User with that email already exists',
         });
       }
 
-      const createdUser = results.rows[0];
-      const token = Helper.generateToken(createdUser.id);
-
-      res.status(201).send({
+      const token = Helper.generateToken(results.rows[0].id);
+      return res.status(201).send({
         status: 201,
-        data: [{
+        data: {
           token,
-          user: createdUser,
-        }],
+          user: results.rows[0],
+        },
       });
     });
   }
@@ -76,14 +63,7 @@ class UserController {
     if (!req.body.password || !req.body.email) {
       res.status(400).send({
         status: 400,
-        error: 'Some values are missing',
-      });
-    }
-
-    if (req.body.password.trim().length < 5) {
-      res.status(400).send({
-        status: 400,
-        error: 'Password must be greater than 5',
+        error: 'Please ensure to fill all input field',
       });
     }
 
@@ -94,27 +74,28 @@ class UserController {
       });
     }
 
-    pool.query('SELECT * FROM users WHERE email = $1', (error, results) => {
-      if (!results.rows) {
-        res.status(400).send({
+    pool.query('SELECT * FROM users WHERE email = $1', [req.body.email], (error, results) => {
+      if (!results.rows[0]) {
+        return res.status(400).send({
           status: 400,
-          error: 'The credentials you provided is incorrect',
+          error: 'No such user in our database, check your credentials',
         });
       }
 
-      if (!Helper.comparePassword(results.rows.password, req.body.password)) {
-        res.status(400).send({
+      if (!Helper.comparePassword(results.rows[0].password, req.body.password)
+      || req.body.password.trim().length < 5) {
+        return res.status(400).send({
           status: 400,
           error: 'Incorrect password',
         });
       }
 
-      const token = Helper.generateToken(results.rows.id);
+      const token = Helper.generateToken(results.rows[0].id);
       return res.status(200).send({
         status: 200,
         data: [{
           token,
-          user: results.row,
+          user: results.rows[0],
         }],
       });
     });

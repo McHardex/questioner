@@ -10,6 +10,7 @@ import UserController from '../controllers/userController';
 import * as validate from '../middlewares/validations/meetupValidations';
 import * as validation from '../middlewares/validations/questionValidations';
 import createRsvpValidation from '../middlewares/validations/rsvpValidations';
+import signupValidation from '../middlewares/validations/signupValidation';
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ const router = express.Router();
 router.get('/welcome', WelcomeController.welcome);
 
 // create user account
-router.post('/auth/signup', UserController.signUp);
+router.post('/auth/signup', signupValidation, UserController.signUp);
 
 // login to account
 router.post('/auth/login', UserController.login);

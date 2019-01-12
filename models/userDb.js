@@ -1,11 +1,11 @@
 const userDB = `
   DROP TABLE IF EXISTS users CASCADE;
   CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     othername VARCHAR(255) NOT NULL,
-    username VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     phoneNumber BIGINT NOT NULL,
     registered TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

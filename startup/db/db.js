@@ -1,4 +1,6 @@
-import { Pool } from 'pg';
+/* eslint-disable no-unused-vars */
+
+import pg from 'pg';
 
 import userDb from '../../models/userDb';
 
@@ -6,20 +8,17 @@ require('dotenv').config();
 
 const connectionString = process.env.DB_URL;
 
-const pool = new Pool(connectionString);
-
-pool.on('connect', () => {
-  /* eslint-disable no-console */
-  console.log(`connected to ${connectionString}`);
+const client = new pg.Client(connectionString);
+client.connect((err) => {
+  if (err) {
+    /* eslint-disable no-console */
+    console.error('error connecting', err.stack);
+  } else {
+    /* eslint-disable no-console */
+    console.log(`connected to ${connectionString}`);
+  }
 });
 
-pool.query(`${userDb}`)
-  .then((res) => {
-    /* eslint-disable no-console */
-    console.log('schmas ready', res);
-  })
-  .catch((err) => {
-    /* eslint-disable no-console */
-    console.log(err);
-    pool.end();
-  });
+client.query(userDb, (err, res) => {
+  client.end();
+});

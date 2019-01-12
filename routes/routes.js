@@ -1,10 +1,10 @@
 import express from 'express';
 
-import MeetupController from '../controller/MeetupController';
-import QuestionController from '../controller/QuestionController';
-import RsvpController from '../controller/RsvpController';
-import WelcomeController from '../controller/WelcomeController';
-import UserController from '../controller/userController';
+import MeetupController from '../controllers/MeetupController';
+import QuestionController from '../controllers/QuestionController';
+import RsvpController from '../controllers/RsvpController';
+import WelcomeController from '../controllers/WelcomeController';
+import UserController from '../controllers/userController';
 
 // validations
 import * as validate from '../middlewares/validations/meetupValidations';

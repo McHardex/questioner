@@ -12,7 +12,7 @@ class Helper {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   }
 
- /**
+  /**
   * @description - compares password
   * @param {string} - password
   * @returns {Boolean} - returns true or false
@@ -39,11 +39,8 @@ class Helper {
    */
 
   static generateToken(id) {
-    const token = jwt.sign({
-      userId: id
-    },
-      process.env.SECRET, { expiresIn: '2h' }
-    );
+    const token = jwt.sign({ userId: id },
+      process.env.SECRET, { expiresIn: '2h' });
     return token;
   }
 }

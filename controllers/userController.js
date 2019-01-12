@@ -60,20 +60,6 @@ class UserController {
    */
 
   static login(req, res) {
-    if (!req.body.password || !req.body.email) {
-      res.status(400).send({
-        status: 400,
-        error: 'Please ensure to fill all input field',
-      });
-    }
-
-    if (!Helper.isValidEmail(req.body.email)) {
-      res.status(400).send({
-        status: 400,
-        error: 'Please enter a valid email address',
-      });
-    }
-
     pool.query('SELECT * FROM users WHERE email = $1', [req.body.email], (error, results) => {
       if (!results.rows[0]) {
         return res.status(400).send({

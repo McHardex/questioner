@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 
 require('./startup/routes')(app);
+require('./startup/db/db');
 
 const port = process.env.PORT || 2000;
 const server = app.listen(port, () => {

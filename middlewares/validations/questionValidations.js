@@ -1,8 +1,6 @@
 /* eslint-disable consistent-return */
 
-import db from '../../startup/db/db';
-
-const { questionDb } = db;
+import questionDb from '../../models/questionDb';
 
 export function createQuestion(req, res, next) {
   if (!req.body.title) return res.status(400).send({ status: 400, error: 'title is required' });

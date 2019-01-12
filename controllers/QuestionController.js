@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
 
-import db from '../startup/db/db';
+import questionDb from '../models/questionDb';
 
-const { questionDb, votesDb } = db;
+import votesDb from '../models/votesDb';
 
 const meetupId = 1;
 

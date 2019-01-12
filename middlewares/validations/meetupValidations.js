@@ -1,8 +1,6 @@
 /* eslint-disable consistent-return */
 
-import db from '../../startup/db/db';
-
-const { meetupDb } = db;
+import meetupDb from '../../models/meetupDb';
 
 const isValidDate = (dateString) => {
   const regEx = /^\d{2}[-/]\d{2}[-/]\d{4}$/;

@@ -4,7 +4,11 @@ import questionDb from '../models/questionDb';
 
 import votesDb from '../models/votesDb';
 
-const meetupId = 1;
+require('dotenv').config();
+
+const { Pool } = require('pg');
+
+const pool = new Pool({ connectionString: process.env.DB_URL });
 
 class QuestionController {
   /**
@@ -14,27 +18,41 @@ class QuestionController {
    * @return{json}
   */
   static getAllQuestions(req, res) {
-    res.status(200).send({
-      status: 200,
-      data: questionDb,
+    pool.query('SELECT * FROM questions ORDER by id ASC', (error, results) => {
+      if (error) throw error;
+      return res.status(200).send({
+        status: 200,
+        data: results.rows,
+      });
     });
   }
 
   static async createQuestion(req, res) {
-    const question = {
-      userId: 1,
-      meetupId,
-      createdOn: new Date(),
-      title: req.body.title,
-      body: req.body.body,
-      votes: 0,
-    };
+    pool.query('SELECT * FROM meetups WHERE id = $1',
+      [req.body.meetup_id],
+      (error, results) => {
+        if (results.rows === undefined || results.rows.length === 0) {
+          return res.status(404).send({
+            status: 404,
+            error: 'meetup does not exist',
+          });
+        }
 
-    await questionDb.push(question);
-    res.status(201).send({
-      status: 201,
-      data: [question],
-    });
+        pool.query('INSERT INTO questions (title, body, meetup_id) VALUES ($1, $2, $3) RETURNING *',
+          [req.body.title, req.body.body, req.body.meetup_id],
+          (err, response) => {
+            if (err) throw err;
+            return res.status(201).send({
+              status: 201,
+              data: [{
+                createdBy: req.user.id,
+                meetup_id: results.rows[0].id,
+                title: response.rows[0].title,
+                body: response.rows[0].body,
+              }],
+            });
+          });
+      });
   }
 
   static async upvoteQuestion(req, res) {

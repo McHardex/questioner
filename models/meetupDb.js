@@ -1,18 +1,13 @@
-const meetupDb = [
-  {
-    id: 0,
-    title: 'coders brings live',
-    location: 'Abuja',
-    happeningOn: '12-04-2016',
-    tags: ['codes', 'live'],
-  },
-  {
-    id: 1,
-    title: 'Javascript crash course',
-    location: 'Lagos',
-    happeningOn: '12-04-2030',
-    tags: ['javascript', 'programming', '2030'],
-  },
-];
+const meetupDb = `
+  DROP TABLE IF EXISTS meetups CASCADE;
+  CREATE TABLE meetups (
+    id SERIAL PRIMARY KEY,
+    createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    location VARCHAR(255) NOT NULL,
+    topic VARCHAR(255) UNIQUE NOT NULL,
+    happeningOn TIMESTAMPTZ NOT NULL,
+    Tags TEXT []
+  );
+`;
 
 export default meetupDb;

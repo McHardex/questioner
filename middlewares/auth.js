@@ -1,22 +1,29 @@
 /* eslint-disable consistent-return */
-
 import jwt from 'jsonwebtoken';
-import db from '../startup/db/db';
+
+require('dotenv').config();
+
+const { Pool } = require('pg');
+
+const pool = new Pool({ connectionString: process.env.DB_URL });
 
 function auth(req, res, next) {
-  const token = req.headers['x-access-token'];
+  const token = req.headers['x-auth-token'];
   if (!token) return res.status(400).send({ status: 400, error: 'No Token provided' });
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET);
     const text = 'SELECT * from users WHERE id = $1';
-    const { rows } = db.query(text, [decoded.userId]);
-    if (!rows[0]) return res.status(400).send({ status: 400, error: 'The token you provided is invalid' });
 
-    req.user = { id: decoded.userId };
+    pool.query(text, [decoded.userID]);
+
+    req.user = { id: decoded.userID };
     next();
   } catch (error) {
-    return res.status(400).send({ status: 400, error });
+    return res.status(400).send({
+      status: 400,
+      error: 'The token you provided is invalid',
+    });
   }
 }
 

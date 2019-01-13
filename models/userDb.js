@@ -11,6 +11,7 @@ const userDB = `
     registered TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     isAdmin BOOLEAN,
     password VARCHAR(255) NOT NULL
-  )`;
+  );
+`;
 
 export default userDB;

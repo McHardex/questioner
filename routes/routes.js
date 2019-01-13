@@ -1,10 +1,13 @@
 import express from 'express';
 
+import auth from '../middlewares/auth';
+
 import MeetupController from '../controllers/MeetupController';
 import QuestionController from '../controllers/QuestionController';
 import RsvpController from '../controllers/RsvpController';
 import WelcomeController from '../controllers/WelcomeController';
 import UserController from '../controllers/userController';
+import CommentController from '../controllers/CommentController';
 
 // validations
 import * as validate from '../middlewares/validations/meetupValidations';
@@ -12,6 +15,7 @@ import * as validation from '../middlewares/validations/questionValidations';
 import createRsvpValidation from '../middlewares/validations/rsvpValidations';
 import signupValidation from '../middlewares/validations/signupValidation';
 import loginValidation from '../middlewares/validations/loginValidation';
+import commentValid from '../middlewares/validations/commentValidation';
 
 const router = express.Router();
 
@@ -26,18 +30,19 @@ router.post('/auth/login', loginValidation, UserController.login);
 
 // Meetup endpoints
 router.get('/meetups', MeetupController.getAllMeetups);
-router.get('/meetups/upcoming', validate.upcomingMeetups, MeetupController.upcomingMeetups);
+router.get('/meetups/upcoming', MeetupController.upcomingMeetups);
 router.get('/meetups/:id', validate.specificMeetup, MeetupController.getSpecificMeetupRecord);
-router.post('/meetups', validate.createMeetup, MeetupController.createMeetup);
+router.post('/meetups', auth, validate.createMeetup, MeetupController.createMeetup);
 
 // Question endpoints
 router.get('/questions', QuestionController.getAllQuestions);
-router.post('/questions', validation.createQuestion,
+router.post('/questions', auth, validation.createQuestion,
   QuestionController.createQuestion);
-router.patch('/questions/:question_id/upvote', validation.upvoteQuestion,
+router.patch('/questions/:question_id/upvote', auth, validation.upvoteQuestion,
   QuestionController.upvoteQuestion);
-router.patch('/questions/:question_id/downvote', validation.downvoteQuestion,
+router.patch('/questions/:question_id/downvote', auth, validation.downvoteQuestion,
   QuestionController.downvoteQuestion);
+router.post('/comments', auth, commentValid, CommentController.comment);
 
 // Rsvp enpoints
 router.get('/rsvps', RsvpController.getAllRsvps);

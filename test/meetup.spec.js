@@ -15,8 +15,8 @@ describe('Meetups', () => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
           expect(res.body.data[0])
-            .to.have.keys('id', 'title', 'location', 'happeningOn', 'tags');
-          expect(res.body.data[0].title).to.equal('coders brings live');
+            .to.have.keys('id', 'topic', 'location', 'happeningon', 'createdon', 'tags');
+          expect(res.body.data[0].topic).to.equal('coders brings live');
           expect(res.body.data[0].location).to.equal('Abuja');
           expect(res.body.data[0].happeningOn).to.equal('12-04-2016');
           expect(res.body.data[0].tags).to.deep.equal(['codes', 'live']);
@@ -35,8 +35,8 @@ describe('Meetups', () => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
           expect(res.body.data[0])
-            .to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
-          expect(res.body.data[0].title).to.equal('coders brings live');
+            .to.have.all.keys('id', 'topic', 'location', 'happeningon', 'createdon', 'tags');
+          expect(res.body.data[0].topic).to.equal('coders brings live');
           expect(res.body.data[0].location).to.equal('Abuja');
           expect(res.body.data[0].happeningOn).to.equal('12-04-2016');
           expect(res.body.data[0].tags).to.deep.equal(['codes', 'live']);
@@ -67,7 +67,7 @@ describe('Meetups', () => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
           expect(res.body.data[0])
-            .to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
+            .to.have.all.keys('id', 'topic', 'location', 'happeningon', 'createdon', 'tags');
           done();
         });
     });
@@ -78,7 +78,8 @@ describe('Meetups', () => {
 
     it('should return status code 201 on successful post', (done) => {
       params = {
-        title: 'Binary trading',
+        id: 1,
+        topic: 'Binary trading',
         location: 'lagos',
         happeningOn: '23-12-2020',
         tags: ['apple', 'coding', 'legend'],
@@ -91,8 +92,8 @@ describe('Meetups', () => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('data');
           expect(res.body.data[0])
-            .to.have.all.keys('id', 'title', 'location', 'happeningOn', 'tags');
-          expect(res.body.data[0].title).to.equal('Binary trading');
+            .to.have.all.keys('id', 'topic', 'location', 'happeningOn', 'createdon', 'tags');
+          expect(res.body.data[0].topic).to.equal('Binary trading');
           expect(res.body.data[0].location).to.equal('lagos');
           expect(res.body.data[0].happeningOn).to.equal('23-12-2020');
           expect(res.body.data[0].tags).to.deep.eql(['apple', 'coding', 'legend']);
@@ -102,7 +103,8 @@ describe('Meetups', () => {
 
     it('should fail on POST with incomplete payload', (done) => {
       params = {
-        title: 'Progress Party',
+        id: 1,
+        topic: 'Progress Party',
         location: 'lagos',
         happeningOn: '22-04-2020',
       };
@@ -120,7 +122,7 @@ describe('Meetups', () => {
 
     it('should return 409 status code if meetup already exists', (done) => {
       params = {
-        title: 'coders brings live',
+        topic: 'Binary trading',
         location: 'lagos',
         happeningOn: '22-04-2020',
         tags: ['coders', 'everyday', 'live'],
@@ -133,14 +135,14 @@ describe('Meetups', () => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
           expect(res.body.error)
-            .to.equal('A meetup with this title already exists. Please input another title');
+            .to.equal('A meetup with this topic already exists. Please input another topic');
           done();
         });
     });
 
     it('should fail on POST with incomplete payload', (done) => {
       params = {
-        title: 'Bootcamp',
+        topic: 'Bootcamp',
         tags: 'apple',
         happeningOn: '23-12-2019',
       };
@@ -158,7 +160,7 @@ describe('Meetups', () => {
 
     it('should fail on POST with incomplete payload', (done) => {
       params = {
-        title: 'javascript',
+        topic: 'javascript',
         tags: 'apple',
         location: 'lagos',
       };
@@ -183,14 +185,14 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.equal('title is required');
+          expect(res.body.error).to.equal('topic is required');
           done();
         });
     });
 
-    it('should fail on POST with title length less than 5', (done) => {
+    it('should fail on POST with topic length less than 5', (done) => {
       params = {
-        title: 'me',
+        topic: 'me',
         location: 'lagos',
         happeningOn: '22-04-2020',
         tags: 'apple',
@@ -202,14 +204,14 @@ describe('Meetups', () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.equal('title length must be greater than 5');
+          expect(res.body.error).to.equal('topic length must be greater than 5');
           done();
         });
     });
 
     it('should fail on POST with location length less than 3', (done) => {
       params = {
-        title: 'community shield',
+        topic: 'community shield',
         location: 'la',
         happeningOn: '22-04-2020',
         tags: 'apple',
@@ -228,7 +230,7 @@ describe('Meetups', () => {
 
     it('should fail on POST with tag length less than 3', (done) => {
       params = {
-        title: 'Accountability',
+        topic: 'Accountability',
         location: 'los angeles',
         happeningOn: '22-04-2020',
         tags: 'ap',
@@ -247,7 +249,7 @@ describe('Meetups', () => {
 
     it('should fail on POST with incorrect date input', (done) => {
       params = {
-        title: 'The green initiatives',
+        topic: 'The green initiatives',
         location: 'los angeles',
         happeningOn: '2222-040-2020',
         tags: 'apple',

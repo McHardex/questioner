@@ -1,6 +1,10 @@
 /* eslint-disable consistent-return */
 
-import meetupDb from '../models/meetupDb';
+require('dotenv').config();
+
+const { Pool } = require('pg');
+
+const pool = new Pool({ connectionString: process.env.DB_URL });
 
 class MeetupController {
   /**
@@ -10,43 +14,73 @@ class MeetupController {
    * @return{json}
   */
   static getAllMeetups(req, res) {
-    res.status(200).send({
-      status: 200,
-      data: meetupDb,
+    pool.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
+      if (error) throw error;
+      return res.status(200).send({
+        status: 200,
+        data: results.rows,
+      });
     });
   }
 
   static async upcomingMeetups(req, res) {
-    const newArray = meetupDb.filter(result => new Date(result.happeningOn.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')) > Date.now());
-
-    res.status(200).send({
-      status: 200,
-      data: newArray,
+    pool.query('SELECT * FROM meetups WHERE happeningOn > now()', (error, results) => {
+      if (error) {
+        return res.status(404).send({
+          status: 404,
+          error: 'There is no upcoming meetups',
+        });
+      }
+      if (results.rows === undefined || results.rows.length === 0) {
+        return res.status(404).send({
+          status: 404,
+          error: 'there are no upcoming meetups',
+        });
+      }
+      res.status(200).send({
+        status: 200,
+        data: results.rows,
+      });
     });
   }
 
   static async getSpecificMeetupRecord(req, res) {
-    const meetup = meetupDb[req.params.id];
-
-    res.status(200).send({
-      status: 200,
-      data: [meetup],
+    const meetupId = parseInt(req.params.id, 10);
+    pool.query('SELECT * FROM meetups WHERE id = $1', [meetupId], (error, results) => {
+      if (results.rows === undefined || results.rows.length === 0) {
+        return res.status(404).send({
+          status: 404,
+          error: 'No meetup with the id',
+        });
+      }
+      return res.status(200).send({
+        status: 200,
+        data: results.rows,
+      });
     });
   }
 
   static async createMeetup(req, res) {
-    const meetup = {
-      id: meetupDb.length,
-      title: req.body.title,
-      location: req.body.location,
-      happeningOn: req.body.happeningOn,
-      tags: req.body.tags,
-    };
+    const {
+      topic, location, happeningOn, tags,
+    } = req.body;
 
-    await meetupDb.push(meetup);
-    res.status(201).send({
-      status: 201,
-      data: [meetup],
+    pool.query(`INSERT INTO meetups 
+    (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
+    [topic, location, happeningOn, tags], (error, results) => {
+      if (error) {
+        res.status(409).send({
+          status: 409,
+          error: 'Meetup with the same topic already exists',
+          newError: error,
+          anotherEroor: error.routine,
+        });
+      } else {
+        res.status(201).send({
+          status: 201,
+          data: [results.rows[0]],
+        });
+      }
     });
   }
 }

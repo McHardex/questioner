@@ -19,8 +19,8 @@ class UserController {
     const hashPassword = Helper.hashPassword(req.body.password);
 
     const query = `INSERT INTO
-      users (firstname, lastname, othername, username, phoneNumber, email, password, isAdmin)
-      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      users (firstname, lastname, othername, username, phoneNumber, email, password)
+      VALUES($1, $2, $3, $4, $5, $6, $7)
       returning *`;
     const values = [
       req.body.firstname,
@@ -30,7 +30,6 @@ class UserController {
       req.body.phoneNumber,
       req.body.email,
       hashPassword,
-      req.body.isAdmin,
     ];
 
     pool.query(query, values, (error, results) => {

@@ -9,7 +9,7 @@ const userDB = `
     email VARCHAR(255) UNIQUE NOT NULL,
     phoneNumber BIGINT NOT NULL,
     registered TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    isAdmin BOOLEAN,
+    isAdmin BOOLEAN DEFAULT FALSE,
     password VARCHAR(255) NOT NULL
   );
 `;

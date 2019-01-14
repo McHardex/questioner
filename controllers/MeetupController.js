@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+/* eslint-disable no-console */
 
 require('dotenv').config();
 
@@ -65,21 +66,26 @@ class MeetupController {
       topic, location, happeningOn, tags,
     } = req.body;
 
-    pool.query(`INSERT INTO meetups 
-    (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
-    [topic, location, happeningOn, tags], (error, results) => {
-      if (error) {
-        res.status(409).send({
-          status: 409,
-          error: 'Meetup with the same topic already exists',
-          newError: error,
-          anotherEroor: error.routine,
+    pool.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
+      if (result.rowCount < 1) return res.status(400).send({ status: 400, error: 'token expired' });
+      if (result.rows[0].isadmin) {
+        pool.query(`INSERT INTO meetups 
+        (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
+        [topic, location, happeningOn, tags], (error, results) => {
+          if (error) {
+            res.status(409).send({
+              status: 409,
+              error: 'Meetup with the same topic already exists',
+            });
+          } else {
+            res.status(201).send({
+              status: 201,
+              data: [results.rows[0]],
+            });
+          }
         });
       } else {
-        res.status(201).send({
-          status: 201,
-          data: [results.rows[0]],
-        });
+        return res.status(401).send({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
     });
   }

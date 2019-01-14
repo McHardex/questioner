@@ -16,7 +16,12 @@ class MeetupController {
   */
   static getAllMeetups(req, res) {
     pool.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
-      if (error) throw error;
+      if (results.rowCount < 1) {
+        return res.status(404).send({
+          status: 400,
+          error: 'No meetup record found',
+        });
+      }
       return res.status(200).send({
         status: 200,
         data: results.rows,
@@ -67,7 +72,7 @@ class MeetupController {
     } = req.body;
 
     pool.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
-      if (result.rowCount < 1) return res.status(400).send({ status: 400, error: 'token expired' });
+      if (result.rowCount < 1) return res.status(400).send({ status: 400, error: 'invalid token' });
       if (result.rows[0].isadmin) {
         pool.query(`INSERT INTO meetups 
         (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
@@ -81,6 +86,30 @@ class MeetupController {
             res.status(201).send({
               status: 201,
               data: [results.rows[0]],
+            });
+          }
+        });
+      } else {
+        return res.status(401).send({ status: 401, error: 'Sorry, only Admin can perform this action' });
+      }
+    });
+  }
+
+  static async deleteMeetup(req, res) {
+    pool.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
+      if (result.rowCount < 1) return res.status(400).send({ status: 400, error: 'token expired' });
+      if (result.rows[0].isadmin) {
+        const meetupId = parseInt(req.params.id, 10);
+        pool.query('DELETE FROM meetups WHERE id = $1', [meetupId], (error, response) => {
+          if (response.rowCount < 1) {
+            res.status(404).send({
+              status: 404,
+              error,
+            });
+          } else {
+            res.status(200).send({
+              status: 200,
+              message: 'Meetup successfully deleted',
             });
           }
         });

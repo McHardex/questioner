@@ -33,6 +33,7 @@ router.get('/meetups', MeetupController.getAllMeetups);
 router.get('/meetups/upcoming', MeetupController.upcomingMeetups);
 router.get('/meetups/:id', validate.specificMeetup, MeetupController.getSpecificMeetupRecord);
 router.post('/meetups', auth, validate.createMeetup, MeetupController.createMeetup);
+router.delete('/meetups/:id', auth, MeetupController.deleteMeetup);
 
 // Question endpoints
 router.get('/questions', QuestionController.getAllQuestions);

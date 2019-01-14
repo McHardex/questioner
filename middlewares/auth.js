@@ -13,6 +13,8 @@ function auth(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET);
+    if (!decoded) return res.status(400).send({ status: 400, error: 'token has expired' });
+
     const text = 'SELECT * from users WHERE id = $1';
 
     pool.query(text, [decoded.userID]);
@@ -22,7 +24,7 @@ function auth(req, res, next) {
   } catch (error) {
     return res.status(400).send({
       status: 400,
-      error: 'The token you provided is invalid',
+      error: error.message,
     });
   }
 }

@@ -67,8 +67,7 @@ class MeetupController {
     } = req.body;
 
     pool.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
-      if (err) return res.status.send({ error: err });
-      console.log(result.rows[0].isadmin, '---------');
+      if (result.rowCount < 1) return res.status(400).send({ status: 400, error: 'token expired' });
       if (result.rows[0].isadmin) {
         pool.query(`INSERT INTO meetups 
         (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,

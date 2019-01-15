@@ -118,6 +118,40 @@ class MeetupController {
       }
     });
   }
+
+  static async updateMeetup(req, res) {
+    pool.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
+      if (err) return res.status(404).send({ status: 404, error: err });
+      if (result.rows === undefined || result.rows.length === 0) {
+        return res.status(400).send({
+          status: 400,
+          error: 'token invalid',
+        });
+      }
+      if (result.rows[0].isadmin) {
+        const meetupId = parseInt(req.params.id, 10);
+        const {
+          topic, location, happeningOn, tags,
+        } = req.body;
+        pool.query('UPDATE meetups SET topic = $1, location = $2, happeningOn = $3, tags = $4 WHERE id = $5',
+          [topic, location, happeningOn, tags, meetupId], (error, response) => {
+            if (response.rowCount < 1) {
+              res.status(404).send({
+                status: 404,
+                error: 'Unable to update! No meetup found',
+              });
+            } else {
+              res.status(200).send({
+                status: 200,
+                message: 'Meetup successfully updated',
+              });
+            }
+          });
+      } else {
+        return res.status(401).send({ status: 401, error: 'Sorry, only Admin can perform this action' });
+      }
+    });
+  }
 }
 
 export default MeetupController;

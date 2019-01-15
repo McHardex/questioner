@@ -15,7 +15,7 @@ require('dotenv').config();
 
 const connectionString = process.env.DB_URL;
 
-function createQuery(query) {
+const createQuery = (query) => {
   const client = new pg.Client(connectionString);
   client.connect((err) => {
     if (err) {
@@ -34,6 +34,6 @@ function createQuery(query) {
       console.log(err, 'error creating tables');
       client.end();
     });
-}
+};
 
 createQuery(`${userDb}${meetupDb}${questionDb}${commentDb}`);

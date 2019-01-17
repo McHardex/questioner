@@ -40,6 +40,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/register": "^7.0.0",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
@@ -59,7 +60,6 @@
     "supertest": "^3.3.0"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "babel-istanbul": "^0.12.2",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",

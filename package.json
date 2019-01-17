@@ -56,6 +56,7 @@
     "supertest": "^3.3.0"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "babel-istanbul": "^0.12.2",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",

@@ -1,6 +1,9 @@
 {
   "name": "questioner",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.x"
+  },
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "./server/index.js",
   "scripts": {

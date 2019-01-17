@@ -7,7 +7,7 @@ services:
 before_script:
   - psql -c 'DROP DATABASE IF EXISTS travis;' -U postgres
   - psql -c 'CREATE DATABASE travis;' -U postgres
-  - sudo -u postgres psql -c "ALTER ROLE mchardex WITH password 'postgres'"
+  - sudo -u postgres psql -c "ALTER ROLE mchardex WITH password 'h0ttestt'"
 script:
   - npm test
 after_success:

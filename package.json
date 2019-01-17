@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=development nodemon --exec babel-node index.js",
     "prod-migrate": "npm run db-migrate --env development",
     "db-migrate": "babel-node ./startup/db/db.js",
-    "test": "cross-env NODE_ENV=test && npm run fortest && nyc mocha --compilers js:@babel/register ./test/**/*.spec.js --exit",
+    "test": "cross-env NODE_ENV=test && npm run fortest && nyc mocha ./test/**/*.spec.js --exit --compilers js:@babel/register ./test/**/*.spec.js --exit",
     "pretest": "eslint --ignore-path .gitignore .",
     "coverage": "nyc --reporter=lcov --reporter=text-lcov --require js:@babel/register  _mocha --exit test/*.spec.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",

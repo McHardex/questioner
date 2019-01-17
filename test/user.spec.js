@@ -9,8 +9,6 @@ import server from '../index';
 
 process.env.NODE_ENV = 'test';
 
-console.log(process.env.NODE_ENV, 'env');
-
 const signupPayload = {
   firstname: 'omoluwa',
   lastname: 'david',

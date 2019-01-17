@@ -1,14 +1,14 @@
 /* eslint-disable consistent-return */
+import { Client } from 'pg';
 
-import questionDb from '../models/questionDb';
+import dotenv from 'dotenv';
 
-import votesDb from '../models/votesDb';
+import connectionString from '../config';
 
-require('dotenv').config();
+dotenv.config();
 
-const { Pool } = require('pg');
-
-const pool = new Pool({ connectionString: process.env.DB_URL });
+const client = new Client(connectionString);
+client.connect();
 
 class QuestionController {
   /**
@@ -18,34 +18,34 @@ class QuestionController {
    * @return{json}
   */
   static getAllQuestions(req, res) {
-    pool.query('SELECT * FROM questions ORDER by id ASC', (error, results) => {
+    client.query('SELECT * FROM asknow ORDER by id ASC', (error, results) => {
       if (error) throw error;
-      return res.status(200).send({
+      return res.status(200).json({
         status: 200,
         data: results.rows,
       });
     });
   }
 
-  static async createQuestion(req, res) {
-    pool.query('SELECT * FROM meetups WHERE id = $1',
+  static createQuestion(req, res) {
+    client.query('SELECT * FROM meetups WHERE id = $1',
       [req.body.meetup_id],
       (error, results) => {
         if (results.rows === undefined || results.rows.length === 0) {
-          return res.status(404).send({
+          return res.status(404).json({
             status: 404,
             error: 'meetup does not exist',
           });
         }
 
-        pool.query('INSERT INTO questions (title, body, meetup_id) VALUES ($1, $2, $3) RETURNING *',
+        client.query('INSERT INTO asknow (title, body, meetup_id) VALUES ($1, $2, $3) RETURNING *',
           [req.body.title, req.body.body, req.body.meetup_id],
           (err, response) => {
-            if (err) throw err;
-            return res.status(201).send({
+            if (err) return res.status(400).json({ status: 400, error: err });
+            res.status(201).json({
               status: 201,
               data: [{
-                createdBy: req.user.id,
+                createdBy: req.user,
                 meetup_id: results.rows[0].id,
                 title: response.rows[0].title,
                 body: response.rows[0].body,
@@ -55,37 +55,49 @@ class QuestionController {
       });
   }
 
-  static async upvoteQuestion(req, res) {
-    const specificQuestion = questionDb[req.params.question_id];
-
-    const question = {
-      meetupId: 1,
-      title: specificQuestion.title,
-      body: specificQuestion.body,
-      votes: specificQuestion.votes += 1,
-    };
-
-    await votesDb.push(question);
-    res.status(200).send({
-      status: 200,
-      data: [question],
+  static upvoteQuestion(req, res) {
+    client.query('SELECT * FROM asknow WHERE id = $1', [req.params.question_id], (err, resp) => {
+      if (err) res.status(404).json({ status: 404, error: err });
+      client.query(`UPDATE asknow SET votes = votes + 1 WHERE id = ${req.params.question_id}`, (error, response) => {
+        if (error || response.rowCount < 1) {
+          res.status(404).json({
+            status: 404,
+            error: 'Unable to update! No question found',
+          });
+        } else {
+          return res.status(200).json({
+            status: 200,
+            data: [{
+              title: resp.rows[0].title,
+              body: resp.rows[0].body,
+              votes: resp.rows[0].votes,
+            }],
+          });
+        }
+      });
     });
   }
 
-  static async downvoteQuestion(req, res) {
-    const specificQuestion = questionDb[req.params.question_id];
-
-    const question = {
-      meetupId: 1,
-      title: specificQuestion.title,
-      body: specificQuestion.body,
-      votes: specificQuestion.votes -= 1,
-    };
-
-    await votesDb.push(question);
-    res.status(200).send({
-      status: 200,
-      data: [question],
+  static downvoteQuestion(req, res) {
+    client.query('SELECT * FROM asknow WHERE id = $1', [req.params.question_id], (err, resp) => {
+      if (err) res.status(404).json({ status: 404, error: err });
+      client.query(`UPDATE asknow SET votes = votes - 1 WHERE id = ${req.params.question_id}`, (error, response) => {
+        if (error || response.rowCount < 1) {
+          res.status(404).json({
+            status: 404,
+            error: 'Unable to update! No question found',
+          });
+        } else {
+          return res.status(200).send({
+            status: 200,
+            data: [{
+              title: resp.rows[0].title,
+              body: resp.rows[0].body,
+              votes: resp.rows[0].votes,
+            }],
+          });
+        }
+      });
     });
   }
 }

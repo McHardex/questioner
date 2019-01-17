@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
 
-import Helper from '../../controllers/Helpers';
+import Helper from '../../controllers/helpers/Helpers';
 
-function loginValidation(req, res, next) {
+const loginValidation = (req, res, next) => {
   if (!req.body.password || !req.body.email) {
     return res.status(400).send({
       status: 400,
@@ -17,6 +17,6 @@ function loginValidation(req, res, next) {
     });
   }
   next();
-}
+};
 
 export default loginValidation;

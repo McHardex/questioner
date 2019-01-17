@@ -1,13 +1,15 @@
 /* eslint-disable consistent-return */
 
-import meetupDb from '../../models/meetupDb';
-
-function createRsvpValidation(req, res, next) {
-  const meetup = meetupDb[req.params.meetup_id];
-  if (!meetup) return res.status(404).send({ status: 404, error: 'meetup does not exist' });
-  if (!req.body.status) return res.status(400).send({ status: 400, error: 'Input your status. Let us know if you will be coming' });
+const createRsvpValidation = (req, res, next) => {
+  if (!req.body.response) return res.status(400).send({ status: 400, error: 'Kindly input your response.Limited space available' });
+  if (req.body.response.toLowerCase() !== 'yes' || 'no' || 'maybe') {
+    return res.status(400).json({
+      status: 400,
+      error: 'You can only input Yes, No or Maybe',
+    });
+  }
 
   next();
-}
+};
 
 export default createRsvpValidation;

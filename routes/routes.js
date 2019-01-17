@@ -10,7 +10,7 @@ import UserController from '../controllers/userController';
 import CommentController from '../controllers/CommentController';
 
 // validations
-import * as validate from '../middlewares/validations/meetupValidations';
+import createMeetupValidation from '../middlewares/validations/meetupValidations';
 import * as validation from '../middlewares/validations/questionValidations';
 import createRsvpValidation from '../middlewares/validations/rsvpValidations';
 import signupValidation from '../middlewares/validations/signupValidation';
@@ -29,11 +29,12 @@ router.post('/auth/signup', signupValidation, UserController.signUp);
 router.post('/auth/login', loginValidation, UserController.login);
 
 // Meetup endpoints
-router.get('/meetups', MeetupController.getAllMeetups);
+router.get('/meetups', auth, MeetupController.getAllMeetups);
 router.get('/meetups/upcoming', MeetupController.upcomingMeetups);
-router.get('/meetups/:id', validate.specificMeetup, MeetupController.getSpecificMeetupRecord);
-router.post('/meetups', auth, validate.createMeetup, MeetupController.createMeetup);
+router.get('/meetups/:id', auth, MeetupController.getSpecificMeetupRecord);
+router.post('/meetups', auth, createMeetupValidation, MeetupController.createMeetup);
 router.delete('/meetups/:id', auth, MeetupController.deleteMeetup);
+router.put('/meetups/:id', auth, createMeetupValidation, MeetupController.updateMeetup);
 
 // Question endpoints
 router.get('/questions', QuestionController.getAllQuestions);

@@ -1,22 +1,22 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
-import pg from 'pg';
+import { Client } from 'pg';
 
 import userDb from '../../models/userDb';
 
 import questionDb from '../../models/questionDb';
 
-import commentDb from '../../models/commentDb';
+import rsvpDB from '../../models/rsvpDb';
 
 import meetupDb from '../../models/meetupDb';
 
+import connectionString from '../../config';
+
 require('dotenv').config();
 
-const connectionString = process.env.DB_URL;
-
-function createQuery(query) {
-  const client = new pg.Client(connectionString);
+const createQuery = (query) => {
+  const client = new Client(connectionString);
   client.connect((err) => {
     if (err) {
       console.error('error connecting to database', err.stack);
@@ -34,6 +34,6 @@ function createQuery(query) {
       console.log(err, 'error creating tables');
       client.end();
     });
-}
+};
 
-createQuery(`${userDb}${meetupDb}${questionDb}${commentDb}`);
+createQuery(`${userDb}${meetupDb}${questionDb}${rsvpDB}`);

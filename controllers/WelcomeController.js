@@ -24,7 +24,7 @@ class WelcomeController {
         createRsvp: 'POST /api/v1/meetups/:meetup_id/rsvps',
       },
     };
-    res.status(200).send({ status: 200, data });
+    res.status(200).json({ status: 200, data });
   }
 }
 

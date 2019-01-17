@@ -7,7 +7,7 @@ import server from '../index';
 
 describe('Questions', () => {
   describe('GET /questions', () => {
-    it('should return status code 200 on successful questions fetching', (done) => {
+    xit('should return status code 200 on successful questions fetching', (done) => {
       request(server)
         .get('/api/v1/questions')
         .end((err, res) => {
@@ -27,7 +27,7 @@ describe('Questions', () => {
   describe('POST /questions', () => {
     let params;
 
-    it('should return status code 201 on successful question post', (done) => {
+    xit('should return status code 201 on successful question post', (done) => {
       params = {
         title: 'new apple always come with a new set of rules',
         body: 'new apple always come with a new set of rules new new set of rules',
@@ -48,7 +48,7 @@ describe('Questions', () => {
         });
     });
 
-    it('should return status code 400 with title length greater than 10', (done) => {
+    xit('should return status code 400 with title length greater than 10', (done) => {
       params = {
         title: 'new',
         body: 'new apple always new apple always come with a new set of rules',
@@ -65,7 +65,7 @@ describe('Questions', () => {
         });
     });
 
-    it('should return status code 400 with body length greater than 30', (done) => {
+    xit('should return status code 400 with body length greater than 30', (done) => {
       params = {
         title: 'new apple comes with new',
         body: 'new apple',
@@ -82,7 +82,7 @@ describe('Questions', () => {
         });
     });
 
-    it('should return 400 with incomplete payload', (done) => {
+    xit('should return 400 with incomplete payload', (done) => {
       params = {
         title: 'new apple always come with a new set of rules',
       };
@@ -98,7 +98,7 @@ describe('Questions', () => {
         });
     });
 
-    it('should fail on POST with empty payload', (done) => {
+    xit('should fail on POST with empty payload', (done) => {
       params = {};
       request(server)
         .post('/api/v1/questions')
@@ -113,7 +113,7 @@ describe('Questions', () => {
     });
   });
 
-  describe('PATCH /questions/question_id/upvote', () => {
+  xdescribe('PATCH /questions/question_id/upvote', () => {
     it('should return status code 200 upvote with valid id', (done) => {
       request(server)
         .patch('/api/v1/questions/0/upvote')
@@ -125,7 +125,7 @@ describe('Questions', () => {
         });
     });
 
-    it('should return status code 422 with invalid id', (done) => {
+    xit('should return status code 422 with invalid id', (done) => {
       request(server)
         .patch('/api/v1/questions/aaa/upvote')
         .end((err, res) => {
@@ -139,7 +139,7 @@ describe('Questions', () => {
   });
 
   describe('PATCH /questions/question_id/downvote', () => {
-    it('should return status code 200 for downvote with valid id', (done) => {
+    xit('should return status code 200 for downvote with valid id', (done) => {
       request(server)
         .patch('/api/v1/questions/0/downvote')
         .end((err, res) => {
@@ -151,7 +151,7 @@ describe('Questions', () => {
         });
     });
 
-    it('should return status code 422 with invalid id', (done) => {
+    xit('should return status code 422 with invalid id', (done) => {
       request(server)
         .patch('/api/v1/questions/aaa/downvote')
         .end((err, res) => {

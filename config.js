@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const config = {
+const config = {
   development: process.env.DB_URL,
   test: process.env.TEST_DB,
 };

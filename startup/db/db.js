@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-
 import { Client } from 'pg';
+
+import dotenv from 'dotenv';
 
 import userDb from '../../models/userDb';
 
@@ -13,7 +14,8 @@ import meetupDb from '../../models/meetupDb';
 
 import connectionString from '../../config';
 
-require('dotenv').config();
+dotenv.config();
+
 
 const createQuery = (query) => {
   const client = new Client(connectionString);

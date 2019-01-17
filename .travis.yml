@@ -1,13 +1,11 @@
-sudo: enabled
 language: node_js
 node_js:
  - "10.11.0"
 services:
   - postgresql
 before_script:
-  - psql -c 'DROP DATABASE IF EXISTS travis;' -U postgres
-  - psql -c 'CREATE DATABASE travis;' -U postgres
-  - sudo -u postgres psql -c "ALTER ROLE mchardex WITH password 'h0ttestt'"
+  - psql -c 'DROP DATABASE IF EXISTS travis_ci_test;' -U postgres
+  - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
 script:
   - npm test
 after_success:

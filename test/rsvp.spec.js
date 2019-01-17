@@ -7,7 +7,7 @@ import server from '../index';
 
 describe('RSVPs', () => {
   describe('GET /rsvps', () => {
-    it('should return status code 200 on successful fetching of all rsvps', (done) => {
+    xit('should return status code 200 on successful fetching of all rsvps', (done) => {
       request(server)
         .get('/api/v1/rsvps')
         .end((err, res) => {
@@ -25,7 +25,7 @@ describe('RSVPs', () => {
 
   describe('POST /meetups/:meetup-id/rsvps', () => {
     let payload = { status: 'yes' };
-    it('should return status code 201 on successful post to endpoint', (done) => {
+    xit('should return status code 201 on successful post to endpoint', (done) => {
       request(server)
         .post('/api/v1/meetups/1/rsvps')
         .send(payload)
@@ -39,7 +39,7 @@ describe('RSVPs', () => {
         });
     });
 
-    it('should return 400 status code when empty payload is passed', (done) => {
+    xit('should return 400 status code when empty payload is passed', (done) => {
       payload = {};
       request(server)
         .post('/api/v1/meetups/1/rsvps')
@@ -54,7 +54,7 @@ describe('RSVPs', () => {
         });
     });
 
-    it('should return 404 status with invalid meetupId', (done) => {
+    xit('should return 404 status with invalid meetupId', (done) => {
       request(server)
         .post('/api/v1/meetups/invalidId/rsvps')
         .send(payload)

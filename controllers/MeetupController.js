@@ -1,11 +1,14 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
+import { Client } from 'pg';
+
+import connectionString from '../config';
 
 require('dotenv').config();
 
-const { Pool } = require('pg');
 
-const pool = new Pool({ connectionString: process.env.DB_URL });
+const client = new Client(connectionString);
+client.connect();
 
 class MeetupController {
   /**
@@ -15,106 +18,134 @@ class MeetupController {
    * @return{json}
   */
   static getAllMeetups(req, res) {
-    pool.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
+    client.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
       if (results.rowCount < 1) {
-        return res.status(404).send({
-          status: 400,
+        return res.status(404).json({
+          status: 404,
           error: 'No meetup record found',
         });
       }
-      return res.status(200).send({
+      res.status(200).json({
         status: 200,
         data: results.rows,
       });
     });
   }
 
-  static async upcomingMeetups(req, res) {
-    pool.query('SELECT * FROM meetups WHERE happeningOn > now()', (error, results) => {
+  static upcomingMeetups(req, res) {
+    client.query('SELECT * FROM meetups WHERE happeningOn > now()', (error, results) => {
       if (error) {
-        return res.status(404).send({
+        return res.status(404).json({
           status: 404,
           error: 'There is no upcoming meetups',
         });
       }
       if (results.rows === undefined || results.rows.length === 0) {
-        return res.status(404).send({
+        return res.status(404).json({
           status: 404,
           error: 'there are no upcoming meetups',
         });
       }
-      res.status(200).send({
+      res.status(200).json({
         status: 200,
         data: results.rows,
       });
     });
   }
 
-  static async getSpecificMeetupRecord(req, res) {
-    const meetupId = parseInt(req.params.id, 10);
-    pool.query('SELECT * FROM meetups WHERE id = $1', [meetupId], (error, results) => {
-      if (results.rows === undefined || results.rows.length === 0) {
-        return res.status(404).send({
-          status: 404,
-          error: 'No meetup with the id',
-        });
-      }
-      return res.status(200).send({
+  static getSpecificMeetupRecord(req, res) {
+    client.query('SELECT * FROM meetups WHERE id = $1', [req.params.id], (error, results) => {
+      if (error || results.rowCount < 1) return res.status(404).json({ status: 404, error: 'Meetup record does not exist' });
+      res.status(200).json({
         status: 200,
         data: results.rows,
       });
     });
   }
 
-  static async createMeetup(req, res) {
+  static createMeetup(req, res) {
     const {
       topic, location, happeningOn, tags,
     } = req.body;
-
-    pool.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
-      if (result.rowCount < 1) return res.status(400).send({ status: 400, error: 'invalid token' });
+    client.query('SELECT * FROM users WHERE id = $1', [req.user], (err, result) => {
+      if (err) return res.status(400).json({ status: 400, error: err.stack });
       if (result.rows[0].isadmin) {
-        pool.query(`INSERT INTO meetups 
+        client.query(`INSERT INTO meetups 
         (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
         [topic, location, happeningOn, tags], (error, results) => {
           if (error) {
-            res.status(409).send({
-              status: 409,
-              error: 'Meetup with the same topic already exists',
+            res.status(400).json({
+              status: 400,
+              error: 'Meetup already exists, try creating a new one',
             });
           } else {
-            res.status(201).send({
+            return res.status(201).json({
               status: 201,
               data: [results.rows[0]],
             });
           }
         });
       } else {
-        return res.status(401).send({ status: 401, error: 'Sorry, only Admin can perform this action' });
+        return res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
     });
   }
 
-  static async deleteMeetup(req, res) {
-    pool.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
-      if (result.rowCount < 1) return res.status(400).send({ status: 400, error: 'token expired' });
+  static deleteMeetup(req, res) {
+    client.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
+      if (result.rowCount < 1) return res.status(400).json({ status: 400, error: 'token expired' });
       if (result.rows[0].isadmin) {
         const meetupId = parseInt(req.params.id, 10);
-        pool.query('DELETE FROM meetups WHERE id = $1', [meetupId], (error, response) => {
+        client.query('DELETE FROM meetups WHERE id = $1', [meetupId], (error, response) => {
           if (response.rowCount < 1) {
-            res.status(404).send({
+            res.status(404).json({
               status: 404,
               error,
             });
           } else {
-            res.status(200).send({
+            res.status(200).json({
               status: 200,
               message: 'Meetup successfully deleted',
             });
           }
         });
       } else {
-        return res.status(401).send({ status: 401, error: 'Sorry, only Admin can perform this action' });
+        return res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
+      }
+    });
+  }
+
+
+  static updateMeetup(req, res) {
+    client.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
+      if (err) return res.status(404).json({ status: 404, error: err });
+      if (result.rows === undefined || result.rows.length === 0) {
+        return res.status(400).json({
+          status: 400,
+          error: 'token invalid',
+        });
+      }
+      if (result.rows[0].isadmin) {
+        const meetupId = parseInt(req.params.id, 10);
+        const {
+          topic, location, happeningOn, tags,
+        } = req.body;
+        client.query('UPDATE meetups SET topic = $1, location = $2, happeningOn = $3, tags = $4 WHERE id = $5',
+          [topic, location, happeningOn, tags, meetupId], (error, response) => {
+            if (response.rowCount < 1) {
+              res.status(404).json({
+                status: 404,
+                error: 'Unable to update! No meetup found',
+              });
+            } else {
+              res.status(200).json({
+                status: 200,
+                message: 'Meetup successfully updated',
+              });
+            }
+          });
+      } else {
+        return res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
     });
   }

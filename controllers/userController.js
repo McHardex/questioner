@@ -1,11 +1,12 @@
 /* eslint-disable consistent-return */
-import Helper from './Helpers';
+import { Client } from 'pg';
 
-require('dotenv').config();
+import connectionString from '../config';
 
-const { Pool } = require('pg');
+import Helper from './helpers/Helpers';
 
-const pool = new Pool({ connectionString: process.env.DB_URL });
+const client = new Client(connectionString);
+client.connect();
 
 class UserController {
   /**
@@ -17,7 +18,6 @@ class UserController {
 
   static signUp(req, res) {
     const hashPassword = Helper.hashPassword(req.body.password);
-
     const query = `INSERT INTO
       users (firstname, lastname, othername, username, phoneNumber, email, password)
       VALUES($1, $2, $3, $4, $5, $6, $7)
@@ -31,23 +31,32 @@ class UserController {
       req.body.email,
       hashPassword,
     ];
-
-    pool.query(query, values, (error, results) => {
+    client.query(query, values, (error, results) => {
       if (error) {
-        return res.status(409).send({
+        res.status(409).json({
           status: 409,
-          error: 'User with that email already exists',
+          error: 'User exists, check your credentials',
+        });
+      } else {
+        const token = Helper.generateToken(results.rows[0].id);
+        return res.status(201).json({
+          status: 201,
+          data: {
+            token,
+            message: 'Account successfully created',
+            user: {
+              id: results.rows[0].id,
+              firstname: results.rows[0].firstname,
+              lastname: results.rows[0].lastname,
+              othername: results.rows[0].othername,
+              username: results.rows[0].username,
+              phoneNumber: results.rows[0].phoneNumber,
+              isAdmin: results.rows[0].isAdmin,
+              registered: results.rows[0].registered,
+            },
+          },
         });
       }
-
-      const token = Helper.generateToken(results.rows[0].id);
-      return res.status(201).send({
-        status: 201,
-        data: {
-          token,
-          user: results.rows[0],
-        },
-      });
     });
   }
 
@@ -59,30 +68,32 @@ class UserController {
    */
 
   static login(req, res) {
-    pool.query('SELECT * FROM users WHERE email = $1', [req.body.email], (error, results) => {
-      if (!results.rows[0]) {
-        return res.status(400).send({
+    client.query('SELECT * FROM users WHERE email = $1', [req.body.email], (error, results) => {
+      if (results.rows.length < 1) {
+        res.status(404).json({
+          status: 404,
+          error: 'No such user in our database',
+        });
+      } else if ((results.rows[0].email !== req.body.email)
+      || (!Helper.comparePassword(results.rows[0].password, req.body.password))) {
+        res.status(400).json({
           status: 400,
-          error: 'No such user in our database, check your credentials',
+          error: 'Invalid credentials',
+        });
+      } else {
+        const token = Helper.generateToken(results.rows[0].id);
+        res.status(200).json({
+          status: 200,
+          data: [{
+            token,
+            user: {
+              email: results.rows[0].email,
+              firstname: results.rows[0].firstname,
+              username: results.rows[0].username,
+            },
+          }],
         });
       }
-
-      if (!Helper.comparePassword(results.rows[0].password, req.body.password)
-      || req.body.password.trim().length < 5) {
-        return res.status(400).send({
-          status: 400,
-          error: 'Incorrect password',
-        });
-      }
-
-      const token = Helper.generateToken(results.rows[0].id);
-      return res.status(200).send({
-        status: 200,
-        data: [{
-          token,
-          user: results.rows[0],
-        }],
-      });
     });
   }
 }

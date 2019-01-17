@@ -1,10 +1,15 @@
 /* eslint-disable consistent-return */
 
-require('dotenv').config();
+import { Client } from 'pg';
 
-const { Pool } = require('pg');
+import dotenv from 'dotenv';
 
-const pool = new Pool({ connectionString: process.env.DB_URL });
+import connectionString from '../config';
+
+dotenv.config();
+
+const client = new Client(connectionString);
+client.connect();
 
 class CommentController {
   /**
@@ -15,20 +20,20 @@ class CommentController {
   */
 
   static comment(req, res) {
-    pool.query('SELECT * FROM questions WHERE id = $1',
+    client.query('SELECT * FROM asknow WHERE id = $1',
       [req.body.question_id],
       (error, results) => {
         if (results.rows === undefined || results.rows.length === 0) {
-          return res.status(404).send({
+          res.status(404).json({
             status: 404,
             error: 'question does not exist',
           });
         }
-        pool.query('INSERT INTO comments (comment, question_id) VALUES ($1, $2) RETURNING *',
+        client.query('INSERT INTO asknow (comment, question_id) VALUES ($1, $2) RETURNING *',
           [req.body.comment, req.body.question_id],
           (err, response) => {
             if (err) throw err;
-            return res.status(201).send({
+            return res.status(201).json({
               status: 201,
               data: [{
                 question_id: results.rows[0].id,

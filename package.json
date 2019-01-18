@@ -13,7 +13,7 @@
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./server/index.js",
     "prod-migrate": "npm run db-migrate --env production",
     "db-migrate": "babel-node ./server/startup/db/db.js",
-    "test": "./node_modules/.bin/cross-env NODE_ENV=test && npm run fortest && nyc mocha --timeout 15000 server/test/**/*.spec.js --exit --compilers babel-register ./server/test/**/*.spec.js",
+    "test": "./node_modules/.bin/cross-env NODE_ENV=test && npm run fortest && nyc mocha server/test/**/*.spec.js --exit --compilers babel-register ./server/test/**/*.spec.js",
     "pretest": "eslint --ignore-path .gitignore .",
     "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-register _mocha --exit server/test/*.spec.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",

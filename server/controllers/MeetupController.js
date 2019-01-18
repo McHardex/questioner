@@ -19,7 +19,7 @@ class MeetupController {
   */
   static getAllMeetups(req, res) {
     client.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
-      if (results.rowCount < 1) {
+      if (results.rows.length < 1) {
         return res.status(404).json({
           status: 404,
           error: 'No meetup record found',
@@ -40,7 +40,7 @@ class MeetupController {
           error: 'There is no upcoming meetups',
         });
       }
-      if (results.rows === undefined || results.rows.length === 0) {
+      if (results.rows.length < 1) {
         return res.status(404).json({
           status: 404,
           error: 'there are no upcoming meetups',
@@ -55,7 +55,7 @@ class MeetupController {
 
   static getSpecificMeetupRecord(req, res) {
     client.query('SELECT * FROM meetups WHERE id = $1', [req.params.id], (error, results) => {
-      if (error || results.rowCount < 1) return res.status(404).json({ status: 404, error: 'Meetup record does not exist' });
+      if (results.rows.length < 1) return res.status(404).json({ status: 404, error: 'Meetup record does not exist' });
       res.status(200).json({
         status: 200,
         data: results.rows,
@@ -68,14 +68,13 @@ class MeetupController {
       topic, location, happeningOn, tags,
     } = req.body;
     client.query('SELECT * FROM users WHERE id = $1', [req.user], (err, result) => {
-      if (err) return res.status(400).json({ status: 400, error: err.stack });
       if (result.rows[0].isadmin) {
         client.query(`INSERT INTO meetups 
         (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
         [topic, location, happeningOn, tags], (error, results) => {
           if (error) {
-            res.status(400).json({
-              status: 400,
+            res.status(404).json({
+              status: 404,
               error: 'Meetup already exists, try creating a new one',
             });
           } else {
@@ -86,21 +85,20 @@ class MeetupController {
           }
         });
       } else {
-        return res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
+        res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
     });
   }
 
   static deleteMeetup(req, res) {
-    client.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
-      if (result.rowCount < 1) return res.status(400).json({ status: 400, error: 'token expired' });
+    client.query('SELECT * FROM users WHERE id = $1', [req.user], (err, result) => {
+      if (err) return res.status(400).json({ status: 400, error: err });
       if (result.rows[0].isadmin) {
-        const meetupId = parseInt(req.params.id, 10);
-        client.query('DELETE FROM meetups WHERE id = $1', [meetupId], (error, response) => {
+        client.query('DELETE FROM meetups WHERE id = $1', [req.params.id], (error, response) => {
           if (response.rowCount < 1) {
             res.status(404).json({
               status: 404,
-              error,
+              message: 'This meetup is no longer available',
             });
           } else {
             res.status(200).json({
@@ -110,28 +108,21 @@ class MeetupController {
           }
         });
       } else {
-        return res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
+        res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
     });
   }
 
 
   static updateMeetup(req, res) {
-    client.query('SELECT * FROM users WHERE id = $1', [req.user.id], (err, result) => {
-      if (err) return res.status(404).json({ status: 404, error: err });
-      if (result.rows === undefined || result.rows.length === 0) {
-        return res.status(400).json({
-          status: 400,
-          error: 'token invalid',
-        });
-      }
+    client.query('SELECT * FROM users WHERE id = $1', [req.user], (error, result) => {
+      if (error) return res.status(404).json({ status: 404, error: 'User not found!' });
       if (result.rows[0].isadmin) {
-        const meetupId = parseInt(req.params.id, 10);
         const {
           topic, location, happeningOn, tags,
         } = req.body;
         client.query('UPDATE meetups SET topic = $1, location = $2, happeningOn = $3, tags = $4 WHERE id = $5',
-          [topic, location, happeningOn, tags, meetupId], (error, response) => {
+          [topic, location, happeningOn, tags, req.params.id], (err, response) => {
             if (response.rowCount < 1) {
               res.status(404).json({
                 status: 404,

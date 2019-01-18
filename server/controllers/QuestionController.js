@@ -19,7 +19,7 @@ class QuestionController {
   */
   static getAllQuestions(req, res) {
     client.query('SELECT * FROM asknow ORDER by id ASC', (error, results) => {
-      if (error) throw error;
+      if (error) return res.status(404).send({ status: 404, error });
       return res.status(200).json({
         status: 200,
         data: results.rows,
@@ -65,12 +65,12 @@ class QuestionController {
             error: 'Unable to update! No question found',
           });
         } else {
-          return res.status(200).json({
+          res.status(200).json({
             status: 200,
             data: [{
               title: resp.rows[0].title,
               body: resp.rows[0].body,
-              votes: resp.rows[0].votes,
+              votes: resp.rows[0].votes += 1,
             }],
           });
         }
@@ -88,12 +88,12 @@ class QuestionController {
             error: 'Unable to update! No question found',
           });
         } else {
-          return res.status(200).send({
+          res.status(200).send({
             status: 200,
             data: [{
               title: resp.rows[0].title,
               body: resp.rows[0].body,
-              votes: resp.rows[0].votes,
+              votes: resp.rows[0].votes -= 1
             }],
           });
         }

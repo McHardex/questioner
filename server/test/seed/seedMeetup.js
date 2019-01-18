@@ -8,9 +8,7 @@ import moment from 'moment';
 
 import connectionString from '../../config';
 
-
 dotenv.config();
-
 
 const sql = 'INSERT INTO meetups (topic, location, happeningOn, tags) VALUES($1,$2,$3,$4)';
 

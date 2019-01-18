@@ -21,9 +21,14 @@ class RsvpController {
   */
 
   static getAllRsvps(req, res) {
-    client.query('SELECT * FROM questions ORDER by id ASC', (error, results) => {
-      if (error) return res.status(404).send({ status: 404, error });
-      return res.status(200).json({
+    client.query('SELECT * FROM rsvps ORDER by id ASC', (error, results) => {
+      if (results.rows.length < 1) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No meetup record found',
+        });
+      }
+      res.status(200).json({
         status: 200,
         data: results.rows,
       });
@@ -32,36 +37,41 @@ class RsvpController {
 
   static createRsvp(req, res) {
     client.query('SELECT * FROM meetups WHERE id = $1', [req.params.meetup_id], (err, response) => {
+      if (err) {
+        return es.status(404).json({
+          status: 404,
+          error
+        });
+      }
       if (response.rows[0].id) {
         client.query('INSERT INTO rsvps (response) VALUES ($1) RETURNING *', [req.body.response], (error, result) => {
-          console.log(result);
           console.log(error);
-          if (error) return res.status(404).json({ status: 404, error });
-          if (req.body.response.toLowerCase() !== 'yes') {
+          console.log(response);
+          if (req.body.response === 'yes') {
             res.status(200).json({
               status: 200,
               data: [{
                 meetup_id: response.rows[0].id,
                 topic: response.rows[0].topic,
-                status: result.rows[0].response,
+                response: result.rows[0].response,
               }],
             });
-          } else if (req.body.response.toLowerCase() !== 'no') {
+          } else if (req.body.response === 'no') {
             res.status(200).json({
               status: 200,
               data: [{
                 meetup_id: response.rows[0].id,
                 topic: response.rows[0].topic,
-                status: result.rows[0].response,
+                response: result.rows[0].response,
               }],
             });
-          } else if (req.body.response.toLowerCase() !== 'maybe') {
+          } else if (req.body.response === 'maybe') {
             res.status(200).json({
               status: 200,
               data: [{
                 meetup_id: response.rows[0].id,
                 topic: response.rows[0].topic,
-                status: result.rows[0].response,
+                response: result.rows[0].response,
               }],
             });
           } else {
@@ -74,7 +84,7 @@ class RsvpController {
       } else {
         res.status(404).json({
           status: 404,
-          error: 'no user',
+          error: 'no user found',
         });
       }
     });

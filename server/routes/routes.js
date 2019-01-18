@@ -47,7 +47,7 @@ router.patch('/questions/:question_id/downvote', auth, validation.downvoteQuesti
 router.post('/comments', auth, commentValid, CommentController.comment);
 
 // Rsvp enpoints
-router.get('/rsvps', RsvpController.getAllRsvps);
-router.post('/meetups/:meetup_id/rsvps', createRsvpValidation, RsvpController.createRsvp);
+router.get('/rsvps', auth, RsvpController.getAllRsvps);
+router.post('/meetups/:meetup_id/rsvps', auth, RsvpController.createRsvp);
 
 export default router;

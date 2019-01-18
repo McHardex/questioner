@@ -1,7 +1,7 @@
 const rsvpDb = `
   DROP TABLE IF EXISTS rsvps CASCADE;
   CREATE TABLE rsvps (
-    id INTEGER NOT NULL,
+    id INTEGER,
     meetup_id INTEGER NOT NULL, 
     user_id INTEGER NOT NULL,
     response VARCHAR(255) NOT NULL,

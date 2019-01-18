@@ -12,7 +12,6 @@ import CommentController from '../controllers/CommentController';
 // validations
 import createMeetupValidation from '../middlewares/validations/meetupValidations';
 import * as validation from '../middlewares/validations/questionValidations';
-import createRsvpValidation from '../middlewares/validations/rsvpValidations';
 import signupValidation from '../middlewares/validations/signupValidation';
 import loginValidation from '../middlewares/validations/loginValidation';
 import commentValid from '../middlewares/validations/commentValidation';

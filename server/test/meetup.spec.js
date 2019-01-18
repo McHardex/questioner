@@ -70,19 +70,6 @@ describe('Meetups', () => {
             done();
           });
       });
-
-      it('should return status code 404 with invalid meetup id', (done) => {
-        request(server)
-          .get('/api/v1/meetups/aaaa')
-          .set('x-auth-token', token)
-          .end((err, res) => {
-            expect(res.status).to.equal(404);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.have.all.keys('status', 'error');
-            expect(res.body.error).to.equal('Meetup record does not exist');
-            done();
-          });
-      });
     });
 
     describe('GET /meetups/upcoming', () => {

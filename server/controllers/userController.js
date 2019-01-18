@@ -19,8 +19,8 @@ class UserController {
   static signUp(req, res) {
     const hashPassword = Helper.hashPassword(req.body.password);
     const query = `INSERT INTO
-      users (firstname, lastname, othername, username, phoneNumber, email, password)
-      VALUES($1, $2, $3, $4, $5, $6, $7)
+      users (firstname, lastname, othername, username, phoneNumber, email, isadmin, password)
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
       returning *`;
     const values = [
       req.body.firstname,
@@ -29,6 +29,7 @@ class UserController {
       req.body.username,
       req.body.phoneNumber,
       req.body.email,
+      req.body.isAdmin,
       hashPassword,
     ];
     client.query(query, values, (error, results) => {

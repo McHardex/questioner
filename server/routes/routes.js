@@ -37,7 +37,7 @@ router.delete('/meetups/:id', auth, MeetupController.deleteMeetup);
 router.put('/meetups/:id', auth, createMeetupValidation, MeetupController.updateMeetup);
 
 // Question endpoints
-router.get('/questions', QuestionController.getAllQuestions);
+router.get('/questions', auth, QuestionController.getAllQuestions);
 router.post('/questions', auth, validation.createQuestion,
   QuestionController.createQuestion);
 router.patch('/questions/:question_id/upvote', auth, validation.upvoteQuestion,

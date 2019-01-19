@@ -68,6 +68,7 @@ class MeetupController {
       topic, location, happeningOn, tags,
     } = req.body;
     client.query('SELECT * FROM users WHERE id = $1', [req.user], (err, result) => {
+      if (result.rows.length < 1) return res.status(404).send({ status: 404, error: 'User not found' });
       if (result.rows[0].isadmin) {
         client.query(`INSERT INTO meetups 
         (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
@@ -131,7 +132,7 @@ class MeetupController {
             } else {
               res.status(200).json({
                 status: 200,
-                message: 'Meetup successfully updated',
+                message: response.rows,
               });
             }
           });

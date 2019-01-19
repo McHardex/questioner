@@ -241,7 +241,7 @@ describe('Meetups', () => {
         .end((err, res) => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('date must be in this format: mm-dd-yyy or mm/dd/yy');
+          expect(res.body.error).to.equal('date must be in this format: yyyy-mm-dd or yyyy/mm/dd');
           done();
         });
     });

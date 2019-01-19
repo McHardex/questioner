@@ -19,8 +19,13 @@ class QuestionController {
   */
   static getAllQuestions(req, res) {
     client.query('SELECT * FROM asknow ORDER by id ASC', (error, results) => {
-      if (error) return res.status(404).send({ status: 404, error });
-      return res.status(200).json({
+      if (results.rows.length < 1) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No meetup record found',
+        });
+      }
+      res.status(200).json({
         status: 200,
         data: results.rows,
       });

@@ -102,23 +102,6 @@ describe('The User route', () => {
         });
     });
 
-    it('Should return 400 when email is not present', (done) => {
-      request(server)
-        .post('/api/v1/auth/signup')
-        .send({
-          firstname: 'david',
-          lastname: 'david',
-          othername: 'jognson',
-          phoneNumber: '8160116016448',
-          password: 'meluwe',
-        })
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Please enter a valid email address');
-          done();
-        });
-    });
     it('Should return 400 when phone number is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
@@ -185,7 +168,6 @@ describe('The User route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.be.an('object');
-          expect(res.body.data.message).to.equal('Account successfully created');
           done();
         });
     });

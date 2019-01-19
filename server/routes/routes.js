@@ -11,7 +11,7 @@ import CommentController from '../controllers/CommentController';
 
 // validations
 import createMeetupValidation from '../middlewares/validations/meetupValidations';
-import * as validation from '../middlewares/validations/questionValidations';
+import createQuestion from '../middlewares/validations/questionValidations';
 import signupValidation from '../middlewares/validations/signupValidation';
 import loginValidation from '../middlewares/validations/loginValidation';
 import commentValid from '../middlewares/validations/commentValidation';
@@ -37,12 +37,9 @@ router.put('/meetups/:id', auth, createMeetupValidation, MeetupController.update
 
 // Question endpoints
 router.get('/questions', auth, QuestionController.getAllQuestions);
-router.post('/questions', auth, validation.createQuestion,
-  QuestionController.createQuestion);
-router.patch('/questions/:question_id/upvote', auth, validation.upvoteQuestion,
-  QuestionController.upvoteQuestion);
-router.patch('/questions/:question_id/downvote', auth, validation.downvoteQuestion,
-  QuestionController.downvoteQuestion);
+router.post('/questions', auth, createQuestion, QuestionController.createQuestion);
+router.patch('/questions/:question_id/upvote', auth, QuestionController.upvoteQuestion);
+router.patch('/questions/:question_id/downvote', auth, QuestionController.downvoteQuestion);
 router.post('/comments', auth, commentValid, CommentController.comment);
 
 // Rsvp enpoints

@@ -236,7 +236,6 @@ describe('The User route', () => {
           password: '123456lklk',
         })
         .end((err, res) => {
-          console.log(res.body.error, 'error 4');
           expect(res.status).to.equal(404);
           expect(res.body).to.be.an('object');
           expect(res.body.error).to.equal('No such user in our database');

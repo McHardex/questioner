@@ -67,7 +67,7 @@ class QuestionController {
         if (error || response.rowCount < 1) {
           res.status(404).json({
             status: 404,
-            error: 'Unable to update! No question found',
+            error: 'Unable to upvote! No question found',
           });
         } else {
           res.status(200).json({
@@ -90,7 +90,7 @@ class QuestionController {
         if (error || response.rowCount < 1) {
           res.status(404).json({
             status: 404,
-            error: 'Unable to update! No question found',
+            error: 'Unable to downvote! No question found',
           });
         } else {
           res.status(200).send({

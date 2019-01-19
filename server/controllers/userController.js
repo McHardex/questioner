@@ -44,15 +44,11 @@ class UserController {
           status: 201,
           data: {
             token,
-            message: 'Account successfully created',
             user: {
               id: results.rows[0].id,
-              firstname: results.rows[0].firstname,
-              lastname: results.rows[0].lastname,
-              othername: results.rows[0].othername,
               username: results.rows[0].username,
-              phoneNumber: results.rows[0].phoneNumber,
-              isAdmin: results.rows[0].isAdmin,
+              email: results.rows[0].email,
+              isAdmin: results.rows[0].isadmin,
               registered: results.rows[0].registered,
             },
           },
@@ -89,8 +85,8 @@ class UserController {
             token,
             user: {
               email: results.rows[0].email,
-              firstname: results.rows[0].firstname,
               username: results.rows[0].username,
+              isAdmin: results.rows[0].isadmin,
             },
           }],
         });

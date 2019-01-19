@@ -1,11 +1,11 @@
 const rsvpDb = `
   DROP TABLE IF EXISTS rsvps CASCADE;
   CREATE TABLE rsvps (
-    id INTEGER,
-    meetup_id INTEGER NOT NULL, 
+    id SERIAL NOT NULL,
+    meetup_id INTEGER UNIQUE NOT NULL, 
     user_id INTEGER NOT NULL,
-    response VARCHAR(255) NOT NULL,
-    PRIMARY KEY(meetup_id, user_id)
+    response VARCHAR(6) NOT NULL,
+    PRIMARY KEY(id, meetup_id, user_id)
   );
 `;
 

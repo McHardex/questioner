@@ -16,12 +16,12 @@ import connectionString from '../../config';
 
 dotenv.config();
 
+const client = new Client(connectionString);
 
 const createQuery = (query) => {
-  const client = new Client(connectionString);
   client.connect((err) => {
     if (err) {
-      console.error('error connecting to database', err.stack);
+      console.error('error connecting to database', err.message);
     } else {
       console.log(`connected to ${connectionString}`);
     }

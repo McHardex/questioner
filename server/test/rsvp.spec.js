@@ -3,66 +3,153 @@ import request from 'supertest';
 
 import { expect } from 'chai';
 
+import jwt from 'jsonwebtoken';
+
+import dotenv from 'dotenv';
+
 import server from '../index';
+
+dotenv.config();
+
+const invalidString = 'wrong token';
+const token = jwt.sign({ userID: 1 }, process.env.SECRET);
+const wrongToken = `${token}as67asas`;
 
 describe('RSVPs', () => {
   describe('GET /rsvps', () => {
-    xit('should return status code 200 on successful fetching of all rsvps', (done) => {
+    it('should return status code 401 when no token is passed', (done) => {
       request(server)
         .get('/api/v1/rsvps')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
+          expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('data');
-          expect(res.body.data[0]).to.have.all.keys('meetup_id', 'topic', 'status');
-          expect(res.body.data[0].meetup_id).to.equal(2);
-          expect(res.body.data[0].topic).to.equal('bootcamp cycle-40');
-          expect(res.body.data[0].status).to.equal('yes');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('No Token provided');
+          done();
+        });
+    });
+
+    it('should return status code 422 when string is passed as token', (done) => {
+      request(server)
+        .get('/api/v1/rsvps')
+        .set('x-auth-token', invalidString)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('jwt malformed');
+          done();
+        });
+    });
+
+    it('should return status code 422 when invalid token is passed', (done) => {
+      request(server)
+        .get('/api/v1/rsvps')
+        .set('x-auth-token', wrongToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('invalid signature');
+          done();
+        });
+    });
+
+    it('should return status code 404 when unable to fetch rsvps', (done) => {
+      request(server)
+        .get('/api/v1/rsvps')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('No rsvp record found');
           done();
         });
     });
   });
 
   describe('POST /meetups/:meetup-id/rsvps', () => {
-    let payload = { status: 'yes' };
-    xit('should return status code 201 on successful post to endpoint', (done) => {
+    const payload = {
+      response: 'yes'
+    };
+    it('should return status code 401 when no token is passed', (done) => {
       request(server)
         .post('/api/v1/meetups/1/rsvps')
         .send(payload)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(201);
+          expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('data');
-          expect(res.body.data[0].status).to.equal('yes');
-          expect(res.body.data[0]).to.have.all.keys('meetup_id', 'topic', 'status');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('No Token provided');
           done();
         });
     });
 
-    xit('should return 400 status code when empty payload is passed', (done) => {
-      payload = {};
+    it('should return status code 422 when string is passed as token', (done) => {
       request(server)
         .post('/api/v1/meetups/1/rsvps')
+        .set('x-auth-token', invalidString)
         .send(payload)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('error');
-          expect(res.body.error)
-            .to.equal('Input your status. Let us know if you will be coming');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('jwt malformed');
           done();
         });
     });
 
-    xit('should return 404 status with invalid meetupId', (done) => {
+    it('should return status code 422 when invalid token is passed', (done) => {
       request(server)
-        .post('/api/v1/meetups/invalidId/rsvps')
+        .post('/api/v1/meetups/1/rsvps')
+        .set('x-auth-token', wrongToken)
         .send(payload)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(404);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('error');
-          expect(res.body.error).to.equal('meetup does not exist');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('invalid signature');
+          done();
+        });
+    });
+
+    it('should return 201 status code when successfully posted', (done) => {
+      request(server)
+        .post('/api/v1/meetups/1/rsvps')
+        .set('x-auth-token', token)
+        .send(payload)
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should return 409 status response already recorded', (done) => {
+      request(server)
+        .post('/api/v1/meetups/1/rsvps')
+        .set('x-auth-token', token)
+        .send(payload)
+        .end((err, res) => {
+          expect(res.status).to.equal(409);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'error');
+          expect(res.body.error).to.equal('You can only respond once');
+          done();
+        });
+    });
+
+    it('should return status code 201 when on succesful fetching of all rsvps', (done) => {
+      request(server)
+        .get('/api/v1/rsvps')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'data');
+          expect(res.body.data[0]).to.have.all.keys('id', 'meetup_id', 'user_id', 'response');
+          expect(res.body.data[0].response).to.equal('yes');
           done();
         });
     });

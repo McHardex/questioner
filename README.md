@@ -13,38 +13,41 @@ The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuap
 
 ## Made With
   ### UI
-    * HTML for writing the webpage
-    * CSS for styling
-    * Javascript to add some behaviour
+    - [x] HTML for writing the webpage
+    - [x] CSS for styling
+    - [x] Javascript to add some behaviour
   
   ### Server
-    * Nodejs for server-side logic
-    * Babel for transpiling
-    * Express for api routes implementation
+    - [x] Nodejs for server-side logic
+    - [x] Babel for transpiling
+    - [x] Express for api routes implementation
 
   ### Continuous Integration
-    * Travis CI & Codeclimate for test automation
-    * Coveralls for test coverage report
+    - [x] Travis CI & Codeclimate for test automation
+    - [x] Coveralls for test coverage report
   
   ### Test-Driven Development
-    * Mocha & Chai for api route testing
+    - [x] Mocha & Chai for api route testing
 
 ## Installation.
-  * Install [Nodejs](https://nodejs.org/en/download/)
-  * Clone this repo ``` https://github.com/McHardex/questioner.git ```
-  * Run ```npm install``` to install the required dependencies
-  * Run ```npm test``` to fireup the tests
-  * Navigate to http://localhost:2000/api/v1/welcome
+  - [x] Install [Nodejs](https://nodejs.org/en/download/)
+  - [x] Clone this repo ``` https://github.com/McHardex/questioner.git ```
+  - [x] Run ```npm install``` to install the required dependencies
+  - [x] Run ```npm test``` to fireup the tests
+  - [x] Navigate to http://localhost:2000/api/v1/welcome
 
 ## Features of the template
-* Users can create meetup.
-* Users can get meetups.
-* Users can get upcoming meetups.
-* Users can create questions.
-* Users can get questions.
-* Users can upvote and downvote favorite questions.
-* Users can create RSVPs for meetups.
-* Users can get all rsvps.
+- [x] Admin Users can create meetup.
+- [x] Admin Users can update meetup.
+- [x] Admin Users can delete meetup.
+- [x] Users can get meetups.
+- [x] Users can get upcoming meetups.
+- [x] Users can ask questions in a particular meetup.
+- [x] Users can comment on questions
+- [x] Users can get questions.
+- [x] Users can upvote and downvote questions.
+- [x] Users can create RSVPs for meetups.
+- [x] Users can get all rsvps.
 
 ## Available APIs
 <table>

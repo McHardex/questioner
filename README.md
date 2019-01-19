@@ -13,21 +13,21 @@ The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuap
 
 ## Made With
   ### UI
-    HTML for writing the webpage
-    CSS for styling
-    Javascript to add some behaviour
+    * HTML for writing the webpage
+    * CSS for styling
+    * Javascript to add some behaviour
   
   ### Server
-    Nodejs for server-side logic
-    Babel for transpiling
-    Express for api routes implementation
+    * Nodejs for server-side logic
+    * Babel for transpiling
+    * Express for api routes implementation
 
   ### Continuous Integration
-    Travis CI & Codeclimate for test automation
-    Coveralls for test coverage report
+    * Travis CI & Codeclimate for test automation
+    * Coveralls for test coverage report
   
   ### Test-Driven Development
-    Mocha & Chai for api route testing
+    * Mocha & Chai for api route testing
 
 ## Installation.
   - [x] Install [Nodejs](https://nodejs.org/en/download/)

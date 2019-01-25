@@ -66,6 +66,12 @@ class UserController {
 
   static login(req, res) {
     client.query('SELECT * FROM users WHERE email = $1', [req.body.email], (error, results) => {
+      if (error) {
+        res.status(409).json({
+          status: 409,
+          error,
+        });
+      }
       if (results.rows.length < 1) {
         res.status(404).json({
           status: 404,

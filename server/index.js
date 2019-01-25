@@ -11,4 +11,4 @@ const server = app.listen(port, () => {
   console.log(`questioner listening on port ${port}`);
 });
 
-module.exports = server;
+export default server;

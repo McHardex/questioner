@@ -23,6 +23,12 @@ class CommentController {
     client.query('SELECT * FROM asknow WHERE id = $1',
       [req.body.question_id],
       (error, results) => {
+        if (error) {
+          res.status(409).json({
+            status: 409,
+            error,
+          });
+        }
         if (results.rows === undefined || results.rows.length === 0) {
           res.status(404).json({
             status: 404,

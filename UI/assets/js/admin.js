@@ -1,14 +1,22 @@
-const hide = document.getElementById('que');
-const show = document.getElementById('edit-form');
+/* eslint-disable no-console */
 
-const toggle = () => {
-  if (show.style.display === 'block') {
-    show.style.display = 'none';
-    hide.style.display = 'block';
-  } else {
-    show.style.display = 'block';
-    hide.style.display = 'none';
-  }
-};
+const editIcon = document.getElementById('edit-icon');
+const modal = document.getElementById('modal');
+const hideMeetups = document.getElementById('meetups');
+const closeModal = document.getElementById('closeModal');
+const overlay = document.getElementById('overlay');
 
-module.exports = toggle;
+editIcon.addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log('bukunmi');
+  hideMeetups.style.display = 'none';
+  overlay.style.visibility = 'visible';
+  modal.style.display = 'block';
+});
+
+closeModal.addEventListener('click', (e) => {
+  e.preventDefault();
+  hideMeetups.style.display = 'block';
+  overlay.style.visibility = 'hidden';
+  modal.style.display = 'none';
+});

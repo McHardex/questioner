@@ -16,6 +16,51 @@ header {
   left: 0;
   z-index: 9999;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user {
+  padding: 0 20px;
+  color: #ccc;
+  font-weight: 100;
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: #000;
+  z-index: 1;
+  text-align: center;
+}
+
+.dropdown-content a {
+  color: #ccc;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-weight: 300;
+}
+
+.user:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #222;
+  color: #ea722a;
+}
+.user:hover .dropdown-content {display: block;}
+
+i.fas.fa-user-cog {
+  font-size: 30px;
+  color: #fff;
 }
 
 .questioner-logo {
@@ -44,7 +89,7 @@ header {
 }
 
 .create-meetup-bk {
-  background-image: url(../images/meetup.jpeg);
+  background-image: url(../images/meetup2.jpg);
   background-position: center;
   background-size: cover;
   width: 100%;
@@ -98,61 +143,6 @@ form.search-bar {
   font-weight: 100;
 }
 
-.create-meetup, .editform {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  line-height: 2.5;
-}
-
-.form-input {
-  box-shadow: none;
-  border: none;
-  color: #f2f2f2;
-  background-color: #363636;
-  font-weight: 100;
-  font-size: 14px;
-  line-height: 24px;
-  padding: 8px 16px;
-  outline: none;
-}
-
-label {
-  font-size: 14px;
-  color: #ccc;
-  font-weight: 500;
-}
-
-.submit-form {
-  color: #ccc;
-  border: 1px solid #555;
-  padding: 10px 0;
-  border-radius: 2px;
-  font-size: 18px;
-  outline: none;
-  background: #f96816;
-  color: #fff;
-  font-size: 14px;
-  border: 1px solid #f96816;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.update-form {
-  border: 1px solid #555;
-  padding: 10px 0;
-  border-radius: 2px;
-  font-size: 18px;
-  outline: none;
-  background: transparent;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
 hr {
   border: none;
   height: 1px;
@@ -186,8 +176,15 @@ hr {
   font-size: 12px;
 }
 
-.meetup-text h3 {
+.meetup-text a {
   font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+
+.meetup-text a:hover {
+  color: #ea722a;
 }
 
 .meetups-hori {
@@ -203,56 +200,9 @@ hr {
   color: #fff;
 }
 
-i.fas.fa-trash, i.far.fa-edit {
-  color: #ccc;
-  font-size: 30px;
-  cursor: pointer;
-  opacity: 0.5;
-}
-
-i.fas.fa-trash {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5px;
-}
-
-i.far.fa-edit{
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 5px;
-}
-
 .meetup-cont:hover {
   border: 1px solid #e4e4e4e7;
   opacity: 0.5;
-}
-
-/* form edit */
-.editform {
-  position: relative;
-  width: 95%;
-}
-
-.close-div {
-  color: #F44336;
-  font-size: 40px;
-  font-weight: 800;
-  background: transparent;
-  border: none;
-  border-radius: 50px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-}
-
-.form-edit-cont {
-  transition: 0.3 ease-in-out;
-  display: none;
-  width: 95%;
-  margin: 0 auto;
 }
 
 #overlay {
@@ -282,6 +232,10 @@ i.far.fa-edit{
 
   .meetup-cont {
     border-bottom: 1px solid #ea722a;
+  }
+
+  .user span {
+    display: none;
   }
 }
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Questioner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="./assets/stylesheets/signup.css" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+      <div class="questioner-logo">
+        <a href="../index.html"><img src="./assets/images/logoi.png" alt="questioner-logo"/></a>
+        <span>QUESTIONER</span>
+      </div>
+  </header>
+  <div class="wrapper">
+    <h1>Easy to use. Create an account.</h1>
+    <div class="have-acc">
+      <p>Already have an account? <a href="./login.html" class="sign-in">Sign in</a></p>
+      <hr/>
+    </div>
+    <form class="signup-form" id="signup-form">
+      <div class="form-wrapper">
+        <div class="form1">
+          <label>First Name<sup>*</sup></label>
+          <input type="text" class="form-input" name="firstname" required/>
+          <label>Last Name<sup>*</sup></label>
+          <input type="text" class="form-input" name="lastname" required/>
+          <label>Other Name<sup>*</sup></label>
+          <input type="text" class="form-input" name="othername" required/>
+          <label>Username<sup>*</sup></label>
+          <input type="text" class="form-input" name="username" required/>
+        </div>
+        <div class="form2">
+          <label>Email<sup>*</sup></label>
+          <input type="text" class="form-input" name="email" required/>
+          <label>Phone Number<sup>*</sup></label>
+          <input type="number" class="form-input" name="phoneNumber" required/>
+          <label>Password<sup>*</sup></label>
+          <input type="password" class="form-input" name="password" required/>
+        </div>
+      </div>
+      <p class="required"><sup>*</sup>Required</p>
+      <p id="success">Account Successfully Created <a href="./login.html"> Log in</a></p>
+      <button type="submit" class="submit-form" id="submit-form">Sign up</button>
+    </form>
+  </div>
+  <div class="error-cont" id="error-div">
+    <p id="error"></p>
+    <span id="exit-error">X</span>
+  </div>
+  <script language='javascript' src='./assets/js/signup.js'></script>
+</body>
+</html>

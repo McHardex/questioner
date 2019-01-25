@@ -6,66 +6,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questioner</title>
   <link rel="stylesheet" type="text/css" href="./assets/stylesheets/admin.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 <body>
   <div class='admin-cont'>
-    <Header id='myHeader'>
-      <a href='./post.html' >HOME</a>
-      <a href='./profile.html' >PROFILE</a>
-      <a href='./admin.html' >ADMIN</a>
-      <a href='./sign-in.html' ><img class='logout-icon' src='./assets/images/logout-icon.png' alt='logout icon'/></a>
-    </Header>
+    <header>
+      <div class="questioner-logo">
+        <a href="./admin.html"><img src="./assets/images/logoi.png" alt="questioner-logo"/></a>
+        <span>QUESTIONER</span>
+      </div>
+    </header>
     <div class='cont'>
-      <h3 class='head-tit'>CREATE MEETUP</h3>
-      <form>
-        <div>
-          <input class='form-input' name='topic' type='text' placeholder='Title'/>
+      <div class="create-meetup-bk">
+        <div class="banner-text">
+          <h1>Create a new Meetup</h1>
+          <p>Enrich lives through open mindset and constructive discussions</p>
         </div>
-        <div>
-          <input class='form-input empty' name='date' type='date'/>
-        </div>
-        <div>
-          <input class='form-input' name='location' type='string' placeholder='Enter your location'/>
-        </div>
-        <div>
-          <input class='form-input' name='tags' type='text' placeholder='Tags'/>
-        </div>
-        <button type='submit' class='submit-form'>SUBMIT</button>
+      </div>
+      <form class="create-meetup">
+        <label>Title</label>
+        <input class='form-input' name='topic' type='text' />
+        <label>Date</label>
+        <input class='form-input empty' name='date' type='date' />
+        <label>Location</label>
+        <input class='form-input' name='location' type='string' />
+        <label>Tags</label>
+        <input class='form-input' name='tags' type='text' />
+        <button type='submit' class='submit-form'>Create Meetup</button>
       </form>
-
       <hr/>
-      
-      <section>
-        <h3 class='head-tit'>MEETUPS</h3>
-        <div id='que'>
-          <h4>What is the Abuja Internship program all about?</h4>
-          <p>Location: <span>Abuja</span></p>
-          <p>Happening on: <span>10/04/2019</span></p>
-          <div class='del-edit'>
-            <button class='del'>DELETE</button>
-            <button class='edit' onclick='toggle()'>EDIT</button>
+
+      <form class="search-bar">
+        <input type="text" autocomplete="on" placeholder="Search Meetup" class="search-meetup" tabindex="2"/>
+      </form>
+      <div id="overlay"></div>
+      <div class="meetups" id="meetups">
+        <div class="meetups-hori">
+          <div class="meetup-cont">
+            <div class="meetup-text">
+              <p>Saturday, January 29, 11:00 AM</p>
+              <h3>Android Cell Approach</h3>
+              <p>Lagos, Festac</p>
+              <span>android, tech, growth</span>
+            </div>
+              <i class="fas fa-trash" title="delete"></i>
+              <i class="far fa-edit" title="edit" id="edit-icon"></i>
+          </div>
+          <div class="meetup-cont">
+            <div class="meetup-text">
+              <p>Saturday, January 29, 11:00 AM</p>
+              <h3>Android Cell Approach</h3>
+              <p>Lagos, Festac</p>
+              <span>android, tech, growth</span>
+            </div>
+              <i class="fas fa-trash" title="delete"></i>
+              <i class="far fa-edit" title="edit"></i>
+          </div>
+          <div class="meetup-cont">
+            <div class="meetup-text">
+              <p>Saturday, January 29, 11:00 AM</p>
+              <h3>Android Cell Approach</h3>
+              <p>Lagos, Festac</p>
+              <span>android, tech, growth</span>
+            </div>
+              <i class="fas fa-trash" title="delete"></i>
+              <i class="far fa-edit" title="edit"></i>
+          </div>
+          <div class="meetup-cont">
+            <div class="meetup-text">
+              <p>Saturday, January 29, 11:00 AM</p>
+              <h3>Android Cell Approach</h3>
+              <p>Lagos, Festac</p>
+              <span>android, tech, growth</span>
+            </div>
+              <i class="fas fa-trash" title="delete"></i>
+              <i class="far fa-edit" title="edit"></i>
+          </div>
+          <div class="meetup-cont">
+            <div class="meetup-text">
+              <p>Saturday, January 29, 11:00 AM</p>
+              <h3>Android Cell Approach</h3>
+              <p>Lagos, Festac</p>
+              <span>android, tech, growth</span>
+            </div>
+              <i class="fas fa-trash" title="delete"></i>
+              <i class="far fa-edit" title="edit"></i>
           </div>
         </div>
-        <form id='edit-form'>
-          <div>
-            <input class='form-input' name='topic' type='text' placeholder='Title' value='What is the Abuja Internship program all about?'/>
-          </div>
-          <div>
-            <input class='form-input' name='date' type='text' value='10/04/2019' placeholder='date'/>
-          </div>
-          <div>
-            <input class='form-input' name='location' type='string' placeholder='Location' value='Abuja'/>
-          </div>
-          <div>
-            <input class='form-input' name='tags' type='text' placeholder='Tags' value='social, games'/>
-          </div>
-          <button type='submit' class='submit-form'>UPDATE</button>
-          <button class='close-div' onclick='toggle()'>X</button>
-        </form>
-      </section>
+      </div>
     </div>
+    <!-- form edit -->
+    <div class="form-edit-cont" id="modal">
+      <form class="editform">
+          <label>Title</label>
+          <input class='form-input' name='topic' type='text' />
+          <label>Date</label>
+          <input class='form-input empty' name='date' type='date' />
+          <label>Location</label>
+          <input class='form-input' name='location' type='string' />
+          <label>Tags</label>
+          <input class='form-input' name='tags' type='text' />
+          <button type='submit' class='update-form'>Update Meetup</button>
+          <button class='close-div' id='closeModal'>X</button>
+        </form>
+      </div>
   </div>
   <script language='javascript' src='./assets/js/admin.js'></script>
-  <script language='javascript' src='./assets/js/header.js'></script>
 </body>
 </html>

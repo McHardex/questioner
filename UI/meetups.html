@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questioner</title>
-  <link rel="stylesheet" type="text/css" href="./assets/stylesheets/admin.css">
+  <link rel="stylesheet" type="text/css" href="./assets/stylesheets/meetups.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:200" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
@@ -19,29 +19,25 @@
   <div class='admin-cont'>
     <header>
       <div class="questioner-logo">
-        <a href="./admin.html"><img src="./assets/images/logoi.png" alt="questioner-logo"/></a>
+        <a href="./meetups.html"><img src="./assets/images/logoi.png" alt="questioner-logo"/></a>
         <span>QUESTIONER</span>
+      </div>
+      <div class="user">
+        <i class="fas fa-user-cog"></i>
+        <span>Adebisi Oluwabukunmi</span>
+        <div class="dropdown-content">
+          <a href="#">Profile</a>
+          <a href="../index.html">logout</a>
+        </div>
       </div>
     </header>
     <div class='cont'>
       <div class="create-meetup-bk">
         <div class="banner-text">
-          <h1>Create a new Meetup</h1>
-          <p>Enrich lives through open mindset and constructive discussions</p>
+          <h1>Find a Meetup</h1>
+          <p>Find past and upcoming meetups</p>
         </div>
       </div>
-      <form class="create-meetup">
-        <label>Title</label>
-        <input class='form-input' name='topic' type='text' />
-        <label>Date</label>
-        <input class='form-input empty' name='date' type='date' />
-        <label>Location</label>
-        <input class='form-input' name='location' type='string' />
-        <label>Tags</label>
-        <input class='form-input' name='tags' type='text' />
-        <button type='submit' class='submit-form'>Create Meetup</button>
-      </form>
-      <hr/>
 
       <form class="search-bar">
         <input type="text" autocomplete="on" placeholder="Search Meetup" class="search-meetup" tabindex="2"/>
@@ -56,8 +52,6 @@
               <p>Lagos, Festac</p>
               <span>android, tech, growth</span>
             </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit" id="edit-icon"></i>
           </div>
           <div class="meetup-cont">
             <div class="meetup-text">
@@ -66,8 +60,6 @@
               <p>Lagos, Festac</p>
               <span>android, tech, growth</span>
             </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
           </div>
           <div class="meetup-cont">
             <div class="meetup-text">
@@ -76,8 +68,6 @@
               <p>Lagos, Festac</p>
               <span>android, tech, growth</span>
             </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
           </div>
           <div class="meetup-cont">
             <div class="meetup-text">
@@ -86,8 +76,6 @@
               <p>Lagos, Festac</p>
               <span>android, tech, growth</span>
             </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
           </div>
           <div class="meetup-cont">
             <div class="meetup-text">
@@ -96,28 +84,11 @@
               <p>Lagos, Festac</p>
               <span>android, tech, growth</span>
             </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
           </div>
         </div>
       </div>
     </div>
-    <!-- form edit -->
-    <div class="form-edit-cont" id="modal">
-      <form class="editform">
-          <label>Title</label>
-          <input class='form-input' name='topic' type='text' />
-          <label>Date</label>
-          <input class='form-input empty' name='date' type='date' />
-          <label>Location</label>
-          <input class='form-input' name='location' type='string' />
-          <label>Tags</label>
-          <input class='form-input' name='tags' type='text' />
-          <button type='submit' class='update-form'>Update Meetup</button>
-          <button class='close-div' id='closeModal'>X</button>
-        </form>
-      </div>
   </div>
-  <script language='javascript' src='./assets/js/admin.js'></script>
+  <!-- <script language='javascript' src='./admin.js'></script> -->
 </body>
 </html>

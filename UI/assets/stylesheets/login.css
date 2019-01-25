@@ -169,6 +169,35 @@ a.sign-up:hover, .getstarted:hover {
   color: #fff;
 }
 
+.error-cont {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  color: #fff;
+  z-index: 99999;
+  background: #ff0000ed;
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+  transition-timing-function: ease-in;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1);
+  display: none;
+}
+
+.error-cont span {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  border-radius: 14px;
+  padding: 5px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 26px;
+  opacity: 0.7;
+  font-weight: 900;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
   .col2 {
     display: none;

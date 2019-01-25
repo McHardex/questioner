@@ -23,11 +23,11 @@
           <a href="../index.html"><img src="./assets/images/logoi.png" alt="questioner-logo"/></a>
           <span>QUESTIONER</span>
         </div>
-        <form class="login-form">
+        <form class="login-form" id="login-form">
           <label for="email">Email</label>
-          <input type="email" class="login-input"/><br/>
+          <input type="email" class="login-input" name="email" required/><br/>
           <label for="password">Password</label>
-          <input type="password" class="login-input"/><br/>
+          <input type="password" class="login-input" name="password" required/><br/>
           <button type="submit" class="sign-in">Sign in</button>
         </form>
         <div class="more-details">
@@ -45,6 +45,11 @@
       <h1>Let's create the future <strong>together</strong></h1>
       <a href="./signup.html" class="getstarted">Get started today</a>
     </div>
+    <div class="error-cont" id="error-div">
+        <p id="error"></p>
+        <span id="exit-error">X</span>
+      </div>
   </div>
+  <script language='javascript' src='./assets/js/login.js'></script>
 </body>
 </html>

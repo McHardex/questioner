@@ -38,39 +38,29 @@ const getAllMeetups = () => {
         meet += `<p>${meetup.location}</p>`;
         meet += `<span>${meetup.tags.join(' ')}</span>`;
         meet += `</div>`;
-        meet += `<i class="fas fa-trash" title="delete"></i>`;
+        meet += `<i class="fas fa-trash" title="delete" id=${meetup.id}></i>`;
         meet += `<i class="far fa-edit" title="edit" id=${meetup.id}></i>`;
         meet += `</div>`;
         meetups.innerHTML += meet;
       });
     });
 };
-
 window.onload = getAllMeetups();
 
-meetups.addEventListener('click', (e) => {
-  if (e.target.id && e.target.classList.contains('fa-edit')) {
-    e.preventDefault();
-    meetups.style.display = 'none';
-    overlay.style.visibility = 'visible';
-    modal.style.display = 'block';
-  }
-});
-
-
-// clear error message
+// clear form error message
 exitError.addEventListener('click', (e) => {
   e.preventDefault();
   errorDiv.style.display = 'none';
 });
 
-// clear error after 15seconds
+// clear form error after 15seconds
 const hideError = () => {
   setTimeout(() => {
     errorDiv.style.display = 'none';
   }, 15000);
 };
 
+// close form error modal
 closeModal.addEventListener('click', (e) => {
   e.preventDefault();
   meetups.style.display = 'grid';
@@ -126,4 +116,22 @@ form.addEventListener('submit', (e) => {
     getAllMeetups();
     window.location.reload();
   }, 1000);
+});
+
+// delete meetup
+meetups.addEventListener('click', (e) => {
+  if (e.target.id && e.target.classList.contains('fa-trash')) {
+    e.preventDefault();
+    fetch(`${route}/${e.target.id}`, {
+      headers: {
+        'content-type': 'application/json; charset=utf-8',
+        'x-auth-token': token
+      },
+      method: 'DELETE',
+    });
+    setTimeout(() => {
+      getAllMeetups();
+      window.location.reload();
+    }, 1000);
+  }
 });

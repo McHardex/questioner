@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable array-callback-return */
 
 const meetups = document.getElementById('meetups');
 const modal = document.getElementById('modal');

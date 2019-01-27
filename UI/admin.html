@@ -30,15 +30,18 @@
           <p>Enrich lives through open mindset and constructive discussions</p>
         </div>
       </div>
-      <form class="create-meetup">
-        <label>Title</label>
-        <input class='form-input' name='topic' type='text' />
+      <p id="success">Meetup Created Successfully</p>
+      <form class="create-meetup" id="create-meetup">
+        <label>Topic</label>
+        <input class='form-input' name='topic' type='text' required />
         <label>Date</label>
-        <input class='form-input empty' name='date' type='date' />
+        <input class='form-input empty' name='happeningOn' type='date' required />
         <label>Location</label>
-        <input class='form-input' name='location' type='string' />
+        <input class='form-input' name='location' type='text' required />
         <label>Tags</label>
-        <input class='form-input' name='tags' type='text' />
+        <input class='form-input' name='tags[]' type='text' id="tag1" required />
+        <input class='form-input' name='tags[]' type='text' id="tag2" required />
+        <input class='form-input' name='tags[]' type='text' id="tag3" required />
         <button type='submit' class='submit-form'>Create Meetup</button>
       </form>
       <hr/>
@@ -48,58 +51,6 @@
       </form>
       <div id="overlay"></div>
       <div class="meetups" id="meetups">
-        <div class="meetups-hori">
-          <div class="meetup-cont">
-            <div class="meetup-text">
-              <p>Saturday, January 29, 11:00 AM</p>
-              <h3>Android Cell Approach</h3>
-              <p>Lagos, Festac</p>
-              <span>android, tech, growth</span>
-            </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit" id="edit-icon"></i>
-          </div>
-          <div class="meetup-cont">
-            <div class="meetup-text">
-              <p>Saturday, January 29, 11:00 AM</p>
-              <h3>Android Cell Approach</h3>
-              <p>Lagos, Festac</p>
-              <span>android, tech, growth</span>
-            </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
-          </div>
-          <div class="meetup-cont">
-            <div class="meetup-text">
-              <p>Saturday, January 29, 11:00 AM</p>
-              <h3>Android Cell Approach</h3>
-              <p>Lagos, Festac</p>
-              <span>android, tech, growth</span>
-            </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
-          </div>
-          <div class="meetup-cont">
-            <div class="meetup-text">
-              <p>Saturday, January 29, 11:00 AM</p>
-              <h3>Android Cell Approach</h3>
-              <p>Lagos, Festac</p>
-              <span>android, tech, growth</span>
-            </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
-          </div>
-          <div class="meetup-cont">
-            <div class="meetup-text">
-              <p>Saturday, January 29, 11:00 AM</p>
-              <h3>Android Cell Approach</h3>
-              <p>Lagos, Festac</p>
-              <span>android, tech, growth</span>
-            </div>
-              <i class="fas fa-trash" title="delete"></i>
-              <i class="far fa-edit" title="edit"></i>
-          </div>
-        </div>
       </div>
     </div>
     <!-- form edit -->
@@ -117,6 +68,10 @@
           <button class='close-div' id='closeModal'>X</button>
         </form>
       </div>
+  </div>
+  <div class="error-cont" id="error-div">
+    <p id="error"></p>
+    <span id="exit-error">X</span>
   </div>
   <script language='javascript' src='./assets/js/admin.js'></script>
 </body>

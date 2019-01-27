@@ -55,15 +55,18 @@
     </div>
     <!-- form edit -->
     <div class="form-edit-cont" id="modal">
+      <p id="edit-success">Meetup Updated Successfully</p>
       <form class="editform">
-          <label>Title</label>
-          <input class='form-input' name='topic' type='text' />
+            <label>Topic</label>
+          <input class='form-input' name='topic' type='text' id='topic' required />
           <label>Date</label>
-          <input class='form-input empty' name='date' type='date' />
+          <input class='form-input empty' name='happeningOn' id='happeningOn' type='date' required />
           <label>Location</label>
-          <input class='form-input' name='location' type='string' />
+          <input class='form-input' name='location' type='text' id='location' required />
           <label>Tags</label>
-          <input class='form-input' name='tags' type='text' />
+          <input class='form-input' name='tags[]' type='text' id="edit-tag1" required />
+          <input class='form-input' name='tags[]' type='text' id="edit-tag2" required />
+          <input class='form-input' name='tags[]' type='text' id="edit-tag3" required />
           <button type='submit' class='update-form'>Update Meetup</button>
           <button class='close-div' id='closeModal'>X</button>
         </form>

@@ -258,7 +258,7 @@ i.far.fa-edit:hover, i.fas.fa-trash:hover{
   cursor: pointer;
 }
 
-.form-edit-cont {
+#modal {
   transition: 0.3 ease-in-out;
   display: none;
   width: 95%;
@@ -306,14 +306,14 @@ i.far.fa-edit:hover, i.fas.fa-trash:hover{
   font-weight: 900;
 }
 
-#success {
+#success, #edit-success {
   color: #ccc;
   display: block;
   visibility: hidden;
   text-align: center;
 }
 
-#success p {
+#success p, #edit-success p {
   text-decoration: none;
   color: #ea722c;
   cursor: pointer;

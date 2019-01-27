@@ -6,14 +6,20 @@ const modal = document.getElementById('modal');
 const closeModal = document.getElementById('closeModal');
 const overlay = document.getElementById('overlay');
 const form = document.getElementById('create-meetup');
+const submitEdit = document.getElementsByClassName('editform');
 const tag1 = document.getElementById('tag1');
 const tag2 = document.getElementById('tag2');
 const tag3 = document.getElementById('tag3');
+
+const editTag1 = document.getElementById('edit-tag1');
+const editTag2 = document.getElementById('edit-tag2');
+const editTag3 = document.getElementById('edit-tag3');
 
 const error = document.getElementById('error');
 const exitError = document.getElementById('exit-error');
 const errorDiv = document.getElementById('error-div');
 const successMsg = document.getElementById('success');
+const editSuccess = document.getElementById('edit-success');
 
 const route = 'http://localhost:2000/api/v1/meetups';
 const token = localStorage.getItem('token');
@@ -59,14 +65,6 @@ const hideError = () => {
     errorDiv.style.display = 'none';
   }, 15000);
 };
-
-// close form error modal
-closeModal.addEventListener('click', (e) => {
-  e.preventDefault();
-  meetups.style.display = 'grid';
-  overlay.style.visibility = 'hidden';
-  modal.style.display = 'none';
-});
 
 // admin create meetup
 const createMeetup = () => {
@@ -134,4 +132,66 @@ meetups.addEventListener('click', (e) => {
       window.location.reload();
     }, 1000);
   }
+});
+
+// edit meetup
+meetups.addEventListener('click', (e) => {
+  if (e.target.id && e.target.classList.contains('fa-edit')) {
+    const { id } = e.target;
+    modal.style.display = 'block';
+    meetups.style.display = 'none';
+    overlay.style.visibility = 'visible';
+    submitEdit[0].setAttribute('id', `${id}`);
+  }
+});
+
+// close form edit modal
+closeModal.addEventListener('click', (e) => {
+  e.preventDefault();
+  getAllMeetups();
+  window.location.reload();
+  meetups.style.display = 'grid';
+  overlay.style.visibility = 'hidden';
+  modal.style.display = 'none';
+});
+
+submitEdit[0].addEventListener('submit', (e) => {
+  e.preventDefault();
+  const tagsValue1 = editTag1.value;
+  const tagsValue2 = editTag2.value;
+  const tagsValue3 = editTag3.value;
+  const tagsArray = [tagsValue1, tagsValue2, tagsValue3];
+  const meetupDetails = {
+    topic: document.getElementById('topic').value,
+    happeningOn: document.getElementById('happeningOn').value,
+    location: document.getElementById('location').value,
+    tags: tagsArray
+  };
+  fetch(`${route}/${e.target.id}`, {
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+      'x-auth-token': token
+    },
+    method: 'PUT',
+    body: JSON.stringify(meetupDetails)
+  })
+    .then(response => response.json())
+    .then((data) => {
+      if (data.error) {
+        error.innerHTML = data.error;
+        errorDiv.style.display = 'block';
+        editSuccess.style.visibility = 'hidden';
+        hideError();
+      } else {
+        editSuccess.style.visibility = 'visible';
+        errorDiv.style.display = 'none';
+        submitEdit[0].reset();
+        setTimeout(() => {
+          editSuccess.style.visibility = 'hidden';
+        }, 10000);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });

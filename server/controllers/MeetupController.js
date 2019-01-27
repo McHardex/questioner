@@ -124,10 +124,10 @@ class MeetupController {
         } = req.body;
         client.query('UPDATE meetups SET topic = $1, location = $2, happeningOn = $3, tags = $4 WHERE id = $5',
           [topic, location, happeningOn, tags, req.params.id], (err, response) => {
-            if (response.rowCount < 1) {
+            if (err) {
               res.status(404).json({
                 status: 404,
-                error: 'Unable to update! No meetup found',
+                error: err,
               });
             } else {
               res.status(200).json({

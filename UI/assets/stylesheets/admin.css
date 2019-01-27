@@ -115,6 +115,7 @@ form.search-bar {
   line-height: 24px;
   padding: 8px 16px;
   outline: none;
+  margin: 2px 0;
 }
 
 label {
@@ -156,21 +157,29 @@ label {
 hr {
   border: none;
   height: 1px;
-  background: #cccccc63;
+  background: #7e696963;
+}
+
+div#meetups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-gap: 30px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .meetup-cont {
-  min-width: 30%;
   text-align: center;
   background: transparent;
   color: #ccc;
-  min-height: 55vh;
+  min-height: 65vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   border: 2px solid #353535d9;
   position: relative;
+  box-shadow: 0 0 22px #eeeeee45;
 }
 
 .meetup-text span {
@@ -183,23 +192,19 @@ hr {
 }
 
 .meetup-text p {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .meetup-text h3 {
   font-size: 15px;
 }
 
-.meetups-hori {
-  display: grid;
-  grid-template-columns: 30% 30% 30%;
-  text-align: center;
-  grid-gap: 30px;
-  justify-content: center;
-}
-
 .meetup-text {
-  line-height: 2.5;
+  height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 10px;
   color: #fff;
 }
 
@@ -222,6 +227,11 @@ i.far.fa-edit{
   top: 0;
   right: 0;
   padding: 5px;
+}
+
+i.far.fa-edit:hover, i.fas.fa-trash:hover{
+  color: #fff;
+  opacity: 1;
 }
 
 .meetup-cont:hover {
@@ -267,9 +277,55 @@ i.far.fa-edit{
   opacity: 0.8;
 }
 
+.error-cont {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  color: #fff;
+  z-index: 99999;
+  background: #ff0000ed;
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+  transition-timing-function: ease-in;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1);
+  display: none;
+}
+
+.error-cont span {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  border-radius: 14px;
+  padding: 5px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 26px;
+  opacity: 0.7;
+  font-weight: 900;
+}
+
+#success {
+  color: #ccc;
+  display: block;
+  visibility: hidden;
+  text-align: center;
+}
+
+#success p {
+  text-decoration: none;
+  color: #ea722c;
+  cursor: pointer;
+}
+
+#tag1, #tag2, #tag3 {
+  font-weight: 900;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
-  .meetups-hori {
-    grid-template-columns: 90%;
+  div#meetups {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
   .meetup-cont {
@@ -286,7 +342,7 @@ i.far.fa-edit{
 }
 
 @media (min-width: 480px) and (max-width: 768px) {
-  .meetups-hori {
-    grid-template-columns: 45% 45%;
+  div#meetups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

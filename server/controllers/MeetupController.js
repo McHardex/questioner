@@ -76,7 +76,7 @@ class MeetupController {
           if (error) {
             res.status(404).json({
               status: 404,
-              error: 'Meetup already exists, try creating a new one',
+              error,
             });
           } else {
             return res.status(201).json({

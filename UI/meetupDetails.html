@@ -24,55 +24,49 @@
       </div>
       <div class="user">
         <i class="fas fa-user-cog"></i>
-        <span>Adebisi Oluwabukunmi</span>
+        <span id="user"></span>
         <div class="dropdown-content">
           <a href="#">Profile</a>
-          <a href="#">logout</a>
+          <a href="meetups.html">Meetup</a>
+          <a class="cte-meetup">Admin</a>
+          <a href="" id="logout">logout</a>
         </div>
       </div>
     </header>
     <div class="m-cont">
       <div class="m-image"></div>
       <div class="m-text">
-        <h1>Learn to code in 2019</h1>
+        <h1 id="spe-topic"></h1>
         <div class="location">
           <i class="fas fa-map-marker-alt"></i>
-          <p>Abuja, kagawa</p>
+          <p id="spe-location"></p>
         </div>
         <div class="rsvp">
           <i class="fas fa-users"></i>
-          <p>12 persons are coming</p>
+          <p class="rsvps"></p>
         </div>
         <div class="date">
           <i class="fas fa-calendar-week"></i>
-          <p>29 Jan, 2019</p>
+          <p id="spe-happeningOn"></p>
         </div>
       </div>
     </div>
+    <form id="rsvp-submit" type="submit">
+      <input type="text" class="rsvp-val" name="rsvpInput" placeholder="Will you love to attend this meetup?" autocomplete="off"/>
+      <span id="rsvp-msg"></span>
+    </form>
+    <form id="question-submit">
+      <input type="text" class="question-val" name="questionInput" placeholder="Ask your question"/>
+      <button type="submit" class="submit-ques">Send your question</button>
+    </form>
     <hr/>
     <p class="dicussions">Discussions</p>
-    <div class="questions">
-      <div class="question-cont">
-        <h3>What is the purpose of the meetup?</h3>
-        <div class="likes-dis">
-          <div class="upvote">
-            <i class="far fa-thumbs-up"></i>
-            <span>0</span>
-          </div>
-          <div class="downvote">
-            <i class="far fa-thumbs-down"></i>
-            <span>0</span>
-          </div>
-        </div>
-        <form id='comment'>
-          <input type='text' class='form-input' placeholder='comment'/>
-          <input type='submit' class='submit-comment' value="Send"/>
-        </form>
-        <p>the program we are hacnig today is not just anyhow program. There are certain things to improve in.</p>
-        <p>the program we are hacnig today is not just anyhow program. There are certain things to improve in.</p>
-        <p>the program we are hacnig today is not just anyhow program. There are certain things to improve in.</p>
-      </div>
+    <div id="questions"></div>
+    <div class="error-cont" id="error-div">
+      <p id="error"></p>
     </div>
   </div>
+  <script language='javascript' src='./assets/js/specificMeetup.js'></script>
+  <script language='javascript' src='./assets/js/general.js'></script>
 </body>
 </html>

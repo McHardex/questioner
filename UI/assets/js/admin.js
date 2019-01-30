@@ -126,11 +126,25 @@ meetups.addEventListener('click', (e) => {
         'x-auth-token': token
       },
       method: 'DELETE',
-    });
-    setTimeout(() => {
-      getAllMeetups();
-      window.location.reload();
-    }, 1000);
+    })
+      .then(response => response.json())
+      .then((data) => {
+        if (data.error) {
+          error.innerHTML = data.error;
+          errorDiv.style.display = 'block';
+          editSuccess.style.visibility = 'hidden';
+          hideError();
+        } else {
+          errorDiv.style.display = 'none';
+          setTimeout(() => {
+            getAllMeetups();
+            window.location.reload();
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
 

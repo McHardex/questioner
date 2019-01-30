@@ -93,6 +93,9 @@ class UserController {
               email: results.rows[0].email,
               username: results.rows[0].username,
               isAdmin: results.rows[0].isadmin,
+              firstname: results.rows[0].firstname,
+              lastname: results.rows[0].lastname,
+              othername: results.rows[0].othername,
             },
           }],
         });

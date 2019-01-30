@@ -12,6 +12,8 @@ import rsvpDB from '../../models/rsvpDb';
 
 import meetupDb from '../../models/meetupDb';
 
+import commentDb from '../../models/commentDb';
+
 import connectionString from '../../config';
 
 dotenv.config();
@@ -42,4 +44,4 @@ const createQuery = (query) => {
     });
 };
 
-createQuery(`${userDb}${meetupDb}${questionDb}${rsvpDB}`);
+createQuery(`${userDb}${meetupDb}${questionDb}${commentDb}${rsvpDB}`);

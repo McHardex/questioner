@@ -19,6 +19,27 @@ class CommentController {
    * @returns {json} question details and the comment
   */
 
+  // (SELECT question_id, string_agg(comment, '...<br /> ') AS comment
+  // FROM comments GROUP BY question_id)
+
+  static getAllComments(req, res) {
+    client.query(`SELECT title, upvote, downvote, meetup_id, a.id, COALESCE(string_agg(comment, '...<br />'), 'Be the first to comment') AS comment
+      FROM comments c
+      FULL JOIN asknow a ON a.id = c.question_id
+      GROUP BY (a.title, a.upvote, a.downvote, a.meetup_id, a.id)`, (error, results) => {
+      if (error) {
+        return res.status(404).json({
+          status: 404,
+          error,
+        });
+      }
+      res.status(200).json({
+        status: 200,
+        data: results.rows,
+      });
+    });
+  }
+
   static comment(req, res) {
     client.query('SELECT * FROM asknow WHERE id = $1',
       [req.body.question_id],
@@ -29,25 +50,25 @@ class CommentController {
             error,
           });
         }
-        if (results.rows === undefined || results.rows.length === 0) {
-          res.status(404).json({
-            status: 404,
-            error: 'question does not exist',
-          });
-        }
-        client.query('INSERT INTO asknow (comment, question_id) VALUES ($1, $2) RETURNING *',
+        client.query('INSERT INTO comments (comment, question_id) VALUES ($1, $2) RETURNING *',
           [req.body.comment, req.body.question_id],
           (err, response) => {
-            if (err) throw err;
-            return res.status(201).json({
-              status: 201,
-              data: [{
-                question_id: results.rows[0].id,
-                title: results.rows[0].title,
-                body: results.rows[0].body,
-                comment: response.rows[0].comment,
-              }],
-            });
+            if (err) {
+              res.status(404).json({
+                status: 404,
+                error: 'question does not exist',
+              });
+            } else {
+              res.status(201).json({
+                status: 201,
+                data: [{
+                  question_id: req.body.question_id,
+                  title: results.rows[0].title,
+                  body: results.rows[0].body,
+                  comment: response.rows[0].comment,
+                }],
+              });
+            }
           });
       });
   }

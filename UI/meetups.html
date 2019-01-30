@@ -24,10 +24,11 @@
       </div>
       <div class="user">
         <i class="fas fa-user-cog"></i>
-        <span>Adebisi Oluwabukunmi</span>
+        <span id="user"></span>
         <div class="dropdown-content">
           <a href="#">Profile</a>
-          <a href="../index.html" id="logout">logout</a>
+          <a class="cte-meetup">Admin</a>
+          <a href="" id="logout">logout</a>
         </div>
       </div>
     </header>
@@ -43,20 +44,10 @@
         <input type="text" autocomplete="on" placeholder="Search Meetup" class="search-meetup" tabindex="2"/>
       </form>
       <div id="overlay"></div>
-      <div class="meetups" id="meetups">
-        <div class="meetups-hori">
-          <div class="meetup-cont">
-            <div class="meetup-text">
-              <p>Saturday, January 29, 11:00 AM</p>
-              <h3><a href="./meetupDetails.html">Android Cell Approach</a></h3>
-              <p>Lagos, Festac</p>
-              <span>android, tech, growth</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="meetups" id="meetups"></div>
     </div>
   </div>
-  <script language='javascript' src='./assets/js/main.js'></script>
+  <script language='javascript' src='./assets/js/general.js'></script>
+  <script language='javascript' src='./assets/js/meetups.js'></script>
 </body>
 </html>

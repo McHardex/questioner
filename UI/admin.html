@@ -17,12 +17,21 @@
 </head>
 <body>
   <div class='admin-cont'>
-    <header>
-      <div class="questioner-logo">
-        <a href="./admin.html"><img src="./assets/images/logoi.png" alt="questioner-logo"/></a>
-        <span>QUESTIONER</span>
-      </div>
-    </header>
+      <header>
+        <div class="questioner-logo">
+          <a href="./meetups.html"><img src="./assets/images/logoi.png" alt="questioner-logo"/></a>
+          <span>QUESTIONER</span>
+        </div>
+        <div class="user">
+          <i class="fas fa-user-cog"></i>
+          <span id="user"></span>
+          <div class="dropdown-content">
+            <a href="#">Profile</a>
+            <a class="" href="meetups.html">Meetup</a>
+            <a href="" id="logout">logout</a>
+          </div>
+        </div>
+      </header>
     <div class='cont'>
       <div class="create-meetup-bk">
         <div class="banner-text">
@@ -50,8 +59,7 @@
         <input type="text" autocomplete="on" placeholder="Search Meetup" class="search-meetup" tabindex="2"/>
       </form>
       <div id="overlay"></div>
-      <div class="meetups" id="meetups">
-      </div>
+      <div class="meetups" id="meetups"></div>
     </div>
     <!-- form edit -->
     <div class="form-edit-cont" id="modal">
@@ -77,5 +85,6 @@
     <span id="exit-error">X</span>
   </div>
   <script language='javascript' src='./assets/js/admin.js'></script>
+  <script language='javascript' src='./assets/js/general.js'></script>
 </body>
 </html>

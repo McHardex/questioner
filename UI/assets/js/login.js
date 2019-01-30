@@ -40,6 +40,7 @@ const loginUser = () => {
       } else {
         errorDiv.style.display = 'none';
         localStorage.setItem('token', data.data[0].token);
+        localStorage.setItem('user', JSON.stringify(data.data[0].user));
         if (data.data[0].user.isAdmin) {
           window.location.href = 'admin.html';
         } else {

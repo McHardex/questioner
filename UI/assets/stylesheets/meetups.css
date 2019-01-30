@@ -150,17 +150,24 @@ hr {
 }
 
 .meetup-cont {
-  min-width: 30%;
   text-align: center;
   background: transparent;
   color: #ccc;
-  min-height: 55vh;
+  min-height: 65vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   border: 2px solid #353535d9;
-  position: relative;
+  box-shadow: 0 0 22px #eeeeee45;
+}
+
+#meetups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-gap: 30px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .meetup-text span {
@@ -172,18 +179,14 @@ hr {
   border: 1px solid #eeeeee52;
 }
 
-.meetup-text p {
-  font-size: 12px;
-}
-
-.meetup-text a {
+.meetup-text h3 {
   font-size: 15px;
   cursor: pointer;
   text-decoration: none;
   color: #fff;
 }
 
-.meetup-text a:hover {
+.meetup-text h3:hover {
   color: #ea722a;
 }
 
@@ -196,7 +199,11 @@ hr {
 }
 
 .meetup-text {
-  line-height: 2.5;
+  height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 10px;
   color: #fff;
 }
 
@@ -217,9 +224,14 @@ hr {
   opacity: 0.8;
 }
 
+a.cte-meetup {
+  cursor: pointer;
+  display: none;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
-  .meetups-hori {
-    grid-template-columns: 90%;
+  #meetups {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
   .meetup-cont {
@@ -235,12 +247,12 @@ hr {
   }
 
   .user span {
-    display: none;
+    /* display: none; */
   }
 }
 
 @media (min-width: 480px) and (max-width: 768px) {
-  .meetups-hori {
-    grid-template-columns: 45% 45%;
+  #meetups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

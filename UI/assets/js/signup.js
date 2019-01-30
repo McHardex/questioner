@@ -51,7 +51,7 @@ const signupUser = () => {
         localStorage.setItem('token', data.data.token);
         setTimeout(() => {
           window.location.href = 'login.html';
-        }, 5000);
+        }, 2000);
       }
     })
     .catch((err) => {

@@ -64,16 +64,17 @@ fetch('http://localhost:2000/api/v1/rsvps', {
 })
   .then(response => response.json())
   .then((data) => {
-    const filterData = data.data.filter(rsvp => (rsvp.meetup_id === meetupDetails.id) && (rsvp.response === 'yes' || 'maybe'));
-    if (filterData.length === 0) {
-      rsvps[0].innerHTML = `no one is coming yets`;
-    } else if (filterData.length === 1) {
-      rsvps[0].innerHTML = `${filterData.length} person is coming`;
+    if (data.error) {
+      rsvps[0].innerHTML = `no one is coming yet`;
     } else {
-      rsvps[0].innerHTML = `${filterData.length} people are coming`;
+      const filterData = data.data.filter(rsvp => (rsvp.meetup_id === meetupDetails.id) && (rsvp.response === 'yes' || 'maybe'));
+      if (filterData.length === 1) {
+        rsvps[0].innerHTML = `${filterData.length} person is coming`;
+      } else {
+        rsvps[0].innerHTML = `${filterData.length} people are coming`;
+      }
     }
   });
-
 
 window.onload = getQuestions();
 

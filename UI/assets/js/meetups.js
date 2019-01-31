@@ -37,7 +37,6 @@ window.onload = getAllMeetups();
 meetups.addEventListener('click', (e) => {
   if (e.target.id && e.target.classList.contains('meetup-topic')) {
     const meetupId = e.target.id;
-    console.log(meetupId);
     fetch(`${route}/${meetupId}`, {
       headers: {
         'content-type': 'application/json; charset=utf-8',

@@ -10,7 +10,7 @@ const questionDb = `
     upvote INTEGER DEFAULT 0 CHECK (upvote >= 0),
     downvote INTEGER DEFAULT 0 CHECK (downvote >= 0),
     FOREIGN KEY (createdBy) REFERENCES users (id),
-    FOREIGN KEY (meetup_id) REFERENCES meetups (id)
+    FOREIGN KEY (meetup_id) REFERENCES meetups (id) ON DELETE CASCADE ON UPDATE CASCADE
   );
 `;
 

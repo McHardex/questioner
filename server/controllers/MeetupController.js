@@ -96,6 +96,7 @@ class MeetupController {
       if (err) return res.status(400).json({ status: 400, error: err });
       if (result.rows[0].isadmin) {
         client.query('DELETE FROM meetups WHERE id = $1', [req.params.id], (error, response) => {
+          if (error) return res.status(400).json({ status: 400, error });
           if (response.rowCount < 1) {
             res.status(404).json({
               status: 404,

@@ -90,6 +90,7 @@ class UserController {
           data: [{
             token,
             user: {
+              id: results.rows[0].id,
               email: results.rows[0].email,
               username: results.rows[0].username,
               isAdmin: results.rows[0].isadmin,

@@ -368,4 +368,8 @@ input.rsvp-val {
   input.rsvp-val {
     width: 100%;
   }
+
+  .user span {
+    display: none;
+  }
 }

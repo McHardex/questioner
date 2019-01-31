@@ -184,6 +184,7 @@ hr {
   cursor: pointer;
   text-decoration: none;
   color: #fff;
+  text-transform: capitalize;
 }
 
 .meetup-text h3:hover {
@@ -242,12 +243,17 @@ a.cte-meetup {
     font-size: 30px;
   }
 
+  .meetup-text h3 {
+    font-size: 16px;
+    color: #dd7836;
+    }
+
   .meetup-cont {
     border-bottom: 1px solid #ea722a;
   }
 
   .user span {
-    /* display: none; */
+    display: none;
   }
 }
 

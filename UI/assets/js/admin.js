@@ -68,9 +68,9 @@ const hideError = () => {
 
 // admin create meetup
 const createMeetup = () => {
-  const tagsValue1 = tag1.value;
-  const tagsValue2 = tag2.value;
-  const tagsValue3 = tag3.value;
+  const tagsValue1 = tag1.value.toLowerCase();
+  const tagsValue2 = tag2.value.toLowerCase();
+  const tagsValue3 = tag3.value.toLowerCase();
   const tagsArray = [tagsValue1, tagsValue2, tagsValue3];
   const meetupDetails = {
     topic: form.topic.value,
@@ -103,7 +103,7 @@ const createMeetup = () => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      throw new Error(err);
     });
 };
 
@@ -143,7 +143,7 @@ meetups.addEventListener('click', (e) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        throw new Error(err);
       });
   }
 });
@@ -206,6 +206,6 @@ submitEdit[0].addEventListener('submit', (e) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      throw new Error(err);
     });
 });

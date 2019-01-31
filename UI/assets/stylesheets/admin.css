@@ -242,6 +242,7 @@ hr {
 
 .meetup-text h3 {
   font-size: 15px;
+  text-transform: capitalize;
 }
 
 .meetup-text {
@@ -384,6 +385,10 @@ i.far.fa-edit:hover, i.fas.fa-trash:hover{
 
   .banner-text h1 {
     font-size: 30px;
+  }
+
+  .user span {
+    display: none;
   }
 }
 

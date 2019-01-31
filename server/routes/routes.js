@@ -42,6 +42,7 @@ router.patch('/questions/:question_id/upvote', auth, QuestionController.upvoteQu
 router.patch('/questions/:question_id/downvote', auth, QuestionController.downvoteQuestion);
 router.post('/comments', auth, commentValid, CommentController.comment);
 router.get('/comments', auth, CommentController.getAllComments);
+router.get('/comments/:user_id', CommentController.getSpecificUserComment);
 
 // Rsvp enpoints
 router.get('/rsvps', auth, RsvpController.getAllRsvps);

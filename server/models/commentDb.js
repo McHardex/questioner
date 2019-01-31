@@ -2,8 +2,9 @@ const commentDb = `
   DROP TABLE IF EXISTS comments CASCADE;
   CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
     comment VARCHAR(200) NOT NULL,
-    question_id INTEGER REFERENCES asknow (id)
+    question_id INTEGER REFERENCES asknow (id) ON DELETE CASCADE ON UPDATE CASCADE
   );
 `;
 

@@ -24,54 +24,127 @@
       </div>
       <div class="user">
         <i class="fas fa-user-cog"></i>
-        <span>Adebisi Oluwabukunmi</span>
+        <span id="user">Anonymous</span>
         <div class="dropdown-content">
-          <a href="#">Profile</a>
-          <a href="#">logout</a>
+          <a href="profile.html">Profile</a>
+          <a href="meetups.html">Meetup</a>
+          <a class="cte-meetup">Admin</a>
+          <a href="" id="logout">logout</a>
         </div>
       </div>
     </header>
     <div class="m-cont">
       <div class="m-image"></div>
       <div class="m-text">
-        <h1>Learn to code in 2019</h1>
+        <h1 id="spe-topic"></h1>
         <div class="location">
           <i class="fas fa-map-marker-alt"></i>
-          <p>Abuja, kagawa</p>
+          <p id="spe-location">Lagos, Festac</p>
         </div>
         <div class="rsvp">
           <i class="fas fa-users"></i>
-          <p>12 persons are coming</p>
+          <p class="rsvps">120 people are coming</p>
         </div>
         <div class="date">
           <i class="fas fa-calendar-week"></i>
-          <p>29 Jan, 2019</p>
+          <p id="spe-happeningOn">Wednesday January 24, 2019</p>
         </div>
       </div>
     </div>
+    <form id="rsvp-submit" type="submit">
+      <input type="text" class="rsvp-val" name="rsvpInput" placeholder="Will you love to attend this meetup?" autocomplete="off"/>
+      <span id="rsvp-msg"></span>
+    </form>
+    <form id="question-submit">
+      <input type="text" class="question-val" name="questionInput" placeholder="Ask your question"/>
+      <button type="submit" class="submit-ques">Send your question</button>
+    </form>
     <hr/>
     <p class="dicussions">Discussions</p>
-    <div class="questions">
-      <div class="question-cont">
-        <h3>What is the purpose of the meetup?</h3>
+    <div id="questions">
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
         <div class="likes-dis">
-          <div class="upvote">
-            <i class="far fa-thumbs-up"></i>
-            <span>0</span>
-          </div>
-          <div class="downvote">
-            <i class="far fa-thumbs-down"></i>
-            <span>0</span>
-          </div>
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
         </div>
-        <form id='comment'>
-          <input type='text' class='form-input' placeholder='comment'/>
-          <input type='submit' class='submit-comment' value="Send"/>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
         </form>
-        <p>the program we are hacnig today is not just anyhow program. There are certain things to improve in.</p>
-        <p>the program we are hacnig today is not just anyhow program. There are certain things to improve in.</p>
-        <p>the program we are hacnig today is not just anyhow program. There are certain things to improve in.</p>
+        <p>explain better</p>
+        </div>
       </div>
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
+        <div class="likes-dis">
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
+        </div>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
+        </form>
+        <p>explain better</p>
+        </div>
+      </div>
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
+        <div class="likes-dis">
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
+        </div>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
+        </form>
+        <p>explain better</p>
+        </div>
+      </div>
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
+        <div class="likes-dis">
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
+        </div>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
+        </form>
+        <p>explain better</p>
+        </div>
+      </div>
+    </div>
+    <div class="error-cont" id="error-div">
+      <p id="error"></p>
     </div>
   </div>
 </body>

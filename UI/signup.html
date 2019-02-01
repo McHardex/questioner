@@ -28,30 +28,36 @@
       <p>Already have an account? <a href="./login.html" class="sign-in">Sign in</a></p>
       <hr/>
     </div>
-    <form class="signup-form">
+    <form class="signup-form" id="signup-form">
       <div class="form-wrapper">
         <div class="form1">
           <label>First Name<sup>*</sup></label>
-          <input type="text" class="form-input"/>
+          <input type="text" class="form-input" name="firstname" required/>
           <label>Last Name<sup>*</sup></label>
-          <input type="text" class="form-input"/>
+          <input type="text" class="form-input" name="lastname" required/>
           <label>Other Name<sup>*</sup></label>
-          <input type="text" class="form-input"/>
+          <input type="text" class="form-input" name="othername" required/>
           <label>Username<sup>*</sup></label>
-          <input type="text" class="form-input"/>
+          <input type="text" class="form-input" name="username" required/>
         </div>
         <div class="form2">
           <label>Email<sup>*</sup></label>
-          <input type="text" class="form-input"/>
+          <input type="text" class="form-input" name="email" required/>
           <label>Phone Number<sup>*</sup></label>
-          <input type="text" class="form-input"/>
+          <input type="number" class="form-input" name="phoneNumber" required/>
           <label>Password<sup>*</sup></label>
-          <input type="password" class="form-input"/>
+          <input type="password" class="form-input" name="password" required/>
         </div>
       </div>
       <p class="required"><sup>*</sup>Required</p>
-      <a type="submit" class="submit-form">Sign up</a>
+      <p id="success">Account Successfully Created <a href="./login.html"> Log in</a></p>
+      <button type="submit" class="submit-form" id="submit-form">Sign up</button>
     </form>
   </div>
+  <div class="error-cont" id="error-div">
+    <p id="error"></p>
+    <span id="exit-error">X</span>
+  </div>
+  <script language='javascript' src='./assets/js/signup.js'></script>
 </body>
 </html>

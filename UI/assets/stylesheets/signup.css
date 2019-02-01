@@ -125,8 +125,9 @@ label {
   cursor: pointer;
   float: left;
   margin: 30px 20px;
-  padding: 7px 55px;
+  padding: 10px 60px;
   color: #f2f2f2;
+  font-size: 15px;
 }
 
 .submit-form:hover {
@@ -134,6 +135,49 @@ label {
   color: #f96816;
   text-decoration: none;
   background-color: transparent;
+}
+
+.error-cont {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  color: #fff;
+  z-index: 99999;
+  background: #ff0000ed;
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+  transition-timing-function: ease-in;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1);
+  display: none;
+}
+
+.error-cont span {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  border-radius: 14px;
+  padding: 5px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 26px;
+  opacity: 0.7;
+  font-weight: 900;
+}
+
+#success {
+  padding: 0 20px;
+  color: #ccc;
+  display: block;
+  visibility: hidden;
+  margin: 0;
+}
+
+#success a {
+  text-decoration: none;
+  color: #ea722c;
+  cursor: pointer;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {

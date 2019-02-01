@@ -1,18 +1,26 @@
 {
   "name": "questioner",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.x"
+  },
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
-  "main": "index.js",
+  "main": "./server/index.js",
   "scripts": {
-    "start": "set NODE_ENV=production&& npm run prod-migrate && babel-node index.js",
-    "start:dev": "node --watch server --exec babel-node index.js",
+    "start": "npm run build:prod && node dist/index.js",
+    "clean:dist": "rimraf ./dist",
+    "build:prod": "npm run clean:dist && npm run prod-migrate && babel ./server --out-dir dist",
+    "start:dev": "export NODE_ENV=development && nodemon --exec babel-node ./server/index.js",
     "prod-migrate": "npm run db-migrate --env production",
-    "db-migrate": "babel-node ./startup/db/db.js",
-    "test": "nyc mocha --exit --compilers js:babel-core/register ./test/**/*.spec.js",
+    "db-migrate": "babel-node ./server/startup/db/db.js",
+    "test": "export NODE_ENV=test && npm run fortest && nyc mocha server/test/**/*.spec.js --exit --compilers babel-register ./server/test/**/*.spec.js",
     "pretest": "eslint --ignore-path .gitignore .",
-    "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register  _mocha --exit test/*.spec.js",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-register _mocha --exit server/test/*.spec.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
-    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info"
+    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
+    "seederA": "babel-node ./server/test/seed/seedMeetup.js && babel-node ./server/test/seed/seedUser.js",
+    "seederB": "babel-node ./server/test/seed/seedQuestion.js",
+    "fortest": "npm run db-migrate && npm run seederA"
   },
   "repository": {
     "type": "git",
@@ -26,24 +34,16 @@
   },
   "homepage": "https://github.com/McHardex/questioner#readme",
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/register": "^7.0.0",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
     "codeclimate-test-reporter": "^0.5.1",
     "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^5.11.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "istanbul": "^0.4.5",
+    "jsdoc": "^3.5.5",
     "mocha": "^5.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.18.9",
@@ -52,9 +52,17 @@
     "supertest": "^3.3.0"
   },
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-istanbul": "^0.12.2",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "moment": "^2.23.0",
+    "pg": "^7.8.0"
   }
 }

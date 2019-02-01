@@ -99,7 +99,7 @@ i.fas.fa-user-cog {
 .m-image {
   background-image: url(../images/meetup2.jpg);
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   width: 55%;
   border-radius: 10px;
@@ -118,10 +118,12 @@ i.fas.fa-user-cog {
 
 .m-text h1 {
  font-size: 25px;
+ text-transform: capitalize;
 }
 
 .m-text p {
   margin-left: 10px;
+  text-transform: capitalize;
 }
 
 hr {
@@ -131,13 +133,48 @@ hr {
   height: 1px;
 }
 
-.dicussions {
-  padding-left: 120px;
-  font-size: 20px;
-  margin-top: 0;
+form#question-submit {
+  width: 80%;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.questions {
+input.question-val {
+  border: 1px solid #ccc;
+  background: transparent;
+  border-radius: 5px 0 0 5px;
+  padding: 20px 10px;
+  width: 80%;
+  font-size: 20px;
+  color: #ccc;
+  outline: none;
+}
+
+button.submit-ques {
+  padding: 10px;
+  border: none;
+  font-size: 20px;
+  background: #9d260e;
+  color: #fff;
+  font-weight: lighter;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+button.submit-ques:hover {
+  background: #eeeeee42;
+  color: #ff3a12;
+}
+
+.dicussions {
+  font-size: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#questions {
   width: 80%;
   margin: 0 auto;
 }
@@ -149,6 +186,10 @@ hr {
   color: #fff;
   box-shadow: 0 0 68px #232323;
   margin: 20px 0;
+}
+
+.question-cont h3 {
+  text-transform: capitalize;
 }
 
 i.far.fa-thumbs-up, i.far.fa-thumbs-down {
@@ -176,6 +217,13 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
   font-size: 20px;
 }
 
+.post-comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
 .form-input {
   background-size: 26px 26px;
   width: 85%;
@@ -188,7 +236,6 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
   font-weight: 200;
   padding: 10px 10px;
   outline: none;
-  margin-top: 20px;
   border-radius: 5px;
   background-color: transparent;
   box-sizing: border-box;
@@ -213,8 +260,70 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
 .question-cont p {
   color: #e4e2e2;
   font-size: 14px;
-  background-color: #9292921f;
+  background-color: #92929205;
   padding: 10px;
+}
+
+.error-cont {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  color: #fff;
+  z-index: 99999;
+  background: #ff0000ed;
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+  transition-timing-function: ease-in;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1);
+  display: none;
+}
+
+.error-cont span {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  border-radius: 14px;
+  padding: 5px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 26px;
+  opacity: 0.7;
+  font-weight: 900;
+}
+
+a.cte-meetup {
+  cursor: pointer;
+  display: none;
+}
+
+/* rsvp */
+#rsvp-submit {
+  margin: 50px auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input.rsvp-val {
+  padding: 15px 0;
+  width: 40%;
+  font-size: 26px;
+  color: #ccc;
+  background: #ccc0;
+  border: 1px solid #222;
+  outline: none;
+  text-align: center;
+  font-weight: 100;
+  cursor: pointer;
+}
+
+#rsvp-msg {
+  font-size: 12px;
+  display: none;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -235,8 +344,13 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
   }
 
   .form-input {
-    width: 70%;
+    width: 80%;
     font-size: 12px;
+  }
+
+  #questions {
+    width: 95%;
+    margin: 0 auto;
   }
 
   .question-cont p {
@@ -245,6 +359,14 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
 
   .question-cont h3 {
     font-size: 14px;
+  }
+
+  .dicussions, form#question-submit {
+    width: 95%;
+  }
+
+  input.rsvp-val {
+    width: 100%;
   }
 
   .user span {

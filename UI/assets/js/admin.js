@@ -1,22 +1,19 @@
-/* eslint-disable no-console */
-
-const editIcon = document.getElementById('edit-icon');
-const modal = document.getElementById('modal');
-const hideMeetups = document.getElementById('meetups');
+const meetups = document.getElementById('meetups');
 const closeModal = document.getElementById('closeModal');
-const overlay = document.getElementById('overlay');
-
-editIcon.addEventListener('click', (e) => {
-  e.preventDefault();
-  console.log('bukunmi');
-  hideMeetups.style.display = 'none';
-  overlay.style.visibility = 'visible';
-  modal.style.display = 'block';
+// edit meetup
+meetups.addEventListener('click', (e) => {
+  if (e.target.id && e.target.classList.contains('fa-edit')) {
+    modal.style.display = 'block';
+    meetups.style.display = 'none';
+    overlay.style.visibility = 'visible';
+  }
 });
 
+// close form edit modal
 closeModal.addEventListener('click', (e) => {
   e.preventDefault();
-  hideMeetups.style.display = 'block';
+  window.location.reload();
+  meetups.style.display = 'grid';
   overlay.style.visibility = 'hidden';
   modal.style.display = 'none';
 });

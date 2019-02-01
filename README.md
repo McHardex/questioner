@@ -37,6 +37,7 @@ The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuap
   - [x] Navigate to http://localhost:2000/api/v1/welcome
 
 ## Features of the template
+- [x] Users can signup and login to the application.
 - [x] Admin Users can create meetup.
 - [x] Admin Users can update meetup.
 - [x] Admin Users can delete meetup.
@@ -85,6 +86,11 @@ The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuap
       <td>POST</td>
       <td>/api/v1/questions</td>
       <td>Allows users to ask questions on meetups</td>
+  </tr>
+  <tr>
+      <td>POST</td>
+      <td>/api/v1/comments</td>
+      <td>Allows users comment on questions</td>
   </tr>
   <tr>
       <td>GET</td>

@@ -24,7 +24,7 @@
         </div>
         <div class="user">
           <i class="fas fa-user-cog"></i>
-          <span id="user"></span>
+          <span id="user">Anonymous</span>
           <div class="dropdown-content">
             <a href="profile.html">Profile</a>
             <a href="meetups.html">Meetup</a>
@@ -59,32 +59,92 @@
         <input type="text" autocomplete="on" placeholder="Search Meetup" class="search-meetup" tabindex="2"/>
       </form>
       <div id="overlay"></div>
-      <div class="meetups" id="meetups"></div>
-    </div>
-    <!-- form edit -->
-    <div class="form-edit-cont" id="modal">
-      <p id="edit-success">Meetup Updated Successfully</p>
-      <form class="editform">
-            <label>Topic</label>
-          <input class='form-input' name='topic' type='text' id='topic' required />
-          <label>Date</label>
-          <input class='form-input empty' name='happeningOn' id='happeningOn' type='date' required />
-          <label>Location</label>
-          <input class='form-input' name='location' type='text' id='location' required />
-          <label>Tags</label>
-          <input class='form-input' name='tags[]' type='text' id="edit-tag1" required />
-          <input class='form-input' name='tags[]' type='text' id="edit-tag2" required />
-          <input class='form-input' name='tags[]' type='text' id="edit-tag3" required />
-          <button type='submit' class='update-form'>Update Meetup</button>
-          <button class='close-div' id='closeModal'>X</button>
-        </form>
+      <div class="meetups" id="meetups">
+        <div class="meetup-cont">
+          <div class="meetup-text">
+            <p>Wednesday, Jan 24 2019</p>
+            <h3>Barcelona Fan Base</h3>
+            <p>Lagos, festac</p>
+            <span>new tag day</span>
+          </div>
+            <i class="fas fa-trash" title="delete" id=${meetup.id}></i>
+            <i class="far fa-edit" title="edit" id=${meetup.id}></i>
+        </div>
+        <div class="meetup-cont">
+          <div class="meetup-text">
+            <p>Wednesday, Jan 24 2019</p>
+            <h3>Barcelona Fan Base</h3>
+            <p>Lagos, festac</p>
+            <span>new tag day</span>
+          </div>
+            <i class="fas fa-trash" title="delete" id=${meetup.id}></i>
+            <i class="far fa-edit" title="edit" id=${meetup.id}></i>
+        </div>
+        <div class="meetup-cont">
+          <div class="meetup-text">
+            <p>Wednesday, Jan 24 2019</p>
+            <h3>Barcelona Fan Base</h3>
+            <p>Lagos, festac</p>
+            <span>new tag day</span>
+          </div>
+            <i class="fas fa-trash" title="delete" id=${meetup.id}></i>
+            <i class="far fa-edit" title="edit" id=${meetup.id}></i>
+        </div>
+        <div class="meetup-cont">
+          <div class="meetup-text">
+            <p>Wednesday, Jan 24 2019</p>
+            <h3>Barcelona Fan Base</h3>
+            <p>Lagos, festac</p>
+            <span>new tag day</span>
+          </div>
+            <i class="fas fa-trash" title="delete" id=${meetup.id}></i>
+            <i class="far fa-edit" title="edit" id=${meetup.id}></i>
+        </div>
+        <div class="meetup-cont">
+          <div class="meetup-text">
+            <p>Wednesday, Jan 24 2019</p>
+            <h3>Barcelona Fan Base</h3>
+            <p>Lagos, festac</p>
+            <span>new tag day</span>
+          </div>
+            <i class="fas fa-trash" title="delete" id=${meetup.id}></i>
+            <i class="far fa-edit" title="edit" id=${meetup.id}></i>
+        </div>
+        <div class="meetup-cont">
+          <div class="meetup-text">
+            <p>Wednesday, Jan 24 2019</p>
+            <h3>Barcelona Fan Base</h3>
+            <p>Lagos, festac</p>
+            <span>new tag day</span>
+          </div>
+            <i class="fas fa-trash" title="delete" id=${meetup.id}></i>
+            <i class="far fa-edit" title="edit" id=${meetup.id}></i>
+        </div>
       </div>
-  </div>
-  <div class="error-cont" id="error-div">
-    <p id="error"></p>
-    <span id="exit-error">X</span>
+      <!-- form edit -->
+      <div class="form-edit-cont" id="modal">
+        <p id="edit-success">Meetup Updated Successfully</p>
+        <form class="editform">
+              <label>Topic</label>
+            <input class='form-input' name='topic' type='text' id='topic' required />
+            <label>Date</label>
+            <input class='form-input empty' name='happeningOn' id='happeningOn' type='date' required />
+            <label>Location</label>
+            <input class='form-input' name='location' type='text' id='location' required />
+            <label>Tags</label>
+            <input class='form-input' name='tags[]' type='text' id="edit-tag1" required />
+            <input class='form-input' name='tags[]' type='text' id="edit-tag2" required />
+            <input class='form-input' name='tags[]' type='text' id="edit-tag3" required />
+            <button type='submit' class='update-form'>Update Meetup</button>
+            <button class='close-div' id='closeModal'>X</button>
+          </form>
+        </div>
+    </div>
+    <div class="error-cont" id="error-div">
+      <p id="error"></p>
+      <span id="exit-error">X</span>
+    </div>
   </div>
   <script language='javascript' src='./assets/js/admin.js'></script>
-  <script language='javascript' src='./assets/js/general.js'></script>
 </body>
 </html>

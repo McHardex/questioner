@@ -24,7 +24,7 @@
       </div>
       <div class="user">
         <i class="fas fa-user-cog"></i>
-        <span id="user"></span>
+        <span id="user">Anonymous</span>
         <div class="dropdown-content">
           <a href="profile.html">Profile</a>
           <a href="meetups.html">Meetup</a>
@@ -39,15 +39,15 @@
         <h1 id="spe-topic"></h1>
         <div class="location">
           <i class="fas fa-map-marker-alt"></i>
-          <p id="spe-location"></p>
+          <p id="spe-location">Lagos, Festac</p>
         </div>
         <div class="rsvp">
           <i class="fas fa-users"></i>
-          <p class="rsvps"></p>
+          <p class="rsvps">120 people are coming</p>
         </div>
         <div class="date">
           <i class="fas fa-calendar-week"></i>
-          <p id="spe-happeningOn"></p>
+          <p id="spe-happeningOn">Wednesday January 24, 2019</p>
         </div>
       </div>
     </div>
@@ -61,12 +61,91 @@
     </form>
     <hr/>
     <p class="dicussions">Discussions</p>
-    <div id="questions"></div>
+    <div id="questions">
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
+        <div class="likes-dis">
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
+        </div>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
+        </form>
+        <p>explain better</p>
+        </div>
+      </div>
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
+        <div class="likes-dis">
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
+        </div>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
+        </form>
+        <p>explain better</p>
+        </div>
+      </div>
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
+        <div class="likes-dis">
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
+        </div>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
+        </form>
+        <p>explain better</p>
+        </div>
+      </div>
+      <div class="question-cont" id=${comments.id}>
+        <h3>What do you mean by this</h3>
+        <div class="likes-dis">
+        <div class="upvote">
+        <i class="far fa-thumbs-up" id=${comments.id}></i>
+        <span>2</span>
+        </div>
+        <div class="downvote">
+        <i class="far fa-thumbs-down" id=${comments.id}></i>
+          <span>4</span>
+        </div>
+        </div>
+        <div id="comments">
+        <form class="post-comment">
+        <input type='text' class='form-input' placeholder='comment' required/>
+        <button type='submit' class='submit-comment' id=${comments.id}>Send</button>
+        </form>
+        <p>explain better</p>
+        </div>
+      </div>
+    </div>
     <div class="error-cont" id="error-div">
       <p id="error"></p>
     </div>
   </div>
-  <script language='javascript' src='./assets/js/specificMeetup.js'></script>
-  <script language='javascript' src='./assets/js/general.js'></script>
 </body>
 </html>

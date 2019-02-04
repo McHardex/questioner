@@ -61,17 +61,17 @@ describe('COMMENTS', () => {
     });
   });
 
-  describe('GET /comments', () => {
-    it('should return status code 200 on successful fetch of all comments', (done) => {
-      request(server)
-        .get('/api/v1/comments')
-        .set('x-auth-token', token)
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          done();
-        });
-    });
-  });
+  // describe('GET /comments', () => {
+  //   it('should return status code 200 on successful fetch of all comments', (done) => {
+  //     request(server)
+  //       .get('/api/v1/comments')
+  //       .set('x-auth-token', token)
+  //       .end((err, res) => {
+  //         expect(res.status).to.equal(200);
+  //         done();
+  //       });
+  //   });
+  // });
 
   describe('GET /comments/user_id', () => {
     it('should return status code 200 on successful fetch of specific comments by user', (done) => {

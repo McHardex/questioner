@@ -9,7 +9,6 @@ before_script:
   - psql -c "CREATE USER mchardex WITH PASSWORD 'h0ttestt';" -U postgres
   - psql -c 'DROP DATABASE IF EXISTS question_test;' -U postgres
   - psql -c 'CREATE DATABASE question_test;' -U postgres
-  - npm run build
 script:
   - npm test
 after_success:

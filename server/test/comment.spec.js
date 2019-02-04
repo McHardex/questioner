@@ -11,7 +11,7 @@ import server from '../index';
 
 dotenv.config();
 
-const token = jwt.sign({ userID: 1 }, process.env.SECRET);
+const token = jwt.sign({ userID: 2 }, process.env.SECRET);
 
 describe('COMMENTS', () => {
   describe('POST /comments', () => {
@@ -76,7 +76,7 @@ describe('COMMENTS', () => {
   describe('GET /comments/user_id', () => {
     it('should return status code 200 on successful fetch of specific comments by user', (done) => {
       request(server)
-        .get('/api/v1/comments/1')
+        .get('/api/v1/comments/2')
         .set('x-auth-token', token)
         .end((err, res) => {
           expect(res.status).to.equal(200);

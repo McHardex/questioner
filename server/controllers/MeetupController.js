@@ -35,9 +35,9 @@ class MeetupController {
   static upcomingMeetups(req, res) {
     client.query('SELECT * FROM meetups WHERE happeningOn > now()', (error, results) => {
       if (error) {
-        return res.status(404).json({
-          status: 404,
-          error: 'There is no upcoming meetups',
+        return res.status(403).json({
+          status: 403,
+          error,
         });
       }
       if (results.rows.length < 1) {
@@ -74,8 +74,8 @@ class MeetupController {
         (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
         [topic, location, happeningOn, tags], (error, results) => {
           if (error) {
-            res.status(404).json({
-              status: 404,
+            res.status(403).json({
+              status: 403,
               error,
             });
           } else {
@@ -93,14 +93,14 @@ class MeetupController {
 
   static deleteMeetup(req, res) {
     client.query('SELECT * FROM users WHERE id = $1', [req.user], (err, result) => {
-      if (err) return res.status(400).json({ status: 400, error: err });
+      if (err) return res.status(403).json({ status: 403, error: err });
       if (result.rows[0].isadmin) {
         client.query('DELETE FROM meetups WHERE id = $1', [req.params.id], (error, response) => {
-          if (error) return res.status(400).json({ status: 400, error });
+          if (error) return res.status(403).json({ status: 403, error });
           if (response.rowCount < 1) {
             res.status(404).json({
               status: 404,
-              message: 'This meetup is no longer available',
+              error: 'This meetup is no longer available',
             });
           } else {
             res.status(200).json({
@@ -133,7 +133,7 @@ class MeetupController {
             } else {
               res.status(200).json({
                 status: 200,
-                message: response.rows,
+                data: response.rows,
               });
             }
           });

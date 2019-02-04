@@ -67,8 +67,8 @@ class UserController {
   static login(req, res) {
     client.query('SELECT * FROM users WHERE email = $1', [req.body.email], (error, results) => {
       if (error) {
-        res.status(409).json({
-          status: 409,
+        res.status(403).json({
+          status: 403,
           error,
         });
       }

@@ -37,13 +37,6 @@ class RsvpController {
 
   static createRsvp(req, res) {
     const responseArray = ['yes', 'no', 'maybe'];
-    // client.query('SELECT * FROM users WHERE id = $1', [req.user], (error, resp) => {
-    //   if (resp.rowCount < 1) {
-    //     return res.status(404).send({
-    //       status: 404,
-    //       error: 'User does not exist'
-    //     });
-    //   }
     client.query('SELECT * FROM meetups WHERE id = $1', [req.params.meetup_id], (err, response) => {
       if (response.rowCount < 1) {
         return res.status(404).json({

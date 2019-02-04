@@ -7,8 +7,6 @@ import request from 'supertest';
 
 import server from '../index';
 
-process.env.NODE_ENV = 'test';
-
 const signupPayload = {
   firstname: 'omoluwa',
   lastname: 'david',

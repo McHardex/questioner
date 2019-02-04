@@ -45,7 +45,7 @@ class QuestionController {
         client.query('INSERT INTO asknow (createdby, title, body, meetup_id) VALUES ($1, $2, $3, $4) RETURNING *',
           [req.user, req.body.title, req.body.body, req.body.meetup_id],
           (err, response) => {
-            if (err) return res.status(400).json({ status: 400, error: err });
+            if (err) return res.status(403).json({ status: 403, error: err });
             res.status(201).json({
               status: 201,
               data: [{
@@ -61,7 +61,7 @@ class QuestionController {
 
   static upvoteQuestion(req, res) {
     client.query('SELECT * FROM asknow WHERE id = $1', [req.params.question_id], (err, resp) => {
-      if (err) res.status(404).json({ status: 404, error: err });
+      if (err) res.status(403).json({ status: 403, error: err });
       client.query(`UPDATE asknow SET upvote = upvote + 1 WHERE id = ${req.params.question_id}`, (error, response) => {
         if (error || response.rowCount < 1) {
           res.status(404).json({
@@ -74,7 +74,7 @@ class QuestionController {
             data: [{
               title: resp.rows[0].title,
               body: resp.rows[0].body,
-              votes: resp.rows[0].votes += 1,
+              upvote: resp.rows[0].upvote += 1,
             }],
           });
         }
@@ -84,7 +84,7 @@ class QuestionController {
 
   static downvoteQuestion(req, res) {
     client.query('SELECT * FROM asknow WHERE id = $1', [req.params.question_id], (err, resp) => {
-      if (err) res.status(404).json({ status: 404, error: err });
+      if (err) res.status(403).json({ status: 403, error: err });
       client.query(`UPDATE asknow SET downvote = downvote + 1 WHERE id = ${req.params.question_id}`, (error, response) => {
         if (error || response.rowCount < 1) {
           res.status(404).json({
@@ -97,7 +97,7 @@ class QuestionController {
             data: [{
               title: resp.rows[0].title,
               body: resp.rows[0].body,
-              votes: resp.rows[0].votes -= 1
+              downvote: resp.rows[0].downvote += 1
             }],
           });
         }

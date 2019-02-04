@@ -4,15 +4,13 @@ import { Client } from 'pg';
 
 import dotenv from 'dotenv';
 
-import moment from 'moment';
-
 import connectionString from '../../config';
 
 dotenv.config();
 
-const sql = 'INSERT INTO asknow (createdOn, createdBy, meetup_id, title, body, upvote, downvote) VALUES($1,$2,$3,$4,$5,$6,$7)';
+const sql = 'INSERT INTO comments (user_id, comment, question_id) VALUES($1,$2,$3)';
 
-const data = [moment(new Date()), 1, 1, 'what have you learnt so far?', 'Tolerance, adaptability, collaboration, time management', 1, 1];
+const data = [1, 'this is a new comment', 1];
 
 const client = new Client(connectionString);
 client.connect((err) => {
@@ -25,7 +23,7 @@ client.connect((err) => {
 
 client.query(sql, data)
   .then((res) => {
-    console.log('question table populated');
+    console.log('comment table populated');
     client.end();
   })
   .catch((err) => {

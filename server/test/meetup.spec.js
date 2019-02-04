@@ -8,131 +8,51 @@ import jwt from 'jsonwebtoken';
 
 import dotenv from 'dotenv';
 
+import moment from 'moment';
+
 import server from '../index';
+
 
 dotenv.config();
 
 const wrongtoken = 'wrong token';
 const token = jwt.sign({ userID: 1 }, process.env.SECRET);
+const notAdminToken = jwt.sign({ userID: 2 }, process.env.SECRET);
 
 describe('Meetups', () => {
-  describe('GET /meetups', () => {
-    describe('GET /meetups/', () => {
-      it('should return status code 401 when no token is provided', (done) => {
-        request(server)
-          .get('/api/v1/meetups')
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.have.all.keys('status', 'error');
-            expect(res.body.error).to.equal('No Token provided');
-            done();
-          });
-      });
-
-      it('should return status code 422(unprocessable entity) when an invalid token is passed', (done) => {
-        request(server)
-          .get('/api/v1/meetups')
-          .set('x-auth-token', wrongtoken)
-          .end((err, res) => {
-            console.log(res.body);
-            expect(res.status).to.equal(422);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.have.all.keys('status', 'error');
-            expect(res.body.error).to.equal('jwt malformed');
-            done();
-          });
-      });
-    });
-
-    describe('GET /meetups/meetup-id', () => {
-      it('should return status code 401 when no token is provided', (done) => {
-        request(server)
-          .get('/api/v1/meetups/1')
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.have.all.keys('status', 'error');
-            expect(res.body.error).to.equal('No Token provided');
-            done();
-          });
-      });
-
-      it('should return status code 422(unprocessable entity) when an invalid token is passed', (done) => {
-        request(server)
-          .get('/api/v1/meetups/1')
-          .set('x-auth-token', wrongtoken)
-          .end((err, res) => {
-            expect(res.status).to.equal(422);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.have.all.keys('status', 'error');
-            expect(res.body.error).to.equal('jwt malformed');
-            done();
-          });
-      });
-    });
-
-    describe('GET /meetups/upcoming', () => {
-      it('should return status code 401 when no token is passed there is no upcoming', (done) => {
-        request(server)
-          .get('/api/v1/meetups/upcoming')
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.have.all.keys('status', 'error');
-            expect(res.body.error).to.equal('No Token provided');
-            done();
-          });
-      });
-
-      it('should return status code 404 when no token is passed there is no upcoming meetup', (done) => {
-        request(server)
-          .get('/api/v1/meetups/upcoming')
-          .set('x-auth-token', token)
-          .end((err, res) => {
-            expect(res.status).to.equal(404);
-            expect(res.body).to.be.an('object');
-            expect(res.body.error).to.equal('there are no upcoming meetups');
-            done();
-          });
-      });
-    });
-  });
-
   describe('POST /meetups', () => {
-    it('should return status code 401 when no token is passed', (done) => {
+    it('should return status code 201 on successful post of meetups', (done) => {
       request(server)
         .post('/api/v1/meetups')
+        .set('x-auth-token', token)
         .send({
-          topic: 'challenge trading hour',
+          topic: 'everlasting meetup Party',
           location: 'lagos',
-          happeningOn: '2018-12-22',
-          tags: ['apple', 'coding', 'legend'],
+          happeningOn: moment(new Date('12-12-2990')),
+          tags: ['new', 'meetup', 'record']
         })
         .end((err, res) => {
-          expect(res.status).to.equal(401);
+          expect(res.status).to.equal(201);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('No Token provided');
+          expect(res.body).to.have.all.keys('status', 'data');
           done();
         });
     });
 
-    it('should return status code 422 when invalid token is passed', (done) => {
+    it('should return status code 401 unauthorized when user is not an adin', (done) => {
       request(server)
         .post('/api/v1/meetups')
-        .set('x-auth-token', wrongtoken)
+        .set('x-auth-token', notAdminToken)
         .send({
-          topic: 'challenge trading hour',
-          location: 'lagos',
-          happeningOn: '2018-12-22',
-          tags: ['apple', 'coding', 'legend'],
+          topic: 'everlasting meetup',
+          location: 'usa',
+          happeningOn: moment(new Date('12-12-1012')),
+          tags: ['new', 'meetup', 'yea']
         })
         .end((err, res) => {
-          expect(res.status).to.equal(422);
+          expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('jwt malformed');
+          expect(res.body.error).to.equal('Sorry, only Admin can perform this action');
           done();
         });
     });
@@ -192,25 +112,6 @@ describe('Meetups', () => {
         });
     });
 
-    it('should fail on POST with incomplete payload(location)', (done) => {
-      request(server)
-        .post('/api/v1/meetups')
-        .set('x-auth-token', token)
-        .send({
-          topic: 'Bootcamp',
-          location: 'a',
-          tags: 'apple',
-          happeningOn: '23-12-2019',
-        })
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('location length must be greater than 3');
-          done();
-        });
-    });
-
     it('should fail on POST with incomplete payload (date)', (done) => {
       request(server)
         .post('/api/v1/meetups')
@@ -261,10 +162,10 @@ describe('Meetups', () => {
     });
   });
 
-  describe('DELETE', () => {
-    it('should return 401 when no token is provided', (done) => {
+  describe('GET /meetups/', () => {
+    it('should return status code 401 when no token is provided', (done) => {
       request(server)
-        .delete('/api/v1/meetups/1')
+        .get('/api/v1/meetups')
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
@@ -274,42 +175,132 @@ describe('Meetups', () => {
         });
     });
 
-    it('should return 401 when no wrong is provided', (done) => {
+    it(`should return status code 422(unprocessable entity)
+      when an invalid token is passed`, (done) => {
       request(server)
-        .delete('/api/v1/meetups/1')
+        .get('/api/v1/meetups')
         .set('x-auth-token', wrongtoken)
         .end((err, res) => {
           expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
           expect(res.body.error).to.equal('jwt malformed');
+          done();
+        });
+    });
+
+    it('should return status code 200 on successful fetch of all meetups', (done) => {
+      request(server)
+        .get('/api/v1/meetups')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'data');
+          done();
+        });
+    });
+  });
+
+  describe('GET /meetups/meetup-id', () => {
+    it('should return status code 200 on successful fetch of specific meetups', (done) => {
+      request(server)
+        .get('/api/v1/meetups/1')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'data');
+          done();
+        });
+    });
+  });
+
+  describe('GET /meetups/upcoming', () => {
+    it('should return status code 200 on successful fetch of upcoming meetups', (done) => {
+      request(server)
+        .get('/api/v1/meetups/upcoming')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'data');
           done();
         });
     });
   });
 
   describe('UPDATE', () => {
-    it('should return 401 when no token is provided', (done) => {
+    it('should return 200 on successful update of meetup', (done) => {
       request(server)
         .put('/api/v1/meetups/1')
+        .set('x-auth-token', token)
+        .send({
+          topic: 'new meetup title',
+          happeningOn: moment(new Date()),
+          location: 'Abuja',
+          tags: ['new', 'meetup', 'title'],
+        })
         .end((err, res) => {
-          expect(res.status).to.equal(401);
+          expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('No Token provided');
+          expect(res.body).to.have.all.keys('status', 'data');
           done();
         });
     });
 
-    it('should return 401 when no wrong is provided', (done) => {
+    it('should return 401 unauhorized when user is not an admin', (done) => {
       request(server)
         .put('/api/v1/meetups/1')
-        .set('x-auth-token', wrongtoken)
+        .set('x-auth-token', notAdminToken)
+        .send({
+          topic: 'new meetup title',
+          happeningOn: moment(new Date()),
+          location: 'Abuja',
+          tags: ['new', 'meetup', 'title'],
+        })
         .end((err, res) => {
-          expect(res.status).to.equal(422);
+          expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('jwt malformed');
+          expect(res.body.error).to.equal('Sorry, only Admin can perform this action');
+          done();
+        });
+    });
+  });
+
+  describe('DELETE', () => {
+    it('should return 404 status code when meetup to be deleted does not exist', (done) => {
+      request(server)
+        .delete('/api/v1/meetups/10')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.an('object');
+          expect(res.body.error).to.equal('This meetup is no longer available');
+          done();
+        });
+    });
+
+    it('should return 200 status code on successful deletion of a meetup record', (done) => {
+      request(server)
+        .delete('/api/v1/meetups/3')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('Meetup successfully deleted');
+          done();
+        });
+    });
+
+    it('should return 401 status code(unauthorized) if user is not an admin', (done) => {
+      request(server)
+        .delete('/api/v1/meetups/1')
+        .set('x-auth-token', notAdminToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body).to.be.an('object');
+          expect(res.body.error).to.equal('Sorry, only Admin can perform this action');
           done();
         });
     });

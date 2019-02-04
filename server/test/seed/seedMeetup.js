@@ -12,23 +12,30 @@ dotenv.config();
 
 const sql = 'INSERT INTO meetups (topic, location, happeningOn, tags) VALUES($1,$2,$3,$4)';
 
-const data = ['excellence archievers', 'ajegunle', moment(new Date()), ['bukunmi', 'sola', 'ola']];
+const data1 = ['excellence archievers', 'ajegunle', moment(new Date()), ['bukunmi', 'sola', 'ola']];
+const data2 = ['excellence newbie', 'lagos', moment(new Date('12-12-2990')), ['ola', 'sola', 'bale']];
 
-const client = new Client(connectionString);
-client.connect((err) => {
-  if (err) {
-    console.error('error connecting to database', err.stack);
-  } else {
-    console.log(`connected to ${connectionString}`);
-  }
-});
+const client1 = new Client(connectionString);
+const client2 = new Client(connectionString);
+client1.connect();
+client2.connect();
 
-client.query(sql, data)
+client1.query(sql, data1)
   .then((res) => {
-    console.log('meetup table populated');
-    client.end();
+    console.log('meetup table 1 populated');
+    client1.end();
   })
   .catch((err) => {
     console.log(err, 'error creating tables');
-    client.end();
+    client1.end();
+  });
+
+client2.query(sql, data2)
+  .then((res) => {
+    console.log('meetup table 2 populated');
+    client2.end();
+  })
+  .catch((err) => {
+    console.log(err, 'error creating tables');
+    client2.end();
   });

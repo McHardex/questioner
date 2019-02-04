@@ -28,8 +28,8 @@ class CommentController {
       FULL JOIN asknow a ON a.id = c.question_id
       GROUP BY (a.createdby, a.title, a.upvote, a.downvote, a.meetup_id, a.id)`, (error, results) => {
       if (error) {
-        return res.status(404).json({
-          status: 404,
+        return res.status(403).json({
+          status: 403,
           error,
         });
       }
@@ -43,8 +43,8 @@ class CommentController {
   static getSpecificUserComment(req, res) {
     client.query(`SELECT * from comments WHERE user_id = $1`, [req.params.user_id], (error, results) => {
       if (error) {
-        return res.status(404).json({
-          status: 404,
+        return res.status(403).json({
+          status: 403,
           error,
         });
       }
@@ -66,8 +66,8 @@ class CommentController {
       [req.body.question_id],
       (error, results) => {
         if (error) {
-          res.status(409).json({
-            status: 409,
+          res.status(403).json({
+            status: 403,
             error,
           });
         }
@@ -76,9 +76,9 @@ class CommentController {
         [req.user, req.body.comment, req.body.question_id],
         (err, response) => {
           if (err) {
-            res.status(404).json({
-              status: 404,
-              error: 'question does not exist',
+            res.status(403).json({
+              status: 403,
+              error,
             });
           } else {
             res.status(201).json({

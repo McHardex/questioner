@@ -20,7 +20,7 @@
     "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
     "seederA": "babel-node ./server/test/seed/seedUser.js && babel-node ./server/test/seed/seedMeetup.js",
     "seederB": "babel-node ./server/test/seed/seedQuestion.js && babel-node ./server/test/seed/seedComment.js",
-    "fortest": "npm run db-migrate && npm run seederA && npm run seederB"
+    "fortest": "npm run db-migrate --env test && npm run seederA && npm run seederB"
   },
   "repository": {
     "type": "git",

@@ -1,16 +1,6 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-console */
+/* eslint-disable import/named */
 
-import { Client } from 'pg';
-
-import dotenv from 'dotenv';
-
-import connectionString from '../config';
-
-dotenv.config();
-
-const client = new Client(connectionString);
-client.connect();
+import { client } from '../config';
 
 class RsvpController {
   /**
@@ -32,6 +22,7 @@ class RsvpController {
         status: 201,
         data: results.rows,
       });
+      return results;
     });
   }
 
@@ -41,16 +32,16 @@ class RsvpController {
       if (response.rowCount < 1) {
         return res.status(404).json({
           status: 404,
-          error: 'meetup does not exist'
+          error: 'meetup does not exist',
         });
       }
       if (responseArray.includes(req.body.response)) {
-        client.query(`INSERT INTO rsvps (meetup_id, user_id, response) VALUES ($1, $2, $3) RETURNING *`,
+        client.query('INSERT INTO rsvps (meetup_id, user_id, response) VALUES ($1, $2, $3) RETURNING *',
           [req.params.meetup_id, req.user, req.body.response], (e, result) => {
             if (e) {
               res.status(409).json({
                 status: 409,
-                error: 'You can only respond once'
+                error: 'You can only respond once',
               });
             } else {
               res.status(201).json({
@@ -66,11 +57,11 @@ class RsvpController {
       } else {
         return res.status(400).json({
           status: 400,
-          error: 'Respond only with yes, no or maybe'
+          error: 'Respond only with yes, no or maybe',
         });
       }
+      return response;
     });
-    // });
   }
 }
 

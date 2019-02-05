@@ -1,14 +1,6 @@
-/* eslint-disable consistent-return */
-import { Client } from 'pg';
+/* eslint-disable import/named */
 
-import dotenv from 'dotenv';
-
-import connectionString from '../config';
-
-dotenv.config();
-
-const client = new Client(connectionString);
-client.connect();
+import { client } from '../config';
 
 class QuestionController {
   /**
@@ -29,6 +21,7 @@ class QuestionController {
         status: 200,
         data: results.rows,
       });
+      return results;
     });
   }
 
@@ -55,53 +48,63 @@ class QuestionController {
                 body: response.rows[0].body,
               }],
             });
+            return response;
           });
+        return results;
       });
   }
 
   static upvoteQuestion(req, res) {
-    client.query('SELECT * FROM asknow WHERE id = $1', [req.params.question_id], (err, resp) => {
-      if (err) res.status(403).json({ status: 403, error: err });
-      client.query(`UPDATE asknow SET upvote = upvote + 1 WHERE id = ${req.params.question_id}`, (error, response) => {
-        if (error || response.rowCount < 1) {
-          res.status(404).json({
-            status: 404,
-            error: 'Unable to upvote! No question found',
-          });
-        } else {
-          res.status(200).json({
-            status: 200,
-            data: [{
-              title: resp.rows[0].title,
-              body: resp.rows[0].body,
-              upvote: resp.rows[0].upvote += 1,
-            }],
-          });
-        }
+    client.query(`UPDATE asknow SET upvote = upvote + 1 WHERE id = ${req.params.question_id}
+    RETURNING *`, (error, response) => {
+      if (error) {
+        return res.status(409).json({
+          status: 409,
+          error,
+        });
+      }
+      if (response.rowCount < 1) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Unable to upvote! No question found',
+        });
+      }
+      res.status(200).json({
+        status: 200,
+        data: [{
+          title: response.rows[0].title,
+          body: response.rows[0].body,
+          upvote: response.rows[0].upvote,
+        }],
       });
+      return response;
     });
   }
 
   static downvoteQuestion(req, res) {
-    client.query('SELECT * FROM asknow WHERE id = $1', [req.params.question_id], (err, resp) => {
-      if (err) res.status(403).json({ status: 403, error: err });
-      client.query(`UPDATE asknow SET downvote = downvote + 1 WHERE id = ${req.params.question_id}`, (error, response) => {
-        if (error || response.rowCount < 1) {
-          res.status(404).json({
-            status: 404,
-            error: 'Unable to downvote! No question found',
-          });
-        } else {
-          res.status(200).send({
-            status: 200,
-            data: [{
-              title: resp.rows[0].title,
-              body: resp.rows[0].body,
-              downvote: resp.rows[0].downvote += 1
-            }],
-          });
-        }
+    client.query(`UPDATE asknow SET downvote = downvote + 1 WHERE id = ${req.params.question_id}
+    RETURNING *`, (error, response) => {
+      if (error) {
+        return res.status(409).json({
+          status: 409,
+          error,
+        });
+      }
+      if (response.rowCount < 1) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Unable to downvote! No question found',
+        });
+      }
+      res.status(200).send({
+        status: 200,
+        data: [{
+          title: response.rows[0].title,
+          body: response.rows[0].body,
+          downvote: response.rows[0].downvote,
+        }],
       });
+      return response;
     });
   }
 }

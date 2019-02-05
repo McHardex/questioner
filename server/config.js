@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+
+import { Client } from 'pg';
+
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -18,4 +22,15 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 const connectionString = setConnectionString;
-export default connectionString;
+
+const client = new Client(connectionString);
+client.connect((err) => {
+  if (err) {
+    console.error(`error connecting to ${connectionString}`, err.message);
+    client.end();
+  } else {
+    console.log(`connected to ${connectionString}`);
+  }
+});
+
+exports.client = client;

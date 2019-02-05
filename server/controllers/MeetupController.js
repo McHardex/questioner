@@ -1,14 +1,6 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-console */
-import { Client } from 'pg';
+/* eslint-disable import/named */
 
-import connectionString from '../config';
-
-require('dotenv').config();
-
-
-const client = new Client(connectionString);
-client.connect();
+import { client } from '../config';
 
 class MeetupController {
   /**
@@ -20,7 +12,7 @@ class MeetupController {
   static getAllMeetups(req, res) {
     client.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
       if (results.rows.length < 1) {
-        return res.status(404).json({
+        res.status(404).json({
           status: 404,
           error: 'No meetup record found',
         });
@@ -29,6 +21,7 @@ class MeetupController {
         status: 200,
         data: results.rows,
       });
+      return results;
     });
   }
 
@@ -50,6 +43,7 @@ class MeetupController {
         status: 200,
         data: results.rows,
       });
+      return results;
     });
   }
 
@@ -60,6 +54,7 @@ class MeetupController {
         status: 200,
         data: results.rows,
       });
+      return results;
     });
   }
 
@@ -68,35 +63,37 @@ class MeetupController {
       topic, location, happeningOn, tags,
     } = req.body;
     client.query('SELECT * FROM users WHERE id = $1', [req.user], (err, result) => {
-      if (result.rows.length < 1) return res.status(404).send({ status: 404, error: 'User not found' });
+      if (result.rows.length < 1) res.status(404).send({ status: 404, error: 'User not found' });
       if (result.rows[0].isadmin) {
         client.query(`INSERT INTO meetups 
         (topic, location, happeningOn, tags) VALUES ($1, $2, $3, $4) RETURNING *`,
         [topic, location, happeningOn, tags], (error, results) => {
           if (error) {
-            res.status(403).json({
-              status: 403,
-              error,
+            res.status(409).json({
+              status: 409,
+              error: 'Meetup with this topic already exists',
             });
           } else {
-            return res.status(201).json({
+            res.status(201).json({
               status: 201,
               data: [results.rows[0]],
             });
           }
+          return results;
         });
       } else {
         res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
+      return result;
     });
   }
 
   static deleteMeetup(req, res) {
     client.query('SELECT * FROM users WHERE id = $1', [req.user], (err, result) => {
-      if (err) return res.status(403).json({ status: 403, error: err });
+      if (err) res.status(403).json({ status: 403, error: err });
       if (result.rows[0].isadmin) {
         client.query('DELETE FROM meetups WHERE id = $1', [req.params.id], (error, response) => {
-          if (error) return res.status(403).json({ status: 403, error });
+          if (error) res.status(403).json({ status: 403, error });
           if (response.rowCount < 1) {
             res.status(404).json({
               status: 404,
@@ -108,17 +105,19 @@ class MeetupController {
               message: 'Meetup successfully deleted',
             });
           }
+          return response;
         });
       } else {
         res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
+      return result;
     });
   }
 
 
   static updateMeetup(req, res) {
     client.query('SELECT * FROM users WHERE id = $1', [req.user], (error, result) => {
-      if (error) return res.status(404).json({ status: 404, error: 'User not found!' });
+      if (error) res.status(404).json({ status: 404, error: 'User not found!' });
       if (result.rows[0].isadmin) {
         const {
           topic, location, happeningOn, tags,
@@ -138,8 +137,9 @@ class MeetupController {
             }
           });
       } else {
-        return res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
+        res.status(401).json({ status: 401, error: 'Sorry, only Admin can perform this action' });
       }
+      return result;
     });
   }
 }

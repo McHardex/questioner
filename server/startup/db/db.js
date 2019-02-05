@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable import/named */
 /* eslint-disable no-console */
-import { Client } from 'pg';
-
-import dotenv from 'dotenv';
 
 import userDb from '../../models/userDb';
 
@@ -14,33 +11,17 @@ import meetupDb from '../../models/meetupDb';
 
 import commentDb from '../../models/commentDb';
 
-import connectionString from '../../config';
-
-dotenv.config();
-
-const client = new Client(connectionString);
+import { client } from '../../config';
 
 const createQuery = (query) => {
-  client.connect((err) => {
-    if (err) {
-      console.error(`error connecting to ${connectionString}`, err.message);
-    } else {
-      console.log(`connected to ${connectionString}`);
-    }
-  });
-
   client.query(query)
-    .then((res) => {
+    .then(() => {
       console.log('tables created successfully');
-      client.end()
-        .then(() => console.log('client has disconnected'))
-        .catch(err => console.error('error during disconnection', err.stack));
+      client.end();
     })
     .catch((err) => {
       console.log(err, 'error creating tables');
-      client.end()
-        .then(() => console.log('client has disconnected'))
-        .catch(err => console.error('error during disconnection', err.stack));
+      client.end();
     });
 };
 

@@ -71,7 +71,7 @@ describe('RSVPs', () => {
 
   describe('POST /meetups/:meetup-id/rsvps', () => {
     const payload = {
-      response: 'yes'
+      response: 'yes',
     };
     it('should return status code 401 when no token is passed', (done) => {
       request(server)

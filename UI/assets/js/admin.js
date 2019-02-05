@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const meetups = document.getElementById('meetups');
 const closeModal = document.getElementById('closeModal');
 // edit meetup

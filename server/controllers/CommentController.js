@@ -1,15 +1,6 @@
-/* eslint-disable consistent-return */
+/* eslint-disable import/named */
 
-import { Client } from 'pg';
-
-import dotenv from 'dotenv';
-
-import connectionString from '../config';
-
-dotenv.config();
-
-const client = new Client(connectionString);
-client.connect();
+import { client } from '../config';
 
 class CommentController {
   /**
@@ -18,9 +9,6 @@ class CommentController {
    * @param {Object} res - route response
    * @returns {json} question details and the comment
   */
-
-  // (SELECT question_id, string_agg(comment, '...<br /> ') AS comment
-  // FROM comments GROUP BY question_id)
 
   static getAllComments(req, res) {
     client.query(`SELECT createdby, title, upvote, downvote, meetup_id, a.id, COALESCE(string_agg(comment, '...<br />'), 'Be the first to comment') AS comment
@@ -37,11 +25,12 @@ class CommentController {
         status: 200,
         data: results.rows,
       });
+      return results;
     });
   }
 
   static getSpecificUserComment(req, res) {
-    client.query(`SELECT * from comments WHERE user_id = $1`, [req.params.user_id], (error, results) => {
+    client.query('SELECT * from comments WHERE user_id = $1', [req.params.user_id], (error, results) => {
       if (error) {
         return res.status(403).json({
           status: 403,
@@ -51,13 +40,14 @@ class CommentController {
       if (results.rows.length < 1) {
         return res.status(404).json({
           status: 404,
-          error: 'user does not exist'
+          error: 'user does not exist',
         });
       }
       res.status(200).json({
         status: 200,
         data: results.rows,
       });
+      return results;
     });
   }
 

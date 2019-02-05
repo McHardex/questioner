@@ -1,14 +1,12 @@
-import bodyParser from 'body-parser';
+import express from 'express';
 import routes from '../routes/routes';
 import invalidUrl from '../middlewares/invalidUrl';
 
 module.exports = (app) => {
-  // parse incoming requests data
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(express.json());
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, x-auth-token, Content-Type, Accept');
     next();
   });

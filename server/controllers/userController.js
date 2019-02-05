@@ -24,7 +24,7 @@ class UserController {
       req.body.othername,
       req.body.username,
       req.body.phoneNumber,
-      req.body.email,
+      req.body.email.toLowerCase(),
       req.body.isAdmin,
       hashPassword,
     ];

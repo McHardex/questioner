@@ -6,14 +6,9 @@ import { expect } from 'chai';
 
 import jwt from 'jsonwebtoken';
 
-import dotenv from 'dotenv';
-
 import moment from 'moment';
 
 import server from '../index';
-
-
-dotenv.config();
 
 const wrongtoken = 'wrong token';
 const token = jwt.sign({ userID: 1 }, process.env.SECRET);

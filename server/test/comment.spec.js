@@ -5,11 +5,7 @@ import { expect } from 'chai';
 
 import jwt from 'jsonwebtoken';
 
-import dotenv from 'dotenv';
-
 import server from '../index';
-
-dotenv.config();
 
 const token = jwt.sign({ userID: 2 }, process.env.SECRET);
 

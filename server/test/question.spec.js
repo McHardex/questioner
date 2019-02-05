@@ -5,11 +5,7 @@ import { expect } from 'chai';
 
 import jwt from 'jsonwebtoken';
 
-import dotenv from 'dotenv';
-
 import server from '../index';
-
-dotenv.config();
 
 const invalidString = 'wrong token';
 const token = jwt.sign({ userID: 1 }, process.env.SECRET);
@@ -102,7 +98,7 @@ describe('QUESTIONS', () => {
         .send({
           title: 'how can I grow as a developer?',
           body: 'Apply to Andela. The best tech company in Africa',
-          meetup_id: 1
+          meetup_id: 1,
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -136,7 +132,7 @@ describe('QUESTIONS', () => {
         .set('x-auth-token', token)
         .send({
           body: 'Apply to Andela. The best tech company in Africa',
-          meetup_id: 1
+          meetup_id: 1,
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -153,7 +149,7 @@ describe('QUESTIONS', () => {
         .set('x-auth-token', token)
         .send({
           title: 'how can I grow as a developer?',
-          meetup_id: 1
+          meetup_id: 1,
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -171,7 +167,7 @@ describe('QUESTIONS', () => {
         .send({
           title: 'how can?',
           body: 'Apply to Andela. The best tech company in Africa',
-          meetup_id: 1
+          meetup_id: 1,
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -189,7 +185,7 @@ describe('QUESTIONS', () => {
         .send({
           title: 'how can I grow as a developer?',
           body: 'Apply to Andela.',
-          meetup_id: 1
+          meetup_id: 1,
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);

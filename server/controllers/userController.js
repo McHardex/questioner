@@ -1,12 +1,8 @@
-/* eslint-disable consistent-return */
-import { Client } from 'pg';
+/* eslint-disable import/named */
 
-import connectionString from '../config';
+import { client } from '../config';
 
 import Helper from './helpers/Helpers';
-
-const client = new Client(connectionString);
-client.connect();
 
 class UserController {
   /**
@@ -40,7 +36,7 @@ class UserController {
         });
       } else {
         const token = Helper.generateToken(results.rows[0].id);
-        return res.status(201).json({
+        res.status(201).json({
           status: 201,
           data: {
             token,

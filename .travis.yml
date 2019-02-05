@@ -2,7 +2,7 @@ language: node_js
 env:
 - NODE_ENV=test
 node_js:
- - "10.11.0"
+ - "node"
 services:
   - postgresql
 before_script:

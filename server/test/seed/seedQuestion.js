@@ -1,30 +1,16 @@
 /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-import { Client } from 'pg';
-
-import dotenv from 'dotenv';
+/* eslint-disable import/named */
 
 import moment from 'moment';
 
-import connectionString from '../../config';
-
-dotenv.config();
+import { client } from '../../config';
 
 const sql = 'INSERT INTO asknow (createdOn, createdBy, meetup_id, title, body, upvote, downvote) VALUES($1,$2,$3,$4,$5,$6,$7)';
 
 const data = [moment(new Date()), 1, 1, 'what have you learnt so far?', 'Tolerance, adaptability, collaboration, time management', 1, 1];
 
-const client = new Client(connectionString);
-client.connect((err) => {
-  if (err) {
-    console.error('error connecting to database', err.stack);
-  } else {
-    console.log(`connected to ${connectionString}`);
-  }
-});
-
 client.query(sql, data)
-  .then((res) => {
+  .then(() => {
     console.log('question table populated');
     client.end();
   })

@@ -6,14 +6,9 @@ import { expect } from 'chai';
 
 import jwt from 'jsonwebtoken';
 
-import dotenv from 'dotenv';
-
 import moment from 'moment';
 
 import server from '../index';
-
-
-dotenv.config();
 
 const wrongtoken = 'wrong token';
 const token = jwt.sign({ userID: 1 }, process.env.SECRET);
@@ -29,7 +24,7 @@ describe('Meetups', () => {
           topic: 'everlasting meetup Party',
           location: 'lagos',
           happeningOn: moment(new Date('12-12-2990')),
-          tags: ['new', 'meetup', 'record']
+          tags: ['new', 'meetup', 'record'],
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -47,7 +42,7 @@ describe('Meetups', () => {
           topic: 'everlasting meetup',
           location: 'usa',
           happeningOn: moment(new Date('12-12-1012')),
-          tags: ['new', 'meetup', 'yea']
+          tags: ['new', 'meetup', 'yea'],
         })
         .end((err, res) => {
           expect(res.status).to.equal(401);

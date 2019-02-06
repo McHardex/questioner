@@ -1,5 +1,4 @@
 const questionDb = `
-  DROP TABLE IF EXISTS asknow CASCADE;
   CREATE TABLE asknow (
     id SERIAL PRIMARY KEY,
     createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

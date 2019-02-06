@@ -1,5 +1,4 @@
 const commentDb = `
-  DROP TABLE IF EXISTS comments CASCADE;
   CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,

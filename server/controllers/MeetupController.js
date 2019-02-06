@@ -11,16 +11,23 @@ class MeetupController {
   */
   static getAllMeetups(req, res) {
     client.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
+      if (error) {
+        return res.status(403).json({
+          status: 403,
+          error,
+        });
+      }
       if (results.rows.length < 1) {
         res.status(404).json({
           status: 404,
           error: 'No meetup record found',
         });
+      } else {
+        res.status(200).json({
+          status: 200,
+          data: results.rows,
+        });
       }
-      res.status(200).json({
-        status: 200,
-        data: results.rows,
-      });
       return results;
     });
   }
@@ -34,21 +41,28 @@ class MeetupController {
         });
       }
       if (results.rows.length < 1) {
-        return res.status(404).json({
+        res.status(404).json({
           status: 404,
           error: 'there are no upcoming meetups',
         });
+      } else {
+        res.status(200).json({
+          status: 200,
+          data: results.rows,
+        });
       }
-      res.status(200).json({
-        status: 200,
-        data: results.rows,
-      });
       return results;
     });
   }
 
   static getSpecificMeetupRecord(req, res) {
     client.query('SELECT * FROM meetups WHERE id = $1', [req.params.id], (error, results) => {
+      if (error) {
+        return res.status(403).json({
+          status: 403,
+          error,
+        });
+      }
       if (results.rows.length < 1) return res.status(404).json({ status: 404, error: 'Meetup record does not exist' });
       res.status(200).json({
         status: 200,

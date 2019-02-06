@@ -1,5 +1,4 @@
 const meetupDb = `
-  DROP TABLE IF EXISTS meetups CASCADE;
   CREATE TABLE meetups (
     id SERIAL PRIMARY KEY,
     createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

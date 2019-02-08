@@ -1,8 +1,8 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import routes from '../routes/routes';
+import router from '../routes/routes';
 import invalidUrl from '../middlewares/invalidUrl';
-import swaggerDocument from './db/swagger.json';
+import swaggerDocument from './swagger.json';
 
 module.exports = (app) => {
   app.use(express.json());
@@ -13,7 +13,7 @@ module.exports = (app) => {
     next();
   });
 
-  app.use('/api/v1', routes);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  app.use('/api/v1', router);
   app.use(invalidUrl);
 };

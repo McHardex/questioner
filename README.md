@@ -40,7 +40,7 @@ API Documentation [ here ](https://questioner-mchardex.herokuapp.com/api-docs).
   - [x] Clone this repo ``` https://github.com/McHardex/questioner.git ```
   - [x] Run ```npm install``` to install the required dependencies
   - [x] Run ```npm test``` to fireup the tests
-  - [x] Navigate to http://localhost:2000/api/v1/welcome
+  - [x] Navigate to https://questioner-mchardex.herokuapp.com/api/v1/welcome
 
 ## Features of the template
 - [x] Users can signup and login to the application.

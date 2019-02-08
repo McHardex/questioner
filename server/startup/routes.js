@@ -13,7 +13,7 @@ module.exports = (app) => {
     next();
   });
 
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use('/api/v1', routes);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use(invalidUrl);
 };

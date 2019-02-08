@@ -1,6 +1,8 @@
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import routes from '../routes/routes';
 import invalidUrl from '../middlewares/invalidUrl';
+import swaggerDocument from './db/swagger.json';
 
 module.exports = (app) => {
   app.use(express.json());
@@ -10,6 +12,8 @@ module.exports = (app) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, x-auth-token, Content-Type, Accept');
     next();
   });
+
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use('/api/v1', routes);
   app.use(invalidUrl);
 };

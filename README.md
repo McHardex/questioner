@@ -11,6 +11,9 @@ The App is hosted on github-pages [ here ](https://mchardex.github.io/questioner
 
 The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuapp.com/api/v1/welcome).
 
+
+API Documentation [ here ](https://questioner-mchardex.herokuapp.com/api-docs).
+
 ## Made With
   ### UI
     * HTML for writing the webpage
@@ -28,6 +31,9 @@ The endpoints are hosted on heroku [ here ](https://questioner-mchardex.herokuap
   
   ### Test-Driven Development
     * Mocha & Chai for api route testing
+
+  ### API Documentation
+    * Swagger
 
 ## Installation.
   - [x] Install [Nodejs](https://nodejs.org/en/download/)

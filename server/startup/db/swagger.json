@@ -1,0 +1,855 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Questioner API Documentation",
+    "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
+    "version": "0.1"
+  },
+  "servers": [
+    {
+      "url": "https://questioner-mchardex.herokuapp.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "summary": "create an account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstname": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "othername": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "lastname": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"email\": \"example@gmail.com\",\n\t\"firstname\": \"example\",\n\t\"lastname\": \"jones\",\n\t\"othername\": \"stone\",\n\t\"phoneNumber\": \"2323232323\",\n\t\"username\": \"docs\",\n\t\"password\": \"documentation\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "summary": "login to the API",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"email\": \"example@gmail.com\",\n\t\"password\": \"documentation\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/meetups": {
+      "post": {
+        "description": "create a meetup record",
+        "summary": "create a meetup record",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjIsImlhdCI6MTU0OTUzMDUwOCwiZXhwIjoxNTQ5NjE2OTA4fQ.vCdSmyjflCmsyXqzJfWC67I3YAepcWxkJHkOJC09AO4"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "topic": {
+                    "type": "string"
+                  },
+                  "happeningOn": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"topic\": \"moral tech summit\",\n\t\"location\": \"Ibadan\",\n\t\"happeningOn\": \"2020-03-12\",\n\t\"tags\": [\"tech\", \"conference\", \"growth\"]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/meetups/{meetup_id}": {
+      "put": {
+        "description": "update specific meetup record",
+        "summary": "update a meetup record",
+        "parameters": [
+          {
+            "name": "meetup_id",
+            "in": "path",
+            "description": "ID of of the meetup to be updated",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjIsImlhdCI6MTU0OTUzMDUwOCwiZXhwIjoxNTQ5NjE2OTA4fQ.vCdSmyjflCmsyXqzJfWC67I3YAepcWxkJHkOJC09AO4"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "topic": {
+                    "type": "string"
+                  },
+                  "happeningOn": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"topic\": \"moral tech updated\",\n\t\"location\": \"Ibadan\",\n\t\"happeningOn\": \"2020-10-12\",\n\t\"tags\": [\"tech\", \"conference\", \"updated\"]\n}"
+                },
+                "1": {
+                  "value": "{\n\t\"topic\": \"moral tech updated\",\n\t\"location\": \"Ibadan\",\n\t\"happeningOn\": \"2020-10-12\",\n\t\"tags\": [\"tech\", \"conference\", \"updated\"]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "delete": {
+        "description": "delete a meetup record",
+        "summary": "delete a meetup record",
+        "parameters": [
+          {
+            "name": "meetup_id",
+            "in": "path",
+            "description": "ID of of the meetup to be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjIsImlhdCI6MTU0OTUzMDUwOCwiZXhwIjoxNTQ5NjE2OTA4fQ.vCdSmyjflCmsyXqzJfWC67I3YAepcWxkJHkOJC09AO4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ],
+      "get": {
+        "description": "fetch a specific meetup record",
+        "summary": "update a meetup record",
+        "parameters": [
+          {
+            "name": "meetup_id",
+            "in": "path",
+            "description": "ID of of the meetup to be fetched",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      }
+    },
+    "/api/v1/meetups/{meetup_id}/rsvps": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "summary": "rsvp for a meetup",
+        "parameters": [
+          {
+            "name": "meetup_id",
+            "in": "path",
+            "description": "ID of of the meetup to rsvp to",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "response": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"response\": \"yes\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "409": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/questions/": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "summary": "post question in a meetup record",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "meetup_id": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"title\": \"This is a question\",\n\t\"meetup_id\": 6,\n\t\"body\": \"we aint keeping our cool bro, so you gotta show us some amazing love\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/questions/{question_id}/upvote": {
+      "patch": {
+        "description": "Upvote question by passing the id of the question to be upvote with the request url",
+        "summary": "upvote a question",
+        "parameters": [
+          {
+            "name": "question_id",
+            "in": "path",
+            "description": "ID of of the question to be upvoted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "meetup_id": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"title\": \"This is a question\",\n\t\"meetup_id\": 6,\n\t\"body\": \"we aint keeping our cool bro, so you gotta show us some amazing love\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/questions/{question_id}/downvote": {
+      "patch": {
+        "description": "Downvote question by passing the id of the question to be Downvote with the request url",
+        "summary": "downvote a meetup record",
+        "parameters": [
+          {
+            "name": "question_id",
+            "in": "path",
+            "description": "ID of of the question to be downvoted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "meetup_id": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n\t\"title\": \"This is a question\",\n\t\"meetup_id\": 6,\n\t\"body\": \"we aint keeping our cool bro, so you gotta show us some amazing love\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/comments": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "summary": "post comment on question",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjIsImlhdCI6MTU0OTUzMDUwOCwiZXhwIjoxNTQ5NjE2OTA4fQ.vCdSmyjflCmsyXqzJfWC67I3YAepcWxkJHkOJC09AO4"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "type": "string"
+                  },
+                  "question_id": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n    \"comment\": \"new comment\",\n    \"question_id\": 3\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/meetups/upcoming": {
+      "get": {
+        "description": "Get all upcoming meetups whose date is greater than the current data",
+        "summary": "fetch all upcoming meetup record",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/rsvps": {
+      "get": {
+        "description": "Get all rsvps for meetup",
+        "summary": "fetch all rsvps for a meetup record",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    },
+    "/api/v1/comments/{user_id}": {
+      "get": {
+        "description": "Get specific comments by specific user passing the user_id with the request url",
+        "summary": "fetch comments by specific user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of of the user",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjIsImlhdCI6MTU0OTUzMDk3OSwiZXhwIjoxNTQ5NjE3Mzc5fQ.RThBzVGQLjyqYMHibFzOR4k00ngyypw2mX616Tpao2w"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://questioner-mchardex.herokuapp.com"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        },
+        {
+          "url": "https://questioner-mchardex.herokuapp.com"
+        }
+      ]
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "http://yourauthurl.com",
+            "scopes": {
+              "scope_name": "Enter your scopes here"
+            }
+          }
+        }
+      }
+    }
+  }
+}

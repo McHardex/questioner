@@ -1,17 +1,26 @@
 /* eslint-disable consistent-return */
+import Joi from 'joi';
 
 const createMeetupValidation = (req, res, next) => {
-  if (!req.body.topic) return res.status(400).send({ status: 400, error: 'topic is required' });
+  const data = req.body;
 
-  if (!req.body.location) return res.status(400).send({ status: 400, error: 'location is required' });
+  const schema = Joi.object().keys({
+    topic: Joi.string().min(10).required(),
+    location: Joi.string().min(3).required(),
+    happeningOn: Joi.date().iso().required().label('date must be in this format: yyyy-mm-dd or yyyy/mm/dd'),
+    tags: Joi.array().length(3).required(),
+  });
 
-  if (!req.body.happeningOn) return res.status(400).send({ status: 400, error: 'date is required' });
-  if (req.body.happeningOn.length < 8) return res.status(400).send({ status: 400, error: 'date must be in this format: yyyy-mm-dd or yyyy/mm/dd' });
-
-  if (!req.body.tags) return res.status(400).send({ status: 400, error: 'tags is required' });
-  if (req.body.tags.length < 3) return res.status(400).send({ status: 400, error: 'Please add a minimum of three(3) tags' });
-
-  next();
+  Joi.validate(data, schema, (err) => {
+    if (err) {
+      res.status(422).json({
+        status: '422',
+        error: err.details[0].message.split('"').join(''),
+      });
+    } else {
+      next();
+    }
+  });
 };
 
 export default createMeetupValidation;

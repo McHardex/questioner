@@ -24,7 +24,7 @@ const loginDetails = {
 
 describe('The User route', () => {
   describe('The Signup route', () => {
-    it('Should return 400 when firsname is not present', (done) => {
+    it('Should return 422 when firsname is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -36,14 +36,14 @@ describe('The User route', () => {
           password: 'meluwe',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Firstname is required');
+          expect(res.body.error).to.equal('firstname is required');
           done();
         });
     });
 
-    it('Should return 400 when lastname is not present', (done) => {
+    it('Should return 422 when lastname is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -55,14 +55,14 @@ describe('The User route', () => {
           password: 'meluwe',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Lastname is required');
+          expect(res.body.error).to.equal('lastname is required');
           done();
         });
     });
 
-    it('Should return 400 when othername is not present', (done) => {
+    it('Should return 422 when othername is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -74,14 +74,14 @@ describe('The User route', () => {
           password: 'meluwe',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Othername is required');
+          expect(res.body.error).to.equal('othername is required');
           done();
         });
     });
 
-    it('Should return 400 when username is not present', (done) => {
+    it('Should return 422 when username is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -93,14 +93,14 @@ describe('The User route', () => {
           password: 'meluwe',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Username is required');
+          expect(res.body.error).to.equal('username is required');
           done();
         });
     });
 
-    it('Should return 400 when phone number is not present', (done) => {
+    it('Should return 422 when phone number is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -113,13 +113,13 @@ describe('The User route', () => {
           password: 'meluwe',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Phone number is required');
+          expect(res.body.error).to.equal('phoneNumber is required');
           done();
         });
     });
-    it('Should return 400 when password is not present', (done) => {
+    it('Should return 422 when password is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -132,14 +132,14 @@ describe('The User route', () => {
           registered: '2019-01-15',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Password is required');
+          expect(res.body.error).to.equal('password is required');
           done();
         });
     });
 
-    it('Should return 400 for invalid email', (done) => {
+    it('Should return 422 for invalid email', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -152,9 +152,9 @@ describe('The User route', () => {
           password: 'password',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Please enter a valid email address');
+          expect(res.body.error).to.equal('email must be a valid email');
           done();
         });
     });
@@ -184,19 +184,19 @@ describe('The User route', () => {
   });
 
   describe('The Login route', () => {
-    it('Should return 400 for missing required fields', (done) => {
+    it('Should return 422 for missing required fields', (done) => {
       request(server)
         .post('/api/v1/auth/login')
         .send({})
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Please ensure to fill all input field');
+          expect(res.body.error).to.equal('email is required');
           done();
         });
     });
 
-    it('Should return 400 for incorrect email format', (done) => {
+    it('Should return 422 for incorrect email format', (done) => {
       request(server)
         .post('/api/v1/auth/login')
         .send({
@@ -204,9 +204,9 @@ describe('The User route', () => {
           password: 'h0ttestt',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Please enter a valid email address');
+          expect(res.body.error).to.equal('email must be a valid email');
           done();
         });
     });

@@ -1,5 +1,6 @@
-/* eslint-disable consistent-return */
 import Joi from 'joi';
+
+import validate from './validateInput';
 
 const createMeetupValidation = (req, res, next) => {
   const data = req.body;
@@ -12,14 +13,7 @@ const createMeetupValidation = (req, res, next) => {
   });
 
   Joi.validate(data, schema, (err) => {
-    if (err) {
-      res.status(422).json({
-        status: '422',
-        error: err.details[0].message.split('"').join(''),
-      });
-    } else {
-      next();
-    }
+    validate(err, res, next);
   });
 };
 

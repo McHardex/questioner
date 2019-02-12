@@ -1,10 +1,23 @@
-/* eslint-disable consistent-return */
+import Joi from 'joi';
 
 const commentValid = (req, res, next) => {
-  if (!req.body.comment) return res.status(404).send({ status: 404, error: 'comment is required' });
-  if (!req.body.question_id) return res.status(404).send({ status: 404, error: 'question id is required' });
+  const data = req.body;
 
-  next();
+  const schema = Joi.object().keys({
+    comment: Joi.string().min(1).max(100).required(),
+    question_id: Joi.number().required(),
+  });
+
+  Joi.validate(data, schema, (err) => {
+    if (err) {
+      res.status(422).json({
+        status: '422',
+        error: err.details[0].message.split('"').join(''),
+      });
+    } else {
+      next();
+    }
+  });
 };
 
 export default commentValid;

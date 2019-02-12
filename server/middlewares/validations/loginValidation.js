@@ -1,22 +1,23 @@
-/* eslint-disable consistent-return */
-
-import Helper from '../../controllers/helpers/Helpers';
+import Joi from 'joi';
 
 const loginValidation = (req, res, next) => {
-  if (!req.body.password || !req.body.email) {
-    return res.status(400).send({
-      status: 400,
-      error: 'Please ensure to fill all input field',
-    });
-  }
+  const data = req.body;
 
-  if (!Helper.isValidEmail(req.body.email)) {
-    return res.status(400).send({
-      status: 400,
-      error: 'Please enter a valid email address',
-    });
-  }
-  next();
+  const schema = Joi.object().keys({
+    email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+    password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
+  });
+
+  Joi.validate(data, schema, (err) => {
+    if (err) {
+      res.status(422).json({
+        status: '422',
+        error: err.details[0].message.split('"').join(''),
+      });
+    } else {
+      next();
+    }
+  });
 };
 
 export default loginValidation;

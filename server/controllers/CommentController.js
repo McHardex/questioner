@@ -31,8 +31,6 @@ class CommentController {
 
   static getSpecificUserComment(req, res) {
     client.query('SELECT * from comments WHERE user_id = $1', [req.params.user_id], (error, results) => {
-      /* eslint-disable no-console */
-      console.log(results);
       if (error) {
         return res.status(403).json({
           status: 403,
@@ -68,9 +66,9 @@ class CommentController {
         [req.user, req.body.comment, req.body.question_id],
         (err, response) => {
           if (err) {
-            res.status(403).json({
-              status: 403,
-              error,
+            res.status(404).json({
+              status: 404,
+              error: 'No question with the given id found',
             });
           } else {
             res.status(201).json({

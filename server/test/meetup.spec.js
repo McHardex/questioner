@@ -52,17 +52,17 @@ describe('Meetups', () => {
         });
     });
 
-    it('should return status code 400 with incomplete payload (tags)', (done) => {
+    it('should return status code 422 with incomplete payload (tags)', (done) => {
       request(server)
         .post('/api/v1/meetups')
         .set('x-auth-token', token)
         .send({
           topic: 'Progress Party',
           location: 'lagos',
-          happeningOn: '22-04-2020',
+          happeningOn: '2020-04-04',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
           expect(res.body.error).to.equal('tags is required');
@@ -70,21 +70,21 @@ describe('Meetups', () => {
         });
     });
 
-    it('should return status code 400 when tags length is less than 3(tags)', (done) => {
+    it('should return status code 422 when tags length is less than 3(tags)', (done) => {
       request(server)
         .post('/api/v1/meetups')
         .set('x-auth-token', token)
         .send({
           topic: 'Progress Party',
           location: 'lagos',
-          happeningOn: '22-04-2020',
+          happeningOn: '2020-04-04',
           tags: ['bukunmi'],
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('Please add a minimum of three(3) tags');
+          expect(res.body.error).to.equal('tags must contain 3 items');
           done();
         });
     });
@@ -94,12 +94,12 @@ describe('Meetups', () => {
         .post('/api/v1/meetups')
         .set('x-auth-token', token)
         .send({
-          topic: 'Bootcamp',
+          topic: 'Bootcamp is a day to reminnisce a good call',
           tags: 'apple',
           happeningOn: '23-12-2019',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
           expect(res.body.error).to.equal('location is required');
@@ -107,37 +107,37 @@ describe('Meetups', () => {
         });
     });
 
-    it('should fail on POST with incomplete payload (date)', (done) => {
+    it('should fail on POST with date absent from payload (date)', (done) => {
       request(server)
         .post('/api/v1/meetups')
         .set('x-auth-token', token)
         .send({
-          topic: 'javascript',
-          tags: 'apple',
+          topic: 'javascript is an happy language',
+          tags: ['apple', 'happy', 'language'],
           location: 'lagos',
         })
         .end((err, res) => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('date is required');
+          expect(res.body.error).to.equal('date must be in this format: yyyy-mm-dd or yyyy/mm/dd is required');
           done();
         });
     });
 
-    it('should fail on POST with incomplete payload (date)', (done) => {
+    it('should fail on POST with invalid payload (date)', (done) => {
       request(server)
         .post('/api/v1/meetups')
         .set('x-auth-token', token)
         .send({
-          topic: 'javascript',
-          tags: 'apple',
-          happeningOn: '1234',
+          topic: 'javascript is a beautiful language every cares to know',
+          tags: ['apple', 'app', 'growth'],
+          happeningOn: '108-100-1900',
           location: 'lagos',
         })
         .end((err, res) => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('date must be in this format: yyyy-mm-dd or yyyy/mm/dd');
+          expect(res.body.error).to.equal('date must be in this format: yyyy-mm-dd or yyyy/mm/dd must be a valid ISO 8601 date');
           done();
         });
     });
@@ -148,7 +148,7 @@ describe('Meetups', () => {
         .set('x-auth-token', token)
         .send({})
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
           expect(res.body.error).to.equal('topic is required');

@@ -109,7 +109,7 @@ describe('QUESTIONS', () => {
         });
     });
 
-    it('should return status code 400 with incomplete payload(meetup id)', (done) => {
+    it('should return status code 422 with incomplete payload(meetup id)', (done) => {
       request(server)
         .post('/api/v1/questions')
         .set('x-auth-token', token)
@@ -118,15 +118,15 @@ describe('QUESTIONS', () => {
           body: 'Apply to Andela. The best tech company in Africa',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('meetup id is required');
+          expect(res.body.error).to.equal('meetup_id is required');
           done();
         });
     });
 
-    it('should return status code 400 with incomplete payload(title)', (done) => {
+    it('should return status code 422 with incomplete payload(title)', (done) => {
       request(server)
         .post('/api/v1/questions')
         .set('x-auth-token', token)
@@ -135,7 +135,7 @@ describe('QUESTIONS', () => {
           meetup_id: 1,
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
           expect(res.body.error).to.equal('title is required');
@@ -143,7 +143,7 @@ describe('QUESTIONS', () => {
         });
     });
 
-    it('should return status code 400 with incomplete payload(body)', (done) => {
+    it('should return status code 422 with incomplete payload(body)', (done) => {
       request(server)
         .post('/api/v1/questions')
         .set('x-auth-token', token)
@@ -152,7 +152,7 @@ describe('QUESTIONS', () => {
           meetup_id: 1,
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
           expect(res.body.error).to.equal('body is required');
@@ -160,7 +160,7 @@ describe('QUESTIONS', () => {
         });
     });
 
-    it('should return status code 400 with title length less than 10', (done) => {
+    it('should return status code 422 with title length less than 10', (done) => {
       request(server)
         .post('/api/v1/questions')
         .set('x-auth-token', token)
@@ -170,15 +170,15 @@ describe('QUESTIONS', () => {
           meetup_id: 1,
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('title length must be greater than 10');
+          expect(res.body.error).to.equal('title length must be at least 10 characters long');
           done();
         });
     });
 
-    it('should return status code 400 with body length less than 30', (done) => {
+    it('should return status code 422 with body length less than 20', (done) => {
       request(server)
         .post('/api/v1/questions')
         .set('x-auth-token', token)
@@ -188,10 +188,10 @@ describe('QUESTIONS', () => {
           meetup_id: 1,
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('body length must be greater than 30');
+          expect(res.body.error).to.equal('body length must be at least 20 characters long');
           done();
         });
     });

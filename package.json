@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run build:prod && node dist/index.js",
     "clean:dist": "rimraf ./dist",
-    "build:prod": "npm run clean:dist && npm run drop-tables && npm run prod-migrate && babel ./server --out-dir dist --copy-files",
+    "build:prod": "npm run clean:dist && npm run prod-migrate && babel ./server --out-dir dist --copy-files",
     "start:dev": "export NODE_ENV=development && nodemon --exec babel-node ./server/index.js",
     "prod-migrate": "npm run db-migrate --env production",
     "db-migrate": "babel-node ./server/startup/db/db.js",

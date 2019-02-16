@@ -23,7 +23,6 @@ class WelcomeController {
         getAllQuestions: 'GET /api/v1/questions',
         createQuestion: 'POST /api/v1/questions',
         upvoteQuestion: 'PATCH /api/v1/questions/:question_id/upvote',
-        downvoteQuestion: 'PATCH /api/v1/questions/:question_id/downvote',
         getAllRsvps: 'GET /api/v1/rsvps',
         createRsvp: 'POST /api/v1/meetups/:meetup_id/rsvps',
       },

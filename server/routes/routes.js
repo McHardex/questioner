@@ -38,8 +38,7 @@ router.put('/meetups/:id', auth, MeetupController.updateMeetup);
 // Question endpoints
 router.get('/questions', auth, QuestionController.getAllQuestions);
 router.post('/questions', auth, createQuestion, QuestionController.createQuestion);
-router.patch('/questions/:question_id/upvote', auth, QuestionController.upvoteQuestion);
-router.patch('/questions/:question_id/downvote', auth, QuestionController.downvoteQuestion);
+router.patch('/questions/:question_id/upvote', auth, QuestionController.upvoteDownvoteQuestion);
 router.post('/comments', auth, commentValid, CommentController.comment);
 router.get('/comments', auth, CommentController.getAllComments);
 router.get('/comments/:user_id', auth, CommentController.getSpecificUserComment);

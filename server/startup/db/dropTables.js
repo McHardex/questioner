@@ -42,6 +42,16 @@ client.query('DROP TABLE IF EXISTS users CASCADE')
       });
   })
   .then(() => {
+    client.query('DROP TABLE IF EXISTS votes CASCADE')
+      .then(() => {
+        console.log('votes table dropped');
+      })
+      .catch((err) => {
+        console.log('unable to drop votes table', err);
+        client.end();
+      });
+  })
+  .then(() => {
     client.query('DROP TABLE IF EXISTS rsvps CASCADE')
       .then(() => {
         console.log('rsvp table dropped');

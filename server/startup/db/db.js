@@ -11,6 +11,8 @@ import meetupDb from '../../models/meetupDb';
 
 import commentDb from '../../models/commentDb';
 
+import voteDb from '../../models/voteDb';
+
 import { client } from '../../config';
 
 const createQuery = (query) => {
@@ -25,4 +27,4 @@ const createQuery = (query) => {
     });
 };
 
-createQuery(`${userDb}${meetupDb}${questionDb}${commentDb}${rsvpDB}`);
+createQuery(`${userDb}${meetupDb}${questionDb}${commentDb}${rsvpDB}${voteDb}`);

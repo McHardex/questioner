@@ -221,7 +221,22 @@ describe('QUESTIONS', () => {
           expect(res.body).to.have.all.keys('status', 'data');
           expect(res.body.data[0].title).to.equal('how can I grow as a developer?');
           expect(res.body.data[0].body).to.equal('Apply to Andela. The best tech company in Africa');
-          expect(res.body.data[0].upvote).to.equal(1);
+          expect(res.body.data[0].votes).to.equal(1);
+          done();
+        });
+    });
+
+    it('should return status code 200 on successful downvote of question on second patch request', (done) => {
+      request(server)
+        .patch('/api/v1/questions/2/upvote')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.keys('status', 'data');
+          expect(res.body.data[0].title).to.equal('how can I grow as a developer?');
+          expect(res.body.data[0].body).to.equal('Apply to Andela. The best tech company in Africa');
+          expect(res.body.data[0].votes).to.equal(0);
           done();
         });
     });
@@ -234,35 +249,7 @@ describe('QUESTIONS', () => {
           expect(res.status).to.equal(404);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('Unable to upvote! No question found');
-          done();
-        });
-    });
-
-    it('should return status code 200 on successful downvote of question', (done) => {
-      request(server)
-        .patch('/api/v1/questions/2/downvote')
-        .set('x-auth-token', token)
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'data');
-          expect(res.body.data[0].title).to.equal('how can I grow as a developer?');
-          expect(res.body.data[0].body).to.equal('Apply to Andela. The best tech company in Africa');
-          expect(res.body.data[0].downvote).to.equal(1);
-          done();
-        });
-    });
-
-    it('should return status code 404 when invalid question_id is sent with downvote endpoint', (done) => {
-      request(server)
-        .patch('/api/v1/questions/5/downvote')
-        .set('x-auth-token', token)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('Unable to downvote! No question found');
+          expect(res.body.error).to.equal('no votes by user on this question');
           done();
         });
     });

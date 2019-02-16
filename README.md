@@ -106,12 +106,7 @@ API Documentation [ here ](https://questioner-mchardex.herokuapp.com/api-docs).
   <tr>
       <td>PATCH</td>
       <td>/api/v1/questions/:question_id/upvote</td>
-      <td>upvote and questions</td>
-  </tr>
-  <tr>
-      <td>PATCH</td>
-      <td>/api/v1/questions/:question_id/downvote</td>
-      <td>downvote and questions</td>
+      <td>upvote question on first click and downvote it on second click</td>
   </tr>
   <tr>
       <td>POST</td>

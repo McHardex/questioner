@@ -54,58 +54,77 @@ class QuestionController {
       });
   }
 
-  static upvoteQuestion(req, res) {
-    client.query(`UPDATE asknow SET upvote = upvote + 1 WHERE id = ${req.params.question_id}
-    RETURNING *`, (error, response) => {
-      if (error) {
-        return res.status(409).json({
-          status: 409,
-          error,
+  static upvoteDownvoteQuestion(req, res) {
+    client.query(`SELECT votes from asknow WHERE id=${req.params.question_id}`,
+      (err, newResponse) => {
+        if (err) {
+          return res.status(403).json({
+            status: 403,
+            error: err,
+          });
+        }
+        if (newResponse.rowCount < 1) {
+          return res.status(404).json({
+            status: 404,
+            error: 'no votes by user on this question',
+          });
+        }
+        client.query(`SELECT * FROM votes WHERE user_id=${req.user}
+        AND question_id=${req.params.question_id}`, (error, resp) => {
+          if (error) {
+            return res.status(403).json({
+              status: 403,
+              error,
+            });
+          }
+          if (resp.rowCount < 1) {
+            client.query(`UPDATE asknow SET votes = votes + 1 WHERE id = ${req.params.question_id}
+            RETURNING *`, (e, response) => {
+              if (error) {
+                return res.status(403).json({
+                  status: 403,
+                  error: e,
+                });
+              }
+              client.query('INSERT INTO votes (user_id, question_id) VALUES ($1, $2)',
+                [req.user, req.params.question_id], (ee, newVal) => {
+                  res.status(200).json({
+                    status: 200,
+                    data: [{
+                      title: response.rows[0].title,
+                      body: response.rows[0].body,
+                      votes: response.rows[0].votes,
+                    }],
+                  });
+                  return newVal;
+                });
+              return response;
+            });
+          } else {
+            client.query(`UPDATE asknow SET votes = votes - 1 WHERE id = ${req.params.question_id}
+            RETURNING *`, (e, response) => {
+              if (error) {
+                return res.status(403).json({
+                  status: 403,
+                  error: e,
+                });
+              }
+              res.status(200).json({
+                status: 200,
+                data: [{
+                  title: response.rows[0].title,
+                  body: response.rows[0].body,
+                  votes: response.rows[0].votes,
+                }],
+              });
+              client.query(`DELETE FROM votes WHERE id=${resp.rows[0].id}`);
+              return response;
+            });
+          }
+          return resp;
         });
-      }
-      if (response.rowCount < 1) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Unable to upvote! No question found',
-        });
-      }
-      res.status(200).json({
-        status: 200,
-        data: [{
-          title: response.rows[0].title,
-          body: response.rows[0].body,
-          upvote: response.rows[0].upvote,
-        }],
+        return newResponse;
       });
-      return response;
-    });
-  }
-
-  static downvoteQuestion(req, res) {
-    client.query(`UPDATE asknow SET downvote = downvote + 1 WHERE id = ${req.params.question_id}
-    RETURNING *`, (error, response) => {
-      if (error) {
-        return res.status(409).json({
-          status: 409,
-          error,
-        });
-      }
-      if (response.rowCount < 1) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Unable to downvote! No question found',
-        });
-      }
-      res.status(200).send({
-        status: 200,
-        data: [{
-          title: response.rows[0].title,
-          body: response.rows[0].body,
-          downvote: response.rows[0].downvote,
-        }],
-      });
-      return response;
-    });
   }
 }
 

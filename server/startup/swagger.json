@@ -500,86 +500,12 @@
     "/api/v1/questions/{question_id}/upvote": {
       "patch": {
         "description": "Upvote question by passing the id of the question to be upvote with the request url",
-        "summary": "upvote a question",
+        "summary": "upvote a question on the first request and downvote on the second request",
         "parameters": [
           {
             "name": "question_id",
             "in": "path",
             "description": "ID of of the question to be upvoted",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "x-auth-token",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            },
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU0OTUyOTQ1NCwiZXhwIjoxNTQ5NjE1ODU0fQ.TJr0Gmwv4Fs8HKdxlXWkSZPrZcv3YdjAgVOkiImUnC8"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "meetup_id": {
-                    "type": "integer"
-                  }
-                }
-              },
-              "examples": {
-                "0": {
-                  "value": "{\n\t\"title\": \"This is a question\",\n\t\"meetup_id\": 6,\n\t\"body\": \"we aint keeping our cool bro, so you gotta show us some amazing love\"\n}"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Auto generated using Swagger Inspector",
-            "content": {
-              "application/json; charset=utf-8": {
-                "schema": {
-                  "type": "string"
-                },
-                "examples": {}
-              }
-            }
-          }
-        },
-        "servers": [
-          {
-            "url": "https://questioner-mchardex.herokuapp.com"
-          }
-        ]
-      },
-      "servers": [
-        {
-          "url": "https://questioner-mchardex.herokuapp.com"
-        }
-      ]
-    },
-    "/api/v1/questions/{question_id}/downvote": {
-      "patch": {
-        "description": "Downvote question by passing the id of the question to be Downvote with the request url",
-        "summary": "downvote a meetup record",
-        "parameters": [
-          {
-            "name": "question_id",
-            "in": "path",
-            "description": "ID of of the question to be downvoted",
             "required": true,
             "schema": {
               "type": "integer",

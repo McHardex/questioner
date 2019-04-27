@@ -30,7 +30,7 @@ router.post('/auth/login', loginValidation, UserController.login);
 // Meetup endpoints
 router.get('/meetups', auth, MeetupController.getAllMeetups);
 router.get('/meetups/upcoming', auth, MeetupController.upcomingMeetups);
-router.get('/meetups/:id', auth, MeetupController.getSpecificMeetupRecord);
+router.get('/meetups/:id', MeetupController.getSpecificMeetupRecord);
 router.post('/meetups', auth, createMeetupValidation, MeetupController.createMeetup);
 router.delete('/meetups/:id', auth, MeetupController.deleteMeetup);
 router.put('/meetups/:id', auth, MeetupController.updateMeetup);
@@ -40,7 +40,7 @@ router.get('/questions', auth, QuestionController.getAllQuestions);
 router.post('/questions', auth, createQuestion, QuestionController.createQuestion);
 router.patch('/questions/:question_id/upvote', auth, QuestionController.upvoteDownvoteQuestion);
 router.post('/comments', auth, commentValid, CommentController.comment);
-router.get('/comments', auth, CommentController.getAllComments);
+router.get('/comments', CommentController.getAllComments);
 router.get('/comments/:user_id', auth, CommentController.getSpecificUserComment);
 
 // Rsvp enpoints

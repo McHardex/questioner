@@ -44,7 +44,7 @@ router.get('/comments', CommentController.getAllComments);
 router.get('/comments/:user_id', auth, CommentController.getSpecificUserComment);
 
 // Rsvp enpoints
-router.get('/rsvps', auth, RsvpController.getAllRsvps);
+router.get('/rsvps/:meetup_id', auth, RsvpController.getAllRsvps);
 router.post('/meetups/:meetup_id/rsvps', auth, RsvpController.createRsvp);
 
 export default router;

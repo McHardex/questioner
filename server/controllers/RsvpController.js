@@ -11,15 +11,24 @@ class RsvpController {
   */
 
   static getAllRsvps(req, res) {
-    client.query('SELECT * FROM rsvps ORDER by id ASC', (error, results) => {
+    client.query(`SELECT * FROM rsvps 
+    WHERE meetup_id = $1 
+    AND response = 'yes'`,
+    [req.params.meetup_id], (error, results) => {
+      if (error) {
+        return res.status(403).json({
+          status: 403,
+          error,
+        });
+      }
       if (results.rows.length < 1) {
         return res.status(404).json({
           status: 404,
-          error: 'No rsvp record found',
+          error: 'no rsvp record found',
         });
       }
-      res.status(201).json({
-        status: 201,
+      res.status(200).json({
+        status: 200,
         data: results.rows,
       });
       return results;

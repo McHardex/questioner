@@ -15,7 +15,7 @@ describe('RSVPs', () => {
   describe('GET /rsvps', () => {
     it('should return status code 401 when no token is passed', (done) => {
       request(server)
-        .get('/api/v1/rsvps')
+        .get('/api/v1/rsvps/1')
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
@@ -27,7 +27,7 @@ describe('RSVPs', () => {
 
     it('should return status code 422 when string is passed as token', (done) => {
       request(server)
-        .get('/api/v1/rsvps')
+        .get('/api/v1/rsvps/3')
         .set('x-auth-token', invalidString)
         .end((err, res) => {
           expect(res.status).to.equal(422);
@@ -40,7 +40,7 @@ describe('RSVPs', () => {
 
     it('should return status code 422 when invalid token is passed', (done) => {
       request(server)
-        .get('/api/v1/rsvps')
+        .get('/api/v1/rsvps/3')
         .set('x-auth-token', wrongToken)
         .end((err, res) => {
           expect(res.status).to.equal(422);
@@ -53,13 +53,13 @@ describe('RSVPs', () => {
 
     it('should return status code 404 when unable to fetch rsvps', (done) => {
       request(server)
-        .get('/api/v1/rsvps')
+        .get('/api/v1/rsvps/3')
         .set('x-auth-token', token)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('No rsvp record found');
+          expect(res.body.error).to.equal('no rsvp record found');
           done();
         });
     });
@@ -136,16 +136,13 @@ describe('RSVPs', () => {
         });
     });
 
-    it('should return status code 201 when on succesful fetching of all rsvps', (done) => {
+    it('should return status code 200 on successful fetch of rsvps', (done) => {
       request(server)
-        .get('/api/v1/rsvps')
+        .get('/api/v1/rsvps/1')
         .set('x-auth-token', token)
         .end((err, res) => {
-          expect(res.status).to.equal(201);
+          expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'data');
-          expect(res.body.data[0]).to.have.all.keys('id', 'meetup_id', 'user_id', 'response');
-          expect(res.body.data[0].response).to.equal('yes');
           done();
         });
     });

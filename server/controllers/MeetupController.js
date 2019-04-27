@@ -65,18 +65,18 @@ class MeetupController {
     "question"."title" AS "title", 
     "question"."votes" AS "votes", 
     array_agg("comment"."comment") AS "comment"
-    FROM meetups AS "meetup" 
-    LEFT JOIN "asknow" AS "question" 
+    FROM meetups AS "meetup"
+    LEFT JOIN "asknow" AS "question"
     ON "meetup"."id" = "question"."meetup_id"
-    LEFT JOIN "comments" AS "comment" 
+    LEFT JOIN (SELECT * FROM "comments" ORDER BY createdat desc) AS "comment" 
     ON "question"."id" = "comment"."question_id"
     WHERE "meetup"."id" = $1 
     GROUP BY "meetup"."id", 
     "question"."meetup_id", 
     "question"."title", 
     "comment"."question_id", 
-    "question"."id"
-    ORDER BY "question"."id" DESC`, [req.params.id], (error, results) => {
+    "question"."id" 
+    ORDER BY "question"."createdon" desc;`, [req.params.id], (error, results) => {
       if (error) {
         return res.status(400).json({
           status: 400,

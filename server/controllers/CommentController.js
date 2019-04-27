@@ -11,9 +11,9 @@ class CommentController {
   */
 
   static getAllComments(req, res) {
-    client.query(`SELECT createdby, title, votes, meetup_id, a.id, COALESCE(string_agg(comment, '...<br />'), 'Be the first to comment') AS comment
+    client.query(`SELECT createdby, title, votes, meetup_id, a.id,  AS comment
       FROM comments c
-      FULL JOIN asknow a ON a.id = c.question_id
+      LEFT OUTER JOIN asknow a ON a.id = c.question_id
       GROUP BY (a.createdby, a.title, a.votes, a.meetup_id, a.id)`, (error, results) => {
       if (error) {
         return res.status(403).json({

@@ -56,14 +56,30 @@ class MeetupController {
   }
 
   static getSpecificMeetupRecord(req, res) {
-    client.query('SELECT * FROM meetups WHERE id = $1', [req.params.id], (error, results) => {
+    client.query(`SELECT "meetup"."id" AS "meetupId",
+    "meetup"."topic",
+    "meetup"."location",
+    "meetup"."happeningon",
+    "meetup"."tags",
+    "question"."id" AS "questionId", 
+    "question"."title" AS "title", 
+    "question"."votes" AS "votes", 
+    array_agg("comment"."comment") AS "comment"
+    FROM meetups AS "meetup" 
+    LEFT JOIN "asknow" AS "question" 
+    ON "meetup"."id" = "question"."meetup_id"
+    LEFT JOIN "comments" AS "comment" 
+    ON "question"."id" = "comment"."question_id"
+    WHERE "meetup"."id" = $1 GROUP BY "meetup"."id", "question"."meetup_id", "question"."title", "comment"."question_id", "question"."id"`, [req.params.id], (error, results) => {
       if (error) {
-        return res.status(403).json({
-          status: 403,
-          error,
+        return res.status(400).json({
+          status: 400,
+          error: error.message,
         });
       }
-      if (results.rows.length < 1) return res.status(404).json({ status: 404, error: 'Meetup record does not exist' });
+      if (!results.rows.length) {
+        return res.status(404).json({ status: 404, error: 'Meetup record does not exist' });
+      }
       res.status(200).json({
         status: 200,
         data: results.rows,

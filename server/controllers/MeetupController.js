@@ -70,7 +70,13 @@ class MeetupController {
     ON "meetup"."id" = "question"."meetup_id"
     LEFT JOIN "comments" AS "comment" 
     ON "question"."id" = "comment"."question_id"
-    WHERE "meetup"."id" = $1 GROUP BY "meetup"."id", "question"."meetup_id", "question"."title", "comment"."question_id", "question"."id"`, [req.params.id], (error, results) => {
+    WHERE "meetup"."id" = $1 
+    GROUP BY "meetup"."id", 
+    "question"."meetup_id", 
+    "question"."title", 
+    "comment"."question_id", 
+    "question"."id"
+    ORDER BY "question"."id" DESC`, [req.params.id], (error, results) => {
       if (error) {
         return res.status(400).json({
           status: 400,

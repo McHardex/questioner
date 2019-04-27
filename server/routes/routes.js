@@ -30,7 +30,7 @@ router.post('/auth/login', loginValidation, UserController.login);
 // Meetup endpoints
 router.get('/meetups', auth, MeetupController.getAllMeetups);
 router.get('/meetups/upcoming', auth, MeetupController.upcomingMeetups);
-router.get('/meetups/:id', MeetupController.getSpecificMeetupRecord);
+router.get('/meetups/:id', auth, MeetupController.getSpecificMeetupRecord);
 router.post('/meetups', auth, createMeetupValidation, MeetupController.createMeetup);
 router.delete('/meetups/:id', auth, MeetupController.deleteMeetup);
 router.put('/meetups/:id', auth, MeetupController.updateMeetup);

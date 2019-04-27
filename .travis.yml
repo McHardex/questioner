@@ -4,7 +4,7 @@ env:
 node_js:
  - "stable"
 install:
-  - npm ci
+  - npm install
 services:
   - postgresql
 before_script:

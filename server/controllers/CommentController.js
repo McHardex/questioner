@@ -38,9 +38,9 @@ class CommentController {
         });
       }
       if (results.rows.length < 1) {
-        return res.status(404).json({
-          status: 404,
-          error: 'user does not exist',
+        return res.status(200).json({
+          status: 200,
+          error: 'You have not made any comment yet',
         });
       }
       res.status(200).json({

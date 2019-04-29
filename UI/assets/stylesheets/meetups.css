@@ -112,7 +112,7 @@ form.search-bar {
 
 .search-meetup {
   background-size: 26px 26px;
-  width: 100%;
+  width: 85%;
   background-repeat: no-repeat;
   background-position: 5px 6px;
   border: solid 1px #5550;
@@ -120,7 +120,6 @@ form.search-bar {
   font-size: 14px;
   font-style: normal;
   font-weight: 200;
-  padding: 5px 40px;
   outline: none;
   margin: 0;
   height: 40px;
@@ -134,32 +133,12 @@ form.search-bar {
 }
 
 .search-meetup:hover {
-  /* border: solid 1px #555; */
   font-size: 24px;
   padding: 10px 40px;
 }
 
 ::placeholder {
   font-weight: 100;
-}
-
-hr {
-  border: none;
-  height: 1px;
-  background: #cccccc63;
-}
-
-.meetup-cont {
-  text-align: center;
-  background: transparent;
-  color: #ccc;
-  min-height: 65vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  border: 2px solid #353535d9;
-  box-shadow: 0 0 22px #eeeeee45;
 }
 
 #meetups {

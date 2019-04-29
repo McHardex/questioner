@@ -127,13 +127,6 @@ i.fas.fa-user-cog {
   text-transform: capitalize;
 }
 
-hr {
-  margin-top: 50px;
-  border: none;
-  background: #cccccc8f;
-  height: 1px;
-}
-
 form#question-submit {
   width: 80%;
   margin: 50px auto;
@@ -227,7 +220,6 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
 
 .form-input {
   background-size: 26px 26px;
-  width: 85%;
   background-repeat: no-repeat;
   background-position: 5px 6px;
   border: solid 1px #e0dada;
@@ -241,6 +233,10 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
   background-color: transparent;
   box-sizing: border-box;
   appearance: none;
+}
+
+input.form-input.comment {
+  width: 85%;
 }
 
 .submit-comment {
@@ -262,7 +258,7 @@ i.far.fa-thumbs-up, i.far.fa-thumbs-down {
   color: #e4e2e2;
   font-size: 14px;
   background-color: #92929205;
-  padding: 10px;
+  padding: 0;
 }
 
 .error-cont {
@@ -344,7 +340,6 @@ input.rsvp-val {
   }
 
   .form-input {
-    width: 80%;
     font-size: 12px;
   }
 
@@ -355,6 +350,10 @@ input.rsvp-val {
 
   .question-cont p {
     font-size: 12px;
+  }
+
+  .commen-sct {
+    margin-left: 12px;
   }
 
   .question-cont h3 {

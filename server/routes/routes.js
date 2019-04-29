@@ -9,6 +9,7 @@ import WelcomeController from '../controllers/WelcomeController';
 import UserController from '../controllers/userController';
 import CommentController from '../controllers/CommentController';
 
+
 // validations
 import createMeetupValidation from '../middlewares/validations/meetupValidations';
 import createQuestion from '../middlewares/validations/questionValidations';
@@ -26,6 +27,9 @@ router.post('/auth/signup', signupValidation, UserController.signUp);
 
 // login to account
 router.post('/auth/login', loginValidation, UserController.login);
+
+// get user details
+router.get('/user', auth, UserController.getUser);
 
 // Meetup endpoints
 router.get('/meetups', auth, MeetupController.getAllMeetups);

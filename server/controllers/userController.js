@@ -99,6 +99,37 @@ class UserController {
       }
     });
   }
+
+  // fetch currently logged in user
+  static getUser(req, res) {
+    client.query('SELECT * FROM users WHERE id = $1', [req.user], (error, results) => {
+      if (error) {
+        res.status(403).json({
+          status: 403,
+          error,
+        });
+      }
+      if (results.rows.length < 1) {
+        res.status(404).json({
+          status: 404,
+          error: 'No such user in our database',
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          user: {
+            id: results.rows[0].id,
+            firstname: results.rows[0].firstname,
+            lastname: results.rows[0].lastname,
+            email: results.rows[0].email,
+            username: results.rows[0].username,
+            registered: results.rows[0].registered,
+            isAdmin: results.rows[0].isadmin,
+          },
+        });
+      }
+    });
+  }
 }
 
 export default UserController;

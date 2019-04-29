@@ -146,7 +146,6 @@ form.search-bar {
 .create-meetup {
   display: flex;
   flex-direction: column;
-  padding: 20px;
   line-height: 2.5;
 }
 
@@ -197,12 +196,6 @@ label {
   font-weight: 700;
   cursor: pointer;
   margin-top: 20px;
-}
-
-hr {
-  border: none;
-  height: 1px;
-  background: #7e696963;
 }
 
 #meetups {

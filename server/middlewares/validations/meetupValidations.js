@@ -9,7 +9,7 @@ const createMeetupValidation = (req, res, next) => {
     topic: Joi.string().min(10).required(),
     location: Joi.string().min(3).required(),
     happeningOn: Joi.date().iso().required().label('date must be in this format: yyyy-mm-dd or yyyy/mm/dd'),
-    tags: Joi.array().length(3).required(),
+    tags: Joi.array().length(3).max(5).required(),
   });
 
   Joi.validate(data, schema, (err) => {

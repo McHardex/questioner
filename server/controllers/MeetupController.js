@@ -10,7 +10,7 @@ class MeetupController {
    * @return{json}
   */
   static getAllMeetups(req, res) {
-    client.query('SELECT * FROM meetups ORDER by id ASC', (error, results) => {
+    client.query('SELECT * FROM meetups ORDER by createdon DESC', (error, results) => {
       if (error) {
         return res.status(403).json({
           status: 403,

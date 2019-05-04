@@ -42,6 +42,7 @@ class QuestionController {
             res.status(201).json({
               status: 201,
               data: [{
+                id: response.rows[0].id,
                 createdby: response.rows[0].createdby,
                 meetup_id: results.rows[0].id,
                 title: response.rows[0].title,

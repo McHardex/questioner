@@ -158,32 +158,6 @@ describe('Meetups', () => {
   });
 
   describe('GET /meetups/', () => {
-    it('should return status code 401 when no token is provided', (done) => {
-      request(server)
-        .get('/api/v1/meetups')
-        .end((err, res) => {
-          expect(res.status).to.equal(401);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('No Token provided');
-          done();
-        });
-    });
-
-    it(`should return status code 422(unprocessable entity)
-      when an invalid token is passed`, (done) => {
-      request(server)
-        .get('/api/v1/meetups')
-        .set('x-auth-token', wrongtoken)
-        .end((err, res) => {
-          expect(res.status).to.equal(422);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('jwt malformed');
-          done();
-        });
-    });
-
     it('should return status code 200 on successful fetch of all meetups', (done) => {
       request(server)
         .get('/api/v1/meetups')

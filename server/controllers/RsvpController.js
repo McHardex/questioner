@@ -67,7 +67,7 @@ class RsvpController {
         });
       }
       if (req.body.response === 'maybe') {
-        client.query('DELETE FROM rsvps WHERE user_id = $1 AND meetup_id = $2', [req.user, req.params.meetup_id], (error, reject) => {
+        client.query('DELETE FROM rsvps WHERE user_id = $1 AND meetup_id = $2', [req.user, req.params.meetup_id], (error) => {
           if (error) res.status(500).json({ status: 500, error });
         });
         client.query('INSERT INTO rsvps (meetup_id, user_id, response) VALUES ($1, $2, $3) RETURNING *',
@@ -76,7 +76,7 @@ class RsvpController {
             message: 'maybe',
           }));
       } else if (req.body.response === 'yes') {
-        client.query('DELETE FROM rsvps WHERE user_id = $1 AND meetup_id = $2', [req.user, req.params.meetup_id], (error, reject) => {
+        client.query('DELETE FROM rsvps WHERE user_id = $1 AND meetup_id = $2', [req.user, req.params.meetup_id], (error) => {
           if (error) res.status(500).json({ status: 500, error });
         });
         client.query('INSERT INTO rsvps (meetup_id, user_id, response) VALUES ($1, $2, $3) RETURNING *',
@@ -85,7 +85,7 @@ class RsvpController {
             message: 'yes',
           }));
       } else if (req.body.response === 'no') {
-        client.query('DELETE FROM rsvps WHERE user_id = $1 AND meetup_id = $2', [req.user, req.params.meetup_id], (error, reject) => {
+        client.query('DELETE FROM rsvps WHERE user_id = $1 AND meetup_id = $2', [req.user, req.params.meetup_id], (error) => {
           if (error) res.status(500).json({ status: 500, error });
         });
         client.query('INSERT INTO rsvps (meetup_id, user_id, response) VALUES ($1, $2, $3) RETURNING *',

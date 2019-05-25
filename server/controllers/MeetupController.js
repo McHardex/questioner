@@ -68,7 +68,7 @@ class MeetupController {
     FROM meetups AS "meetup"
     LEFT JOIN "asknow" AS "question"
     ON "meetup"."id" = "question"."meetup_id"
-    LEFT JOIN (SELECT * FROM "comments" ORDER BY createdat desc) AS "comment" 
+    LEFT JOIN (SELECT * FROM "comments" ORDER BY createdat asc) AS "comment" 
     ON "question"."id" = "comment"."question_id"
     WHERE "meetup"."id" = $1 
     GROUP BY "meetup"."id", 

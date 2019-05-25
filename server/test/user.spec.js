@@ -8,13 +8,10 @@ import request from 'supertest';
 import server from '../index';
 
 const signupPayload = {
-  firstname: 'omoluwa',
-  lastname: 'david',
-  othername: 'omokeye',
   username: 'codehallow',
   email: 'mchardex1995@gmail.com',
-  phoneNumber: '2334455667788',
   password: 'mchardex',
+  confirmPassword: 'mchardex',
 };
 
 const loginDetails = {
@@ -24,45 +21,45 @@ const loginDetails = {
 
 describe('The User route', () => {
   describe('The Signup route', () => {
-    it('Should return 422 when firsname is not present', (done) => {
+    it('Should return 422 when username is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
           lastname: 'david',
           othername: 'omokeye',
-          username: 'mchardex',
           email: 'adepnte@gmail.com',
           phoneNumber: '0816011601644',
           password: 'meluwe',
+          confirmPassword: 'meluwe',
         })
         .end((err, res) => {
           expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('firstname is required');
+          expect(res.body.error).to.equal('username is required');
           done();
         });
     });
 
-    it('Should return 422 when lastname is not present', (done) => {
+    it('Should return 422 when email is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
           firstname: 'david',
           othername: 'omokeye',
           username: 'mchardex',
-          email: 'adepntefgf@gmail.com',
           phoneNumber: '0816011601644',
           password: 'meluwe',
+          confirmPassword: 'meluwe',
         })
         .end((err, res) => {
           expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('lastname is required');
+          expect(res.body.error).to.equal('email is required');
           done();
         });
     });
 
-    it('Should return 422 when othername is not present', (done) => {
+    it('Should return 422 when password is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -71,12 +68,12 @@ describe('The User route', () => {
           username: 'mchardex',
           email: 'adepncc@gmail.com',
           phoneNumber: '0816011601644',
-          password: 'meluwe',
+          confirmPassword: 'meluwe',
         })
         .end((err, res) => {
           expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('othername is required');
+          expect(res.body.error).to.equal('password is required');
           done();
         });
     });
@@ -100,7 +97,7 @@ describe('The User route', () => {
         });
     });
 
-    it('Should return 422 when phone number is not present', (done) => {
+    it('Should return 422 whenconfirmPassword is not present', (done) => {
       request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -109,13 +106,12 @@ describe('The User route', () => {
           username: 'machardex',
           email: 'boikingh@gmail.com',
           othername: 'jognson',
-          registered: '2019-01-15',
           password: 'meluwe',
         })
         .end((err, res) => {
           expect(res.status).to.equal(422);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('phoneNumber is required');
+          expect(res.body.error).to.equal('confirmPassword is required');
           done();
         });
     });
@@ -177,7 +173,7 @@ describe('The User route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(409);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('User exists, check your credentials');
+          expect(res.body.error).to.equal('User already exists, check your credentials');
           done();
         });
     });
@@ -221,12 +217,12 @@ describe('The User route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('Invalid credentials');
+          expect(res.body.error).to.equal('Invalid email/password');
           done();
         });
     });
 
-    it('Should return 404 if the user doesn\'t exist', (done) => {
+    it('Should return 400 if the user doesn\'t exist', (done) => {
       request(server)
         .post('/api/v1/auth/login')
         .send({
@@ -234,9 +230,9 @@ describe('The User route', () => {
           password: '123456lklk',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(400);
           expect(res.body).to.be.an('object');
-          expect(res.body.error).to.equal('No such user in our database');
+          expect(res.body.error).to.equal('Invalid email/password');
           done();
         });
     });

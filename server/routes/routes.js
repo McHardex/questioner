@@ -14,6 +14,7 @@ import CommentController from '../controllers/CommentController';
 import createMeetupValidation from '../middlewares/validations/meetupValidations';
 import createQuestion from '../middlewares/validations/questionValidations';
 import signupValidation from '../middlewares/validations/signupValidation';
+import updateUserProfileValidation from '../middlewares/validations/updateUserProfileValidation';
 import loginValidation from '../middlewares/validations/loginValidation';
 import commentValid from '../middlewares/validations/commentValidation';
 
@@ -31,8 +32,11 @@ router.post('/auth/login', loginValidation, UserController.login);
 // get user details
 router.get('/user', auth, UserController.getUser);
 
+// update user details
+router.patch('/user', auth, updateUserProfileValidation, UserController.updateUserProfile);
+
 // Meetup endpoints
-router.get('/meetups', auth, MeetupController.getAllMeetups);
+router.get('/meetups', MeetupController.getAllMeetups);
 router.get('/meetups/upcoming', auth, MeetupController.upcomingMeetups);
 router.get('/meetups/:id', auth, MeetupController.getSpecificMeetupRecord);
 router.post('/meetups', auth, createMeetupValidation, MeetupController.createMeetup);
@@ -49,6 +53,7 @@ router.get('/comments/:user_id', auth, CommentController.getSpecificUserComment)
 
 // Rsvp enpoints
 router.get('/rsvps/:meetup_id', auth, RsvpController.getAllRsvps);
+router.get('/user/rsvp/:meetup_id/', auth, RsvpController.getRsvpByUser);
 router.post('/meetups/:meetup_id/rsvps', auth, RsvpController.createRsvp);
 
 export default router;

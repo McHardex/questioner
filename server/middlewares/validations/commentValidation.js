@@ -6,7 +6,7 @@ const commentValid = (req, res, next) => {
   const data = req.body;
 
   const schema = Joi.object().keys({
-    comment: Joi.string().min(1).max(100).required(),
+    comment: Joi.string().min(1).max(500).required(),
     question_id: Joi.number().required(),
   });
 

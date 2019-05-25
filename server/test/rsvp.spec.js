@@ -121,21 +121,6 @@ describe('RSVPs', () => {
           done();
         });
     });
-
-    it('should return 409 status response already recorded', (done) => {
-      request(server)
-        .post('/api/v1/meetups/1/rsvps')
-        .set('x-auth-token', token)
-        .send(payload)
-        .end((err, res) => {
-          expect(res.status).to.equal(409);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys('status', 'error');
-          expect(res.body.error).to.equal('You can only respond once');
-          done();
-        });
-    });
-
     it('should return status code 200 on successful fetch of rsvps', (done) => {
       request(server)
         .get('/api/v1/rsvps/1')

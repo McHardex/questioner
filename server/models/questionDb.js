@@ -1,6 +1,6 @@
 const questionDb = `
   CREATE TABLE asknow (
-    id SERIAL PRIMARY KEY,
+    id SERIAL UNIQUE PRIMARY KEY,
     createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INTEGER,
     meetup_id INTEGER NOT NULL, 
